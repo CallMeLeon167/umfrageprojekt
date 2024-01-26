@@ -1,0 +1,6 @@
+/.idea
+/vendor
+errorlogfile.log
+cml-config.php
+*min.js
+*min.css

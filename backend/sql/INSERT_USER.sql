@@ -1,5 +1,5 @@
 INSERT INTO 
-kk_user 
-(`username`, `password`, `email`, `password_salt`, `created`, `permission`, `pfp_color`) 
+Account 
+(`a_username`, `a_password`, `a_emailaddress`, `a_passwordSalt`) 
 VALUES 
-(?, ?, ?, ?, now(), 1, ?);
+(?, ?, ?, ?);

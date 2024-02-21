@@ -13,17 +13,20 @@ class Login extends DB{
             parent::sql2array_file("SELECT_USERBYUSERNAME.sql", [$user])[0];
             if($user_data){
                 $user_data = $user_data[0];
-                $dbPassword = $user_data['password'];
-                $savedSalt = $user_data['password_salt']; // random salt from DB
+                $dbPassword = $user_data['a_password'];
+                $savedSalt = $user_data['a_passwordSalt']; // random salt from DB
                 $hashedPassword = hash('sha256', $password.$savedSalt); // hashed password with sha256 algorithm
-
+                
                 if ($hashedPassword === $dbPassword) {
                     // Einloggen erfolgreich
+                    echo json_encode(["success" => "Username is logged in"]);
                 } else {
                     //Password falsch
+                    echo json_encode(["error" => "Password is not correct"]);
                 }
             } else {
                 //User ist nicht vorhanden
+                echo json_encode(["error" => "User is not available"]);
             }
         }
     }
@@ -36,11 +39,14 @@ class Login extends DB{
                 $emailCheck = parent::sql2array_file("SELECT_USERBYUSEMAIL.sql", [$email])[0];
                 if ($usernameCheck) {
                     //Username is already taken
+                    echo json_encode(["error" => "Username is already taken"]);
                 } elseif($emailCheck){
                     //email is already taken
+                    echo json_encode(["error" => "Email is already taken"]);
                 } else {
                     // register users
                     parent::sql2db_file("INSERT_USER.sql", [$username, $hashedPassword, $email, $salt]);
+                    echo json_encode(["success" => "User registered successfully"]);
                 }
         } 
     }

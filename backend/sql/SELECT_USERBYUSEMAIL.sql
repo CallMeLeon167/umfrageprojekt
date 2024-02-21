@@ -1,3 +1,3 @@
 SELECT * 
 FROM Account 
-WHERE a_emailadress = ?
+WHERE a_emailaddress = ?

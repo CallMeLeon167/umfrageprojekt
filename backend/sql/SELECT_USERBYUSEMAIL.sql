@@ -1,3 +1,3 @@
 SELECT * 
-FROM kk_user 
-WHERE email = ?
+FROM Account 
+WHERE a_emailadress = ?

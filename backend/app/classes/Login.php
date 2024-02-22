@@ -19,35 +19,40 @@ class Login extends DB{
                 
                 if ($hashedPassword === $dbPassword) {
                     // Einloggen erfolgreich
-                    echo json_encode(["success" => "Username is logged in"]);
+                    $data = ["success" => "User is logged in"];
+                    $data["userData"] = $user_data;
                 } else {
                     //Password falsch
-                    echo json_encode(["error" => "Password is not correct"]);
+                    $data = ["error" => "Password is not correct"];
                 }
             } else {
                 //User ist nicht vorhanden
-                echo json_encode(["error" => "User is not available"]);
+                $data = ["error" => "User is not available"];
             }
+
+            echo json_encode($data, JSON_PRETTY_PRINT);
         }
     }
 
     public function register(string $username, string $email, string $password) {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-                $salt = $this->generateSalt();
-                $hashedPassword = hash('sha256', $password . $salt);
-                $usernameCheck = parent::sql2array_file("SELECT_USERBYUSERNAME.sql", [$username])[0];
-                $emailCheck = parent::sql2array_file("SELECT_USERBYUSEMAIL.sql", [$email])[0];
-                if ($usernameCheck) {
-                    //Username is already taken
-                    echo json_encode(["error" => "Username is already taken"]);
-                } elseif($emailCheck){
-                    //email is already taken
-                    echo json_encode(["error" => "Email is already taken"]);
-                } else {
-                    // register users
-                    parent::sql2db_file("INSERT_USER.sql", [$username, $hashedPassword, $email, $salt]);
-                    echo json_encode(["success" => "User registered successfully"]);
-                }
+            $salt = $this->generateSalt();
+            $hashedPassword = hash('sha256', $password . $salt);
+            $usernameCheck = parent::sql2array_file("SELECT_USERBYUSERNAME.sql", [$username])[0];
+            $emailCheck = parent::sql2array_file("SELECT_USERBYUSEMAIL.sql", [$email])[0];
+            if ($usernameCheck) {
+                //Username is already taken
+                $data = ["error" => "Username is already taken"];
+            } elseif($emailCheck){
+                //email is already taken
+                $data = ["error" => "Email is already taken"];
+            } else {
+                // register users
+                parent::sql2db_file("INSERT_USER.sql", [$username, $hashedPassword, $email, $salt]);
+                $data = ["success" => "User registered successfully"];
+            }
+            
+            echo json_encode($data, JSON_PRETTY_PRINT);
         } 
     }
 

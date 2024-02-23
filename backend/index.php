@@ -14,12 +14,12 @@ $router->addRoute('GET', '/', function () use ($router) {
     echo json_encode(["message" => "Hey Na!!!"]);
 });
 
-$router->addRoute('GET', '/register', function () use ($router, $user) {
+$router->addRoute('*', '/register', function () use ($router, $user) {
     $router->isApi();
     $user->register("callmeleon", "kontakt@callmeleon.de", "TestPassword1234");
 });
 
-$router->addRoute('GET', '/login', function () use ($router, $user) {
+$router->addRoute('*', '/login', function () use ($router, $user) {
     $router->isApi();
     $user->login("kontakt@callmeleon.de", "TestPassword1234"); //das geht
     // $user->login("callmeleon", "TestPassword1234"); //das geht auch :)

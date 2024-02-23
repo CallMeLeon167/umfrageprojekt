@@ -1,7 +1,7 @@
 <?php 
 namespace CML\Classes;
 use CML\Classes\DB;
-
+use Firebase\JWT\JWT;
 class Login extends DB{
     use \CML\Classes\Functions\Functions;
     use \CML\Classes\Functions\Session;
@@ -19,6 +19,7 @@ class Login extends DB{
                 
                 if ($hashedPassword === $dbPassword) {
                     // Einloggen erfolgreich
+                    $user_data = JWT::encode($user_data, ENCODE_KEY, 'HS256');
                     $data = ["success" => "User is logged in"];
                     $data["userData"] = $user_data;
                 } else {

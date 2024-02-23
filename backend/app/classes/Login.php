@@ -3,9 +3,6 @@ namespace CML\Classes;
 use CML\Classes\DB;
 use Firebase\JWT\JWT;
 class Login extends DB{
-    use \CML\Classes\Functions\Functions;
-    use \CML\Classes\Functions\Session;
-
     public function login(string $user, string $password){
         if($_SERVER['REQUEST_METHOD'] == "POST"){
             $user_data = (filter_var($user, FILTER_VALIDATE_EMAIL)) ? 

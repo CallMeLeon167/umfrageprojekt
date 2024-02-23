@@ -20,15 +20,17 @@ class Login extends DB{
                 if ($hashedPassword === $dbPassword) {
                     // Einloggen erfolgreich
                     $user_data = JWT::encode($user_data, ENCODE_KEY, 'HS256');
-                    $data = ["success" => "User is logged in"];
+                    $data = ["message" => "User is logged in"];
                     $data["userData"] = $user_data;
                 } else {
                     //Password falsch
-                    $data = ["error" => "Password is not correct"];
+                    $data = ["message" => "Login is not correct"];
+                    http_response_code(401);
                 }
             } else {
                 //User ist nicht vorhanden
-                $data = ["error" => "User is not available"];
+                $data = ["message" => "User is not available"];
+                http_response_code(401);
             }
 
             echo json_encode($data, JSON_PRETTY_PRINT);
@@ -43,14 +45,16 @@ class Login extends DB{
             $emailCheck = parent::sql2array_file("SELECT_USERBYUSEMAIL.sql", [$email])[0];
             if ($usernameCheck) {
                 //Username is already taken
-                $data = ["error" => "Username is already taken"];
+                $data = ["message" => "Username is already taken"];
+                http_response_code(401);
             } elseif($emailCheck){
                 //email is already taken
-                $data = ["error" => "Email is already taken"];
+                $data = ["message" => "Email is already taken"];
+                http_response_code(401);
             } else {
                 // register users
                 parent::sql2db_file("INSERT_USER.sql", [$username, $hashedPassword, $email, $salt]);
-                $data = ["success" => "User registered successfully"];
+                $data = ["message" => "User registered successfully"];
             }
             
             echo json_encode($data, JSON_PRETTY_PRINT);

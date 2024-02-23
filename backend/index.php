@@ -9,6 +9,12 @@ $db = new DB();
 $router = new Router();
 $user = new Login();
 
+$router->addRoute('*', '/sql', function () use ($router, $db) {
+    $name = "callmeleon";
+    $t = $db->sql2db_file("SELECT_USERBYUSERNAME.sql", [$name]);
+    var_dump($t);
+});
+
 $router->addRoute('GET', '/', function () use ($router) {
     $router->isApi();
     echo json_encode(["message" => "Hey Na!!!"]);

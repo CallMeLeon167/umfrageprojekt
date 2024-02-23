@@ -33,13 +33,6 @@ class DB {
     }
 
     /**
-     * Destructor for the class. Automatically closes the database connection upon object destruction.
-     */
-    public function __destruct() {
-        $this->close();
-    }
-
-    /**
      * Establishes a connection to the database.
      *
      * @param string $host The database host.

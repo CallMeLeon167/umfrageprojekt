@@ -1,9 +1,7 @@
 <?php 
 require_once 'app/admin/cml-load.php'; 
 
-use CML\Classes\Router;
-use CML\Classes\DB;
-use CML\Classes\Login;
+use CML\Classes\{ Router, DB, Login };
 
 $db = new DB();
 $router = new Router();

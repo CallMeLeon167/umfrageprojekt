@@ -2,7 +2,7 @@
   <header>
     <div class="header__left">
       <img src="/src/assets/logo.svg" alt="logo" class="logo">
-      <h2>Umfrage Portal</h2>
+      <h3>Umfrage Portal</h3>
     </div>
     <div class="header__right">
       <nav>

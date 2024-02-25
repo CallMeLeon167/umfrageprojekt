@@ -11,31 +11,46 @@ const router = createRouter({
     {
       path: '/',
       name: 'index',
-      component: HomePage
+      component: HomePage,
+      meta:{
+        title: 'Startseite'
+      }
     },
     {
       // list of all surveys
       path: '/survey/list',
       name: 'survey-list',
-      component: SurveysListVue
+      component: SurveysListVue,
+      meta:{
+        title: 'Umfragen'
+      }
     },
     {
       // detail of a survey (results, questions, etc.)
       path: '/survey/detail/:id',
       name: 'survey-detail',
-      component: SurveyDetailVue
+      component: SurveyDetailVue,
+      meta:{
+        title: 'Umfrage'
+      }
     },
     {
       // fill out a survey
       path: '/survey/fill/:id',
       name: 'survey-fill',
-      component: SurveyFillOutVue
+      component: SurveyFillOutVue,
+      meta:{
+        title: 'Umfrage ausfüllen'
+      }
     },
     {
       // create a new survey
       path: '/survey/create',
       name: 'survey-create',
-      component: SurveyCreateVue
+      component: SurveyCreateVue,
+      meta:{
+        title: 'Umfrage erstellen'
+      }
     }
   ]
 })

@@ -1,6 +1,13 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { watchEffect } from 'vue'
+import { RouterView, useRoute } from 'vue-router'
 import Layout from './layout/layout.vue'
+
+const route = useRoute()
+
+watchEffect(() => {
+  document.title = "Umfrage Portal - " + route.meta.title || 'Umfrage Portal'
+})
 </script>
 
 <template>

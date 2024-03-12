@@ -24,6 +24,10 @@ $router->addRoute('*', '/register', function () use ($router, $user) {
     $router->isApi();
     $user->register("callmeleon", "kontakt@callmeleon.de", "TestPassword1234");
 });
+// zum ändern von accountdaten
+$router->addRoute('PUT', '/register', function () use ($router, $user) {
+    $router->isApi();
+});
 
 $router->addRoute('*', '/login', function () use ($router, $user) {
     $router->isApi();

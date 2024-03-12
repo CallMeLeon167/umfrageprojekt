@@ -2,6 +2,8 @@
 require_once 'app/admin/cml-load.php'; 
 
 use CML\Classes\{ Router, DB, Login };
+use CML\Controllers\ApiController;
+use CML\Controllers\SurveyController;
 
 $db = new DB();
 $router = new Router();
@@ -30,7 +32,8 @@ $router->addRoute('*', '/login', function () use ($router, $user) {
 });
 //filterung per form, gibt komplettes Survey objekt zurück
 $router->addRoute('GET', '/survey', function () use ($router) {
-    $router->isApi();        
+    $router->isApi(); 
+    $router->useController("SurveyController", "getAllSurveys", ["username" => "callmeleon"]);       
 });
 //zum abrufen von surveys
 $router->addRoute('GET', '/survey/:id', function ($id) use ($router) {

@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '@/pages/Home.vue'
+import HomePage from '@/page/Home.vue'
 import SurveysListVue from '@/page/SurveysList.vue'
 import SurveyDetailVue from '@/page/SurveyDetail.vue'
-import SurveyFillOutVue from '@/page/SurveyFillOut.vue'
+// import SurveyFillOutVue from '@/page/SurveyFillOut.vue'
 import SurveyCreateVue from '@/page/SurveyCreate.vue'
 
 const router = createRouter({
@@ -12,7 +12,7 @@ const router = createRouter({
       path: '/',
       name: 'index',
       component: HomePage,
-      meta:{
+      meta: {
         title: 'Startseite'
       }
     },
@@ -21,7 +21,7 @@ const router = createRouter({
       path: '/survey/list',
       name: 'survey-list',
       component: SurveysListVue,
-      meta:{
+      meta: {
         title: 'Umfragen'
       }
     },
@@ -30,25 +30,25 @@ const router = createRouter({
       path: '/survey/detail/:id',
       name: 'survey-detail',
       component: SurveyDetailVue,
-      meta:{
+      meta: {
         title: 'Umfrage'
       }
     },
-    {
-      // fill out a survey
-      path: '/survey/fill/:id',
-      name: 'survey-fill',
-      component: SurveyFillOutVue,
-      meta:{
-        title: 'Umfrage ausfüllen'
-      }
-    },
+    // {
+    //   // fill out a survey
+    //   path: '/survey/fill/:id',
+    //   name: 'survey-fill',
+    //   component: SurveyFillOutVue,
+    //   meta: {
+    //     title: 'Umfrage ausfüllen'
+    //   }
+    // },
     {
       // create a new survey
       path: '/survey/create',
       name: 'survey-create',
       component: SurveyCreateVue,
-      meta:{
+      meta: {
         title: 'Umfrage erstellen'
       }
     }

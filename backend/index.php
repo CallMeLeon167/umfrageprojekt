@@ -2,8 +2,6 @@
 require_once 'app/admin/cml-load.php'; 
 
 use CML\Classes\{ Router, DB, Login };
-use CML\Controllers\ApiController;
-use CML\Controllers\SurveyController;
 
 $db = new DB();
 $router = new Router();

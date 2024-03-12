@@ -2,8 +2,6 @@
 require_once 'app/admin/cml-load.php'; 
 
 use CML\Classes\{ Router, DB, Login };
-use CML\Controllers\ApiController;
-use CML\Controllers\SurveyController;
 
 $db = new DB();
 $router = new Router();
@@ -30,6 +28,7 @@ $router->addRoute('PUT', '/register', function () use ($router, $user) {
 });
 
 $router->addRoute('*', '/login', function () use ($router, $user) {
+    header("Access-Control-Allow-Origin: *");
     $router->isApi();
     $user->login("kontakt@callmeleon.de", "TestPassword1234"); //das geht
     // $user->login("callmeleon", "TestPassword1234"); //das geht auch :)

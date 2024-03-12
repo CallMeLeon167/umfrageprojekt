@@ -52,3 +52,7 @@ $router->addRoute('POST', '/surveyParticipation', function () use ($router) {
 $router->addRoute('GET', '/stats', function () use ($router) {
     $router->isApi();        
 });
+//abrufen der kateogrien (ohne verknüpfungen)
+$router->addRoute('GET', '/category', function () use ($router) {
+    $router->isApi();        
+});

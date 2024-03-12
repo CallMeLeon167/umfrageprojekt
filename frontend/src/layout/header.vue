@@ -4,7 +4,8 @@
       <img src="/src/assets/logo.svg" alt="logo" class="logo" />
       <h3>Umfrage Portal</h3>
     </RouterLink>
-    <div class="header__right">
+
+    <div class="header__right" v-if="isLoggedIn">
       <nav>
         <ul>
           <li>
@@ -20,6 +21,20 @@
         class="header__avatar"
       ></Avatar>
     </div>
+
+    <div class="header__right" v-else>
+      <nav>
+        <ul>
+          <li>
+            <RouterLink to="/login">Login</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/register">Registrieren</RouterLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
   </header>
 </template>
 

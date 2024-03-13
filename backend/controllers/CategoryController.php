@@ -10,3 +10,4 @@ class CategoryController extends DB {
         echo $this->sql2json_file("SELECT_CATEGORYS.sql");
     }
 }
+?>

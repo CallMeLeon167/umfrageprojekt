@@ -59,5 +59,6 @@ $router->addRoute('GET', '/stats', function () use ($router) {
 });
 //abrufen der kateogrien (ohne verknüpfungen)
 $router->addRoute('GET', '/category', function () use ($router) {
-    $router->isApi();        
+    $router->isApi();
+    $router->useController("CategoryController", "getCategorys",[]);        
 });

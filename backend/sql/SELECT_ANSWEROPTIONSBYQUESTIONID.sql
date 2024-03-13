@@ -1,0 +1,1 @@
+SELECT * FROM AnswerOption where ao_questionID = ? 

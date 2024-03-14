@@ -33,25 +33,17 @@ class Survey extends DB
                 $this->status = $data[0][0]["s_status"];
         }  
 
-        $questionData = $dbh->sql2array_file("SELECT_QUESTIONSBYSURVEYID.sql", [$_id]);
-        $cache = array();
+        $questionData = $dbh->sql2array_file("SELECT_QUESTIONSBYSURVEYID.sql", [$_id]);        
         if(!is_null($questionData))
         {
             foreach($questionData[0] as $row)
-            {
-                
+            {              
                 $q = new Question($row["id"], $row["q_questionText"], $row["q_type"], $row["q_order"]);
                 $cache[] = $q;
 
             }
         }        
         $this->Questions = $cache;
-
-        //fill attributes by $daten
-        
-        //get questions via id
-
-        //get surveyparticipation via id
     }
 
     

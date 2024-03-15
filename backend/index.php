@@ -2,8 +2,6 @@
 require_once 'app/admin/cml-load.php'; 
 
 use CML\Classes\{ Router, DB, Login };
-use CML\Controllers\ApiController;
-use CML\Controllers\SurveyController;
 
 $db = new DB();
 $router = new Router();
@@ -61,5 +59,6 @@ $router->addRoute('GET', '/stats', function () use ($router) {
 });
 //abrufen der kateogrien (ohne verknüpfungen)
 $router->addRoute('GET', '/category', function () use ($router) {
-    $router->isApi();        
+    $router->isApi();
+    $router->useController("CategoryController", "getCategorys",[]);        
 });

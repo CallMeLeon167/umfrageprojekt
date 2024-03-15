@@ -5,4 +5,10 @@
 
 body {
   font-family: 'Poppins', 'Roboto', sans-serif;
+  min-height: 100vh;
+}
+
+#app{
+  display: flex;
+  flex-direction: column;
 }

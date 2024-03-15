@@ -19,8 +19,8 @@ class Survey extends DB
 
     public function __construct($_id)
     {
-        $dbh = new DB();
-        $data = $dbh->sql2array_file("SELECT_SURVEYBYID.sql",[$_id]);
+        $this->dbh = new DB();
+        $data = $this->dbh->sql2array_file("SELECT_SURVEYBYID.sql",[$_id]);
         
         if(!is_null($data ))
         {                
@@ -33,7 +33,7 @@ class Survey extends DB
                 $this->status = $data[0][0]["s_status"];
         }  
 
-        $questionData = $dbh->sql2array_file("SELECT_QUESTIONSBYSURVEYID.sql", [$_id]);        
+        $questionData = $this->dbh->sql2array_file("SELECT_QUESTIONSBYSURVEYID.sql", [$_id]);        
         if(!is_null($questionData))
         {
             foreach($questionData[0] as $row)
@@ -44,6 +44,8 @@ class Survey extends DB
             }
         }        
         $this->Questions = $cache;
+
+        $participatingUserData = $this->dbh->sql2array_file("SELECT_PARTICIPATINGUSERDATA.sql",[$_id]);
     }
 
     

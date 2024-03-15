@@ -1,12 +1,16 @@
 import type { JWTUser, Session, User } from '@/types/auth'
 import { ofetch } from 'ofetch'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 const API_URL = import.meta.env.VITE_API_URL
 
-export function useAuth() {
-  const session = ref(<Session>{})
+const session = reactive({
+  user: null as User | null,
+  token: null as string | null,
+  expiresAt: null as Date | null
+})
 
+export function useAuth() {
   async function login(username: string, password: string) {
     try {
       const response = await ofetch('/login', {
@@ -14,10 +18,13 @@ export function useAuth() {
         method: 'POST',
         body: { username: username, password: password }
       })
-      if (response.ok) {
-        const { token } = await response.json()
+      if (response) {
+        const token = response?.token ?? null
         const user = parseUserFromJWT(token)
-        session.value = { user, token, expiresAt: null }
+        session.user = user
+        session.token = token
+      } else {
+        console.error('Login failed:', response.status, response.statusText)
       }
     } catch (error) {
       console.error(error)

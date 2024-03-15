@@ -31,7 +31,13 @@ export function useAuth() {
     }
   }
 
-  return { session, login }
+  function logout() {
+    session.user = null
+    session.token = null
+    session.expiresAt = null
+  }
+
+  return { session, login, logout }
 }
 
 function parseUserFromJWT(jwt: string): User | null {

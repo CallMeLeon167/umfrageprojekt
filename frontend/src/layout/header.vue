@@ -18,6 +18,7 @@
       </nav>
       <span>{{ auth.session.user.username }}</span>
       <span v-if="auth.session.user.role">({{ auth.session.user.role }})</span>
+      <span @click="auth.logout">Logout</span>
       <Avatar
         imageUrl="https://unchainedcrypto.com/wp-content/uploads/2023/07/pfp-nft.png"
         class="header__avatar"

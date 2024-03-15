@@ -1,1 +1,1 @@
-SELECT * FROM AnswerOption where ao_questionID = ? 
+SELECT * FROM AnswerOption where ao_questionID = ? ORDER BY ao_order

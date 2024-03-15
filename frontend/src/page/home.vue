@@ -37,19 +37,19 @@
 import { ofetch } from 'ofetch'
 import { ref, onMounted } from 'vue'
 
-const topVoters = ref([])
+const topVoters = ref<{ id: string, imageUrl: string, username: string, description: string, votes: number }[]>([]);
 const res = ref()
 
 onMounted(async () => {
   const response = await fetch('https://randomuser.me/api/?results=4')
   const data = await response.json()
-  topVoters.value = data.results.map((result, index) => ({
-    id: index,
-    imageUrl: result.picture.large,
-    username: result.login.username,
-    description: result.email,
-    votes: Math.floor(Math.random() * 100) + 1
-  }))
+  topVoters.value = data.results.map((result: any, index: number) => ({
+  id: index.toString(),
+  imageUrl: result.picture.large,
+  username: result.login.username,
+  description: result.email,
+  votes: Math.floor(Math.random() * 100) + 1
+}));
   res.value = await ofetch('https://randomuser.me/api/?results=4')
 })
 </script>

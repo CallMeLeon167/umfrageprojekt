@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '@/page/Home.vue'
+import HomePage from '@/page/home.vue'
 import SurveysListVue from '@/page/SurveysList.vue'
 import SurveyDetailVue from '@/page/SurveyDetail.vue'
 // import SurveyFillOutVue from '@/page/SurveyFillOut.vue'

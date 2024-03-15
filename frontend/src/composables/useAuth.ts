@@ -9,9 +9,16 @@ export function useAuth() {
 
   async function login(username: string, password: string) {
     try {
-      const response = await fetch(API_URL + '/login', {
-        method: 'POST'
+      const response = await ofetch('/login', {
+        baseURL: API_URL,
+        method: 'POST',
+        body: { username: username, password: password }
       })
+      if (response.ok) {
+        const { token } = await response.json()
+        const user = parseUserFromJWT(token)
+        session.value = { user, token, expiresAt: null }
+      }
     } catch (error) {
       console.error(error)
     }

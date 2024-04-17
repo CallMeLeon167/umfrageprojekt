@@ -22,13 +22,12 @@ class DB {
      *
      * @var string
      */
-    public string $sqlPath;
+    public string $sqlPath =SQL_PATH ?? '';
     
     /**
      * Constructor of the DB class. Calls the methods to load environment variables and establish a connection to the database.
      */
     public function __construct() {
-        $this->sqlPath = SQL_PATH ?? '';
         $this->connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME); 
     }
 
@@ -82,7 +81,7 @@ class DB {
      */
     public function sql2array(string $query, array $params = []):array {
         $sqlArray = array();
-    
+        var_dump($query);
         $stmt = $this->conn->prepare($query);
     
         if (!$stmt) {

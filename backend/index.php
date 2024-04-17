@@ -28,6 +28,9 @@ $router->addRoute('PUT', '/register', function () use ($router, $user) {
 });
 
 $router->addRoute('*', '/login', function () use ($router, $user) {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: *");
     $router->isApi();
     $user->login("kontakt@callmeleon.de", "TestPassword1234"); //das geht
     // $user->login("callmeleon", "TestPassword1234"); //das geht auch :)

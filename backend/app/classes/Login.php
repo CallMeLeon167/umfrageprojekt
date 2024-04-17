@@ -18,7 +18,7 @@ class Login extends DB{
                     // Einloggen erfolgreich
                     $user_data = JWT::encode($user_data, ENCODE_KEY, 'HS256');
                     $data = ["message" => "User is logged in"];
-                    $data["userData"] = $user_data;
+                    $data["token"] = $user_data;
                 } else {
                     //Password falsch
                     $data = ["message" => "Login is not correct"];

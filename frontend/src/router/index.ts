@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from '@/page/Home.vue'
+import HomePage from '@/page/home.vue'
 import SurveysListVue from '@/page/SurveysList.vue'
 import SurveyDetailVue from '@/page/SurveyDetail.vue'
 // import SurveyFillOutVue from '@/page/SurveyFillOut.vue'
 import SurveyCreateVue from '@/page/SurveyCreate.vue'
+import LoginPage from '@/page/Login.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,6 +15,14 @@ const router = createRouter({
       component: HomePage,
       meta: {
         title: 'Startseite'
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginPage,
+      meta: {
+        title: 'Login'
       }
     },
     {

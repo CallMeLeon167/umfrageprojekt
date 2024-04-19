@@ -46,6 +46,16 @@ class Survey extends DB
         $this->Questions = $cache;
 
         $participatingUserData = $this->dbh->sql2array_file("SELECT_PARTICIPATINGUSERDATA.sql",[$_id]);
+        if(!is_null($participatingUserData))
+        {
+            foreach($participatingUserData[0] as $row)
+            {
+                $a[] = new Account($row["id"], $row["a_Username"]);
+            }
+        }
+        $this->participatingUsers = $a;
+        
+        
     }
 
     

@@ -39,9 +39,8 @@ $router->addRoute('*', '/login', function () use ($router, $user) {
 });
 //filterung per form, gibt komplettes Survey objekt zurück
 $router->addRoute('GET', '/survey', function () use ($router) {
-    $router->isApi();
-    $router->useController("SurveyController", "getAllSurveys");
-    echo "test";
+    $router->isApi(); 
+    $router->useController("SurveyController", "getAllSurveys");       
 });
 //zum abrufen von surveys
 $router->addRoute('GET', '/survey/:id', function ($id) use ($router) {

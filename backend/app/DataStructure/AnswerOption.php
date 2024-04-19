@@ -4,16 +4,16 @@ use CML\DataStructure\Question;
 
 class AnswerOption extends Question
 {
-    public $QuestionAnswerID;
-    public $QuestionAnswerOptionText;
-    public $QuestionAnswerOptionOrder;
+    public $AnswerOptionID;
+    public $AnswerOptionText;
+    public $AnswerOptionOrder;
 
-
-    function __construct($_questionAnswerID, $_questionAnswerOptionText, $_questionAnswerOptionOrder)
+    function __construct($id,$ao_answerOptionText,$ao_order)
     {
-        $this->QuestionAnswerID = $_questionAnswerID;
-        $this->QuestionAnswerOptionText = $_questionAnswerOptionText;
-        $this->QuestionAnswerOptionOrder = $_questionAnswerOptionOrder;
+        $this->AnswerOptionID = $id;
+        $this->AnswerOptionText = $ao_answerOptionText;
+        $this->AnswerOptionOrder = $ao_order;
+
     }
 }
 ?>

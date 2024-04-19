@@ -19,16 +19,18 @@ class Question extends Survey
         $this->questionType = $_questionType;
         $this->questionOrder = $_questionOrder;
 
-        $AnswerOptionsData = $this->sql2array_file("SELECT_QUESTIONSBYSURVEYID.sql", [$this->QuestionID]);        
+        $AnswerOptionsData = $this->sql2array_file("SELECT_ANSWEROPTIONSBYQUESTIONID.sql", [$_QuestionID]);  
+    
+        $cache =  array();
         if(!is_null($AnswerOptionsData))
         {
             foreach($AnswerOptionsData[0] as $row)
             {              
                 $q = new AnswerOption($row["id"], $row["ao_answerOptionText"], $row["ao_order"]);
                 $cache[] = $q;
-
             }
-        }        
+        }
+
         $this->AnswerOptions = $cache;
     }       
 }

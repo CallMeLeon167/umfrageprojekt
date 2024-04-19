@@ -13,38 +13,13 @@
       <!-- CATEGORY DROPDOWN -->
 
       <!-- questions list -->
-
-      <div id="survey-question-form">
-        <h3>Frage hinzufügen</h3>
-        <div>
-          <label for="question">Frage</label>
-          <input type="text" id="question_text" />
-        </div>
-        <div id="questions_answers"></div>
-        <div>
-          <label for="question_type">Frage Typ</label>
-          <select id="question_type">
-            <option value="text">Text</option>
-            <option value="radio">Radio</option>
-            <option value="checkbox">Checkbox</option>
-          </select>
-
-          <div id="question-options">
-            <label for="question_option">Antwort</label>
-            <input type="text" id="question_option" />
-            <button type="button" id="add-option">Option hinzufügen</button>
-          </div>
-
-          <button type="button" id="add-question">Frage hinzufügen</button>
-        </div>
-      </div>
-
-      <!-- submit button -->
+      <QuestionForm />
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
+import QuestionForm from '@/components/survey/questionForm.vue'
 import { ref } from 'vue'
 
 const form = ref({

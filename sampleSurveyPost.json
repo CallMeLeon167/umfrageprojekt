@@ -1,0 +1,19 @@
+{
+  "topic": "",
+  "startdate": "",
+  "enddate": "",
+  "categoryId": "",
+  "status": "",
+  "questions": [
+    {
+      "question": "Wo Bóbr?",
+      "type": "",
+      "answeroptions": ["abc", "def"]
+    },
+    {
+      "question": "Bóbr Kurwa!",
+      "type": "",
+      "answeroptions": ["abc", "def"]
+    }
+  ]
+}

@@ -40,7 +40,7 @@ const auth = useAuth()
 const API_URL = import.meta.env.VITE_API_URL
 </script>
 
-<style>
+<style scoped>
 .login-container {
   display: flex;
   flex-direction: column;

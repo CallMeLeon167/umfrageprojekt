@@ -10,6 +10,7 @@ class SurveyController extends DB
     {
         //echo $this->sql2json_file("SELECT_SURVEYS.sql");     
         $s1 = new Survey(1);
+        echo json_encode($s1);
     }
     
 }

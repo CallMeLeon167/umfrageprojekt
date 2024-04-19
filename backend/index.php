@@ -65,6 +65,9 @@ $router->addRoute('POST', '/surveyParticipation', function () use ($router) {
 
 //daten für statansicht generieren
 $router->addRoute('GET', '/stats', function () use ($router) {
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: *");
     $router->isApi();
     echo $router->useController("StatsController", "getStatsData");
 });

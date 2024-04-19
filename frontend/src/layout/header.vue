@@ -15,15 +15,13 @@
             <RouterLink to="/survey/list">Umfragen</RouterLink>
           </li>
           <li>
-            <a @click="auth.logout">Logout</a>
+            <a @click="auth.logout" href="#">Logout</a>
           </li>
         </ul>
       </nav>
       <div class="user_wrapper">
-        <Avatar
-          imageUrl="https://unchainedcrypto.com/wp-content/uploads/2023/07/pfp-nft.png"
-          class="header__avatar"
-        ></Avatar>
+        <Avatar imageUrl="https://unchainedcrypto.com/wp-content/uploads/2023/07/pfp-nft.png" class="header__avatar">
+        </Avatar>
         <div class="user_info">
           <span class="name">{{ auth.session.user.username }}</span>
           <span class="role" v-if="auth.session.user.role">({{ auth.session.user.role }})</span>
@@ -105,7 +103,7 @@ header {
   opacity: 0.7;
 }
 
-.user_wrapper{
+.user_wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -114,7 +112,7 @@ header {
   padding: 5px 10px;
 }
 
-.user_info{
+.user_info {
   display: flex;
   flex-direction: column;
 }

@@ -7,6 +7,10 @@ $db = new DB();
 $router = new Router();
 $user = new Login();
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
+
 $router->addRoute('*', '/sql', function () use ($router, $db) {
     $name = "callmeleon";
     $t = $db->sql2db_file("SELECT_USERBYUSERNAME.sql", [$name]);
@@ -29,9 +33,6 @@ $router->addRoute('PUT', '/register', function () use ($router, $user) {
 });
 
 $router->addRoute('*', '/login', function () use ($router, $user) {
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Headers: *");
-    header("Access-Control-Allow-Methods: *");
     $router->isApi();
     $user->login("kontakt@callmeleon.de", "TestPassword1234"); //das geht
     // $user->login("callmeleon", "TestPassword1234"); //das geht auch :)
@@ -65,9 +66,6 @@ $router->addRoute('POST', '/surveyParticipation', function () use ($router) {
 
 //daten für statansicht generieren
 $router->addRoute('GET', '/stats', function () use ($router) {
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Headers: *");
-    header("Access-Control-Allow-Methods: *");
     $router->isApi();
     echo $router->useController("StatsController", "getStatsData");
 });

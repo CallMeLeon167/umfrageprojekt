@@ -13,6 +13,7 @@ const session = reactive({
 export function useAuth() {
   async function login(username: string, password: string) {
     try {
+      console.log('API URL: ' + API_URL)
       const response = await ofetch('/login', {
         baseURL: API_URL,
         method: 'POST',

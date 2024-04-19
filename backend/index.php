@@ -66,6 +66,7 @@ $router->addRoute('POST', '/surveyParticipation', function () use ($router) {
 //daten für statansicht generieren
 $router->addRoute('GET', '/stats', function () use ($router) {
     $router->isApi();
+    echo $router->useController("StatsController", "getStatsData");
 });
 
 //abrufen der kateogrien (ohne verknüpfungen)

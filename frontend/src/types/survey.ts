@@ -21,18 +21,18 @@ export type Survey = {
 }
 
 export type SurveyQuestion = {
-  id: string
-  surveyId: string
-  survey: Survey | undefined
+  id?: string
+  surveyId?: string
+  survey?: Survey | undefined
   text: string
   type: SurveyQuestionType
   options: SurveyAnswerOption[]
 }
 
 export type SurveyAnswerOption = {
-  id: string
-  questionId: string
-  question: SurveyQuestion | undefined
+  id?: string
+  questionId?: string
+  question?: SurveyQuestion | undefined
   text: string
   type: SurveyQuestionType
 }

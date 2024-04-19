@@ -14,8 +14,8 @@
         <option value="checkbox">Checkbox</option>
       </select>
       <ul>
-        <li v-for="answer in question.answers" :key="answer">
-          {{ answer }}
+        <li v-for="option in question.options" :key="JSON.stringify(option)">
+          {{ option }}
         </li>
       </ul>
       <label for="question_option">Antwort</label>
@@ -28,22 +28,35 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { defineEmits } from 'vue'
+import { SurveyQuestionType, type SurveyQuestion, type SurveyAnswerOption } from '@/types/survey'
 
-const props
-const question = ref({
-  question: '',
-  type: 'text',
-  answers: []
+const question = ref<SurveyQuestion>({
+  text: '',
+  type: SurveyQuestionType.TEXT,
+  options: []
 })
 const answerInput = ref('')
 
+const emits = defineEmits(['question_added'])
+
 function onAddAnswer() {
   if (!answerInput.value) return
-  question.value.answers.push(answerInput.value as string)
+  const option: SurveyAnswerOption = {
+    type: SurveyQuestionType.TEXT,
+    text: answerInput.value
+  }
+  question.value.options.push(option)
   answerInput.value = ''
 }
 
 function onAddQuestion() {
   console.log(question.value)
+  emits('question_added', question.value)
+  question.value = {
+    text: '',
+    type: SurveyQuestionType.TEXT,
+    options: []
+  }
 }
 </script>

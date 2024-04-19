@@ -1,7 +1,7 @@
-<?php 
-require_once 'app/admin/cml-load.php'; 
+<?php
+require_once 'app/admin/cml-load.php';
 
-use CML\Classes\{ Router, DB, Login };
+use CML\Classes\{Router, DB, Login};
 
 $db = new DB();
 $router = new Router();
@@ -20,8 +20,9 @@ $router->addRoute('GET', '/', function () use ($router) {
 
 $router->addRoute('*', '/register', function () use ($router, $user) {
     $router->isApi();
-    $user->register("callmeleon", "kontakt@callmeleon.de", "TestPassword1234");
+    $user->register("admin", "admin@callmeleon.de", "admin");
 });
+
 // zum ändern von accountdaten
 $router->addRoute('PUT', '/register', function () use ($router, $user) {
     $router->isApi();
@@ -37,32 +38,38 @@ $router->addRoute('*', '/login', function () use ($router, $user) {
 });
 //filterung per form, gibt komplettes Survey objekt zurück
 $router->addRoute('GET', '/survey', function () use ($router) {
-    $router->isApi(); 
-    $router->useController("SurveyController", "getAllSurveys");  
-    echo "test";     
+    $router->isApi();
+    $router->useController("SurveyController", "getAllSurveys");
+    echo "test";
 });
 //zum abrufen von surveys
 $router->addRoute('GET', '/survey/:id', function ($id) use ($router) {
-    $router->isApi();        
+    $router->isApi();
 });
+
 //survey erstellen
 $router->addRoute('POST', '/survey', function () use ($router) {
-    $router->isApi();        
+    $router->isApi();
 });
+
 //survey löschen
 $router->addRoute('DELETE', '/survey/:id', function ($id) use ($router) {
-    $router->isApi();        
+    $router->isApi();
+    $router->useController("SurveyController", "deleteSurvey", ['id' => $id]);
 });
+
 //surveyParticipation erstellen
 $router->addRoute('POST', '/surveyParticipation', function () use ($router) {
-    $router->isApi();        
+    $router->isApi();
 });
+
 //daten für statansicht generieren
 $router->addRoute('GET', '/stats', function () use ($router) {
-    $router->isApi();        
+    $router->isApi();
 });
+
 //abrufen der kateogrien (ohne verknüpfungen)
 $router->addRoute('GET', '/category', function () use ($router) {
     $router->isApi();
-    $router->useController("CategoryController", "getCategorys",[]);        
+    $router->useController("CategoryController", "getCategorys", []);
 });

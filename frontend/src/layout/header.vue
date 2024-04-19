@@ -14,15 +14,20 @@
           <li>
             <RouterLink to="/survey/list">Umfragen</RouterLink>
           </li>
+          <li>
+            <a @click="auth.logout" href="#">Logout</a>
+          </li>
         </ul>
       </nav>
-      <span>{{ auth.session.user.username }}</span>
-      <span v-if="auth.session.user.role">({{ auth.session.user.role }})</span>
-      <span @click="auth.logout">Logout</span>
-      <Avatar
-        imageUrl="https://unchainedcrypto.com/wp-content/uploads/2023/07/pfp-nft.png"
-        class="header__avatar"
-      ></Avatar>
+      <div class="user_wrapper">
+        <Avatar imageUrl="https://unchainedcrypto.com/wp-content/uploads/2023/07/pfp-nft.png" class="header__avatar">
+        </Avatar>
+        <div class="user_info">
+          <span class="name">{{ auth.session.user.username }}</span>
+          <span class="role" v-if="auth.session.user.role">({{ auth.session.user.role }})</span>
+          <span class="role" v-else>(Keine Rolle)</span>
+        </div>
+      </div>
     </div>
 
     <div class="header__right" v-else>
@@ -78,6 +83,7 @@ header {
 .header__right {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
 #app .header__avatar {
@@ -95,5 +101,19 @@ header {
 
 .header__right a:hover {
   opacity: 0.7;
+}
+
+.user_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--border);
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+.user_info {
+  display: flex;
+  flex-direction: column;
 }
 </style>

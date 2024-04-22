@@ -20,7 +20,7 @@
       "CML\\Controllers\\": "controllers/",
       "CML\\Classes\\Functions\\": "app/classes/Functions/",
       "CML\\Classes\\ORMModel\\": "app/classes/ORMModel/",
-      "CML\\DataStructure\\": "app/Datastructure/"
+      "CML\\DataStructure\\": "app/DataStructure/"
     }
   },
   "config": {

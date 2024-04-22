@@ -1,10 +1,10 @@
 export type User = {
   id: number
   username: string
-  email: string
-  votes: number
-  role: string
-  points: number
+  email?: string
+  votes?: number
+  role?: string
+  points?: number
 }
 
 export type JWTUser = {

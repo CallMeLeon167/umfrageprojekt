@@ -1,6 +1,7 @@
 import type { JWTUser, Session, User } from '@/types/auth'
 import { ofetch } from 'ofetch'
 import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -11,6 +12,9 @@ const session = reactive({
 })
 
 export function useAuth() {
+
+  const router = useRouter();
+
   async function login(username: string, password: string) {
     try {
       console.log('API URL: ' + API_URL)
@@ -24,6 +28,9 @@ export function useAuth() {
         const user = parseUserFromJWT(token)
         session.user = user
         session.token = token
+        // redirect to home page
+        await router.push('/')
+
       } else {
         console.error('Login failed:', response.status, response.statusText)
       }

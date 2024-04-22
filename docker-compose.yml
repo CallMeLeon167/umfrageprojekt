@@ -18,4 +18,4 @@ services:
     volumes:
       - ./backend:/var/www/html
     ports:
-      - "9000:9000"
+      - "8000:80"

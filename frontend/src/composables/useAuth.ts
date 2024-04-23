@@ -1,4 +1,4 @@
-import type { JWTUser, Session, User } from '@/types/auth'
+import { type UserRole, type JWTUser, type Session, type User } from '@/types/auth'
 import { ofetch } from 'ofetch'
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -28,6 +28,8 @@ export function useAuth() {
         const user = parseUserFromJWT(token)
         session.user = user
         session.token = token
+        // save token to local storage
+        localStorage.setItem('token', token);
         // redirect to home page
         await router.push('/')
 
@@ -39,13 +41,25 @@ export function useAuth() {
     }
   }
 
+  function loginFromLocalStorage() {
+    const token = localStorage.getItem('token')
+    if (token) {
+      console.log('Token found in local storage. Logging in...')
+      const user = parseUserFromJWT(token)
+      session.user = user
+      session.token = token
+    }
+  }
+
   function logout() {
     session.user = null
     session.token = null
     session.expiresAt = null
+    // remove token from local storage
+    localStorage.removeItem('token')
   }
 
-  return { session, login, logout }
+  return { session, login, logout, loginFromLocalStorage }
 }
 
 function parseUserFromJWT(jwt: string): User | null {
@@ -54,7 +68,7 @@ function parseUserFromJWT(jwt: string): User | null {
     const user: User = {
       id: jwtUser.id,
       username: jwtUser.a_username,
-      role: jwtUser.a_role,
+      role: jwtUser.a_role as UserRole,
       points: 0
     }
     return user

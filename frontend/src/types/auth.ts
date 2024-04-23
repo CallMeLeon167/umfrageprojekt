@@ -3,7 +3,7 @@ export type User = {
   username: string
   email?: string
   votes?: number
-  role?: string
+  role?: UserRole
   points?: number
 }
 
@@ -12,6 +12,12 @@ export type JWTUser = {
   a_username: string
   a_emailaddress: string
   a_role: string
+}
+
+export enum UserRole {
+  Admin = 'Admin',
+  Kunde = 'Kunde',
+  Guest = 'Gast'
 }
 
 export type Session = {

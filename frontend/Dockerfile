@@ -23,4 +23,5 @@ COPY . .
 # run the app
 USER root
 EXPOSE 5000/tcp
-CMD [ "vite", "--port", "5000", "--host", "0.0.0.0"]
+#CMD [ "vite", "--port", "5000", "--host", "0.0.0.0"]
+CMD [ "bun", "run", "dev", "--port", "5000", "--host", "0.0.0.0"]

@@ -49,7 +49,7 @@ $router->addRoute('*', '/login', function () use ($router, $user) {
 //filterung per form, gibt komplettes Survey objekt zurück
 $router->addRoute('GET', '/survey', function () use ($router) {
     $router->isApi();
-    $router->useController("SurveyController", "getAllSurveys");       
+    $router->useController("SurveyController", "getAllSurveys");
 });
 //zum abrufen von surveys
 $router->addRoute('GET', '/survey/:id', function ($id) use ($router) {
@@ -90,7 +90,8 @@ $router->addRoute('POST', '/category', function () use ($router) {
     $router->useController("CategoryController", "createCategory", []);
 });
 
-$router->addRoute('OPTIONS', '/category', function () {});
+$router->addRoute('OPTIONS', '/category', function () {
+});
 //$router->addRoute('OPTIONS', '/category/:id', function () {});
 
 $router->addRoute('DELETE', '/category/:id', function ($id) use ($router) {
@@ -99,4 +100,3 @@ $router->addRoute('DELETE', '/category/:id', function ($id) use ($router) {
 });
 
 //kategorie löschen
-

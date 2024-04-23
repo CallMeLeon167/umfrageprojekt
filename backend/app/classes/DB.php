@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace CML\Classes;
 
 /**
@@ -9,7 +10,8 @@ namespace CML\Classes;
  * @author CallMeLeon <kontakt@callmeleon.de>
  * @see https://docs.callmeleon.de/cml#db
  */
-class DB {
+class DB
+{
     use Functions\Functions;
 
     /**
@@ -23,12 +25,13 @@ class DB {
      * @var string
      */
     public string $sqlPath = SQL_PATH ?? '';
-    
+
     /**
      * Constructor of the DB class. Calls the methods to load environment variables and establish a connection to the database.
      */
-    public function __construct() {
-        $this->connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME); 
+    public function __construct()
+    {
+        $this->connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
     }
 
     /**
@@ -39,10 +42,11 @@ class DB {
      * @param string $pass The database password.
      * @param string $dbname The database name.
      */
-    public function connect(string $host, string $user, string $pass, string $dbname) {
+    public function connect(string $host, string $user, string $pass, string $dbname)
+    {
         $this->conn = @new \mysqli($host, $user, $pass, $dbname);
         if ($this->conn->connect_error) {
-            trigger_error("Connection failed! ".$this->conn->connect_error, E_USER_ERROR);
+            trigger_error("Connection failed! " . $this->conn->connect_error, E_USER_ERROR);
         }
         $this->conn->set_charset(DB_CHARSET);
     }
@@ -55,7 +59,8 @@ class DB {
      * @param string $pass The database password.
      * @param string $dbname The database name.
      */
-    public function connectToAnotherDB(string $host, string $user, string $pass, string $dbname) {
+    public function connectToAnotherDB(string $host, string $user, string $pass, string $dbname)
+    {
         if ($this->conn->ping()) {
             $this->close();
         }
@@ -65,7 +70,8 @@ class DB {
     /**
      * Restores the default database connection and closes the current connection if it's active.
      */
-    public function defaultConnection() {
+    public function defaultConnection()
+    {
         if ($this->conn->ping()) {
             $this->close();
         }
@@ -79,7 +85,8 @@ class DB {
      * @param array $params Parameters for the SQL query (optional).
      * @return array The result of the SQL query as an array.
      */
-    public function sql2array(string $query, array $params = []):array {
+    public function sql2array(string $query, array $params = []): array
+    {
         $sqlArray = array();
 
         if ($this->conn === null) {
@@ -87,15 +94,15 @@ class DB {
         }
 
         $stmt = $this->conn->prepare($query);
-    
+
         if (!$stmt) {
             trigger_error("SQL Error: " . $this->conn->error, E_USER_ERROR);
         }
-    
+
         if (!empty($params)) {
             $types = "";
             $values = [];
-    
+
             foreach ($params as $param) {
                 if (is_int($param)) {
                     $types .= "i";
@@ -109,27 +116,27 @@ class DB {
                 }
                 $values[] = $param;
             }
-    
+
             array_unshift($values, $types);
-    
+
             call_user_func_array(array($stmt, 'bind_param'), $this->refValues($values));
         }
-    
+
         $stmt->execute();
-        
+
         $result = $stmt->get_result();
         if ($result) {
             while ($row = $result->fetch_assoc()) {
-                $cleanedRow = array_map(function($value) {
+                $cleanedRow = array_map(function ($value) {
                     return ($value !== null) ? htmlspecialchars($value) : null;
                 }, $row);
-        
+
                 $sqlArray[] = $cleanedRow;
             }
         } else {
             throw new \Exception("SQL Error: " . $stmt->error);
         }
-    
+
         $stmt->close();
         return $sqlArray;
     }
@@ -142,40 +149,42 @@ class DB {
      * @return array The result of the SQL query as an array.
      */
 
-    public function sql2array_file(string $filename, array $params = []): array {
+    public function sql2array_file(string $filename, array $params = []): array
+    {
         $filepath = self::getRootPath($this->sqlPath . $filename);
-        
+
         if (!file_exists($filepath)) {
             trigger_error("Could not find SQL file => '" . htmlentities($this->sqlPath . $filename) . "'", E_USER_ERROR);
         }
-        
+
         $sqlContent = file_get_contents($filepath);
         $queries = explode(';', $sqlContent);
 
-        return array_map(fn($query) => $this->sql2array(trim($query), $params), array_filter($queries));
+        return array_map(fn ($query) => $this->sql2array(trim($query), $params), array_filter($queries));
     }
-    
+
     /**
      * Executes an SQL query from a file and performs the operations in the database.
      *
      * @param string $filename The filename of the SQL query.
      * @param array $params Parameters for the SQL query (optional).
      */
-    public function sql2db_file(string $filename, array $params = []) {
+    public function sql2db_file(string $filename, array $params = [])
+    {
         $filepath = self::getRootPath($this->sqlPath . $filename);
-    
+
         if (!file_exists($filepath)) {
             trigger_error("Could not find SQL file => '" . htmlentities($this->sqlPath . $filename) . "'", E_USER_ERROR);
         }
-    
+
         $sqlContent = file_get_contents($filepath);
         $queries = array_filter(array_map('trim', explode(';', $sqlContent)));
-    
+
         foreach ($queries as $query) {
-            $this->sql2db($query, $params);
+            return $this->sql2db($query, $params);
         }
     }
-    
+
 
     /**
      * Executes an SQL query and performs the operations in the database.
@@ -183,17 +192,18 @@ class DB {
      * @param string $query The SQL query.
      * @param array $params Parameters for the SQL query (optional).
      */
-    public function sql2db(string $query, array $params = []) {
+    public function sql2db(string $query, array $params = [])
+    {
         $stmt = $this->conn->prepare($query);
-    
+
         if (!$stmt) {
             trigger_error("SQL Error: " . $this->conn->error, E_USER_ERROR);
         }
-    
+
         if (!empty($params)) {
             $types = "";
             $values = [];
-    
+
             foreach ($params as $param) {
                 if (is_int($param)) {
                     $types .= "i";
@@ -207,14 +217,16 @@ class DB {
                 }
                 $values[] = $param;
             }
-    
+
             array_unshift($values, $types);
-    
+
             call_user_func_array(array($stmt, 'bind_param'), $this->refValues($values));
         }
-    
+
         $stmt->execute();
+        $affectedRows = $stmt->affected_rows ?? 0;
         $stmt->close();
+        return json_encode(['affectedRows' => $affectedRows]);
     }
 
     /**
@@ -224,7 +236,8 @@ class DB {
      * @param array $params Parameters for the SQL query (optional).
      * @return string The result of the SQL query as a JSON-encoded string.
      */
-    public function sql2json(string $query, array $params = []):string {
+    public function sql2json(string $query, array $params = []): string
+    {
         if (!empty($query)) {
             return json_encode($this->sql2array($query, $params));
         }
@@ -237,7 +250,8 @@ class DB {
      * @param array $params Parameters for the SQL query (optional).
      * @return string The result of the SQL query as a JSON-encoded string.
      */
-    public function sql2json_file(string $filename, array $params = []):string {
+    public function sql2json_file(string $filename, array $params = []): string
+    {
         if (!empty($filename)) {
             return json_encode($this->sql2array_file($filename, $params));
         }
@@ -249,7 +263,8 @@ class DB {
      * @param array $arr An array to be referenced.
      * @return array An array of references.
      */
-    private function refValues(array &$arr) {
+    private function refValues(array &$arr)
+    {
         $refs = array();
 
         foreach ($arr as $key => $value) {
@@ -265,8 +280,9 @@ class DB {
      * @param string $input The input data to be cleaned.
      * @return string The cleaned input data.
      */
-    private function cleanInput(string $input):string {
-        $input = trim($input); 
+    private function cleanInput(string $input): string
+    {
+        $input = trim($input);
         $input = stripslashes($input);
         return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
     }
@@ -277,15 +293,16 @@ class DB {
      * @param string $string The input string with HTML entities.
      * @return string The decoded HTML string.
      */
-    public function stringToHtml(string $string):string{
+    public function stringToHtml(string $string): string
+    {
         return html_entity_decode(html_entity_decode($string));
     }
 
     /**
      * Closes the database connection.
      */
-    public function close() {
+    public function close()
+    {
         $this->conn->close();
     }
 }
-?>

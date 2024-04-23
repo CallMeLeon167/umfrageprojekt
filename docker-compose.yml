@@ -18,8 +18,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./backend:/var/www/html
+      - umfrageprojekt_vendor:/var/www/html/vendor
     ports:
       - "8000:80"
 
 volumes:
   umfrageprojekt_node_modules:
+  umfrageprojekt_vendor:

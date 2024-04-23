@@ -44,3 +44,10 @@ export type SurveyAnswer = {
   answerId: string
   answer: SurveyAnswerOption | undefined
 }
+
+export type Category = {
+    id: string
+    cat_name: string
+    cat_type: string
+    surveys?: Survey[]
+}

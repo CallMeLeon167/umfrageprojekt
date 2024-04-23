@@ -7,9 +7,18 @@ $db = new DB();
 $router = new Router();
 $user = new Login();
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: *");
+$allowed_origins = ["http://localhost:5173", "localhost"];
+$http_origin = $_SERVER['HTTP_ORIGIN'] ?? "*";
+
+if (in_array($http_origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $http_origin", true);
+} else {
+    header("Access-Control-Allow-Origin: *", true);
+}
+
+header("Access-Control-Allow-Methods: 'GET, POST, PUT, DELETE, OPTIONS'", true);
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie', true);
+header("Access-Control-Allow-Credentials: true", true);
 
 $router->addRoute('*', '/sql', function () use ($router, $db) {
     $name = "callmeleon";
@@ -39,7 +48,7 @@ $router->addRoute('*', '/login', function () use ($router, $user) {
 });
 //filterung per form, gibt komplettes Survey objekt zurück
 $router->addRoute('GET', '/survey', function () use ($router) {
-    $router->isApi(); 
+    $router->isApi();
     $router->useController("SurveyController", "getAllSurveys");       
 });
 //zum abrufen von surveys
@@ -72,5 +81,22 @@ $router->addRoute('GET', '/stats', function () use ($router) {
 //abrufen der kateogrien (ohne verknüpfungen)
 $router->addRoute('GET', '/category', function () use ($router) {
     $router->isApi();
-    $router->useController("CategoryController", "getCategorys", []);
+    $router->useController("CategoryController", "getCategories", []);
 });
+
+//kategorie erstellen
+$router->addRoute('POST', '/category', function () use ($router) {
+    $router->isApi();
+    $router->useController("CategoryController", "createCategory", []);
+});
+
+$router->addRoute('OPTIONS', '/category', function () {});
+//$router->addRoute('OPTIONS', '/category/:id', function () {});
+
+$router->addRoute('DELETE', '/category/:id', function ($id) use ($router) {
+    $router->isApi();
+    $router->useController("CategoryController", "deleteCategory", ['id' => $id]);
+});
+
+//kategorie löschen
+

@@ -133,7 +133,7 @@ class Router extends \CML\Classes\HTMLBuilder{
      * @return bool
      */
     public function isApi():bool{
-        header('Content-Type: application/json');
+        header('Content-Type: application/json', true);
         return $this->isApi = true;
     }
 

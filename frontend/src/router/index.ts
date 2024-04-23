@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/page/home.vue'
 import SurveysListVue from '@/page/SurveysList.vue'
 import SurveyDetailVue from '@/page/SurveyDetail.vue'
-// import SurveyFillOutVue from '@/page/SurveyFillOut.vue'
+import AdminIndex from '@/page/admin/AdminIndex.vue'
+import AdminCategory from "@/page/admin/AdminCategory.vue";
 import SurveyCreateVue from '@/page/SurveyCreate.vue'
 import LoginPage from '@/page/Login.vue'
 
@@ -16,6 +17,21 @@ const router = createRouter({
       meta: {
         title: 'Startseite'
       }
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: AdminIndex,
+      meta: {
+        title: 'Umfrageprojekt Administration'
+      },
+      children: [
+        {
+          path: "category",
+          name: "admin-categories",
+          component: AdminCategory,
+        }
+      ]
     },
     {
       path: '/login',
@@ -43,15 +59,6 @@ const router = createRouter({
         title: 'Umfrage'
       }
     },
-    // {
-    //   // fill out a survey
-    //   path: '/survey/fill/:id',
-    //   name: 'survey-fill',
-    //   component: SurveyFillOutVue,
-    //   meta: {
-    //     title: 'Umfrage ausfüllen'
-    //   }
-    // },
     {
       // create a new survey
       path: '/survey/create',

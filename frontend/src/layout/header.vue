@@ -15,6 +15,9 @@
             <RouterLink to="/survey/list">Umfragen</RouterLink>
           </li>
           <li>
+            <RouterLink to="/admin" v-if="auth.session.user.role && adminRoles.includes(auth.session.user.role)">Admin</RouterLink>
+          </li>
+          <li>
             <a @click="auth.logout" href="#">Logout</a>
           </li>
         </ul>
@@ -47,8 +50,11 @@
 
 <script setup lang="ts">
 import { useAuth } from '@/composables/useAuth'
+import {UserRole} from "@/types/auth";
 
 const auth = useAuth()
+const adminRoles = [UserRole.Admin, UserRole.Kunde]
+
 </script>
 
 <style>

@@ -19,4 +19,9 @@ class SurveyController extends DB
     {
         $this->sql2db_file("DELETE_SURVEY.sql", [$data['id']]);
     }
+
+    public function createSurvey($data)
+    {
+        $this->sql2db_file("CREATE_SURVEY.sql", [$data['name'], $data['description']]);
+    }
 }

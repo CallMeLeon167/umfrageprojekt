@@ -1,62 +1,47 @@
 <?php
-namespace CML\DataStructure;
-use CML\Classes\DB;
 
-class Survey extends DB
-{  
-    public $id;
-    public $categoryID;
-    public $topic;
-    public $type;
-    public $startdate;
-    public $enddate;
-    public $status;
+    namespace CML\DataStructure;
 
-    public $Questions;
-    public $participatingUsers;
-
-    public DB $dbh;
-
-    public function __construct($_id)
+    class Survey
     {
-        $this->dbh = new DB();
-        $data = $this->dbh->sql2array_file("SELECT_SURVEYBYID.sql",[$_id]);
-        
-        if(!is_null($data)) {
-                $this->id = $data[0][0]["id"];
-                $this->categoryID = $data[0][0]["s_categoryID"];
-                $this->topic = $data[0][0]["s_topic"];
-                $this->type = $data[0][0]["s_type"];
-                $this->startdate = $data[0][0]["s_startdate"];
-                $this->enddate = $data[0][0]["s_enddate"];
-                $this->status = $data[0][0]["s_status"];
+        public $id;
+        public $topic;
+        public $type;
+        public $startdate;
+        public $enddate;
+        public $status;
+        public $categoryID;
+
+        public $questions;
+        public $participatingUsers;
+
+
+        public function hydrateFromDBRow(array $row): Survey|null
+        {
+            if (!$this->validateFields($row)) {
+                return null;
+            }
+            $this->id = $row["id"];
+            $this->topic = $row["s_topic"];
+            $this->type = $row["s_type"];
+            $this->startdate = $row["s_startdate"];
+            $this->enddate = $row["s_enddate"];
+            $this->status = $row["s_status"];
+            $this->categoryID = $row["s_categoryID"];
+            return $this;
         }
 
-        $questionData = $this->dbh->sql2array_file("SELECT_QUESTIONSBYSURVEYID.sql", [$_id]);        
-        if(!is_null($questionData))
+        private function validateFields(array $row): bool
         {
-            foreach($questionData[0] as $row)
-            {              
-                $q = new Question($row["id"], $row["q_questionText"], $row["q_type"], $row["q_order"]);
-                $cache[] = $q;
+            $requiredFields = ["id", "s_topic"];
 
+            foreach ($requiredFields as $field) {
+                if (!array_key_exists($field, $row)) {
+                    return false;
+                }
             }
-        }        
-        $this->Questions = $cache;
-
-        $participatingUserData = $this->dbh->sql2array_file("SELECT_PARTICIPATINGUSERDATA.sql",[$_id]);
-        if(!is_null($participatingUserData))
-        {
-            foreach($participatingUserData[0] as $row)
-            {
-                $a[] = new Account($row["id"], $row["a_Username"]);
-            }
+            return true;
         }
-        $this->participatingUsers = $a;
-        
-        
     }
 
-    
-}
-?>
+    ?>

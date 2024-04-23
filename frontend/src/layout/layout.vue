@@ -9,9 +9,12 @@
 import Header from './header.vue';
 import {useAuth} from "@/composables/useAuth";
 
+
 const auth = useAuth();
 
 auth.loginFromLocalStorage()
+
+
 
 </script>
 

@@ -6,6 +6,7 @@ import AdminIndex from '@/page/admin/AdminIndex.vue'
 import AdminCategory from "@/page/admin/AdminCategory.vue";
 import SurveyCreateVue from '@/page/SurveyCreate.vue'
 import LoginPage from '@/page/Login.vue'
+import AdminSurvey from '@/page/admin/AdminSurvey.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,10 @@ const router = createRouter({
           path: "category",
           name: "admin-categories",
           component: AdminCategory,
+        }, {
+            path: "survey",
+            name: "admin-surveys",
+            component: AdminSurvey,
         }
       ]
     },

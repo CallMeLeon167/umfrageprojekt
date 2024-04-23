@@ -15,8 +15,8 @@
     <tbody v-if="categories.length > 0">
       <tr v-for="category in categories" :key="category.id" >
         <td>{{ category.id }}</td>
-        <td>{{ category.cat_name }}</td>
-        <td>{{ category.cat_type }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.type }}</td>
         <td>
           <button disabled>Bearbeiten</button>
           <button @click="onDeleteCategory(category.id)">Löschen</button>
@@ -25,7 +25,7 @@
     </tbody>
     <tbody v-else>
       <tr>
-        <td colspan="3">Keine Kategorien vorhanden</td>
+        <td colspan="4">Keine Kategorien vorhanden</td>
       </tr>
     </tbody>
   </table>
@@ -69,19 +69,16 @@ const fetchCategories = async () => {
       }
     });
     console.log(response);
-    categories.value = response[0] || [];
+    categories.value = response || [];
     isLoading.value = false;
 }
 
-const onDeleteCategory = async (id: number) => {
+const onDeleteCategory = async (id: number | string) => {
     const API_URL = import.meta.env.VITE_API_URL
 
     const response = fetch(`${API_URL}/category/${id}`, {
       method: 'DELETE',
-      headers: {
-          'Cookie': 'XDEBUG_SESSION=PHPSTORM'
-      }
-    })
+    });
     console.log(response);
     fetchCategories();
 }

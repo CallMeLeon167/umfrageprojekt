@@ -48,7 +48,7 @@ export type SurveyAnswer = {
 
 export type Category = {
     id: string
-    cat_name: string
-    cat_type: string
+    name: string
+    type: string
     surveys?: Survey[]
 }

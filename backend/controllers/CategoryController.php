@@ -3,11 +3,21 @@
 namespace CML\Controllers;
 
 use CML\Classes\DB;
+use CML\DataStructure\CategoryRepository;
 
 class CategoryController extends DB {
+
+    private CategoryRepository $categoryRepository;
+    public function __construct() {
+        parent::__construct();
+        $this->categoryRepository = new CategoryRepository();
+    }
+
     public function getCategories($params)
     {
-        echo $this->sql2json_file("SELECT_CATEGORYS.sql");
+        $categories = $this->categoryRepository->getCategories();
+        echo json_encode($categories);
+//        echo $this->sql2json_file("SELECT_CATEGORYS.sql");
     }
 
     public function deleteCategory($data)

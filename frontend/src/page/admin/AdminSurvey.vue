@@ -78,10 +78,6 @@ const onDeleteSurvey = async (id: string) => {
   await ofetch(`/survey/${id}`, {
     baseURL: API_URL,
     method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-      "XDEBUG_SESSION": "PHPSTORM",
-    },
   });
   await fetchSurveys();
 }

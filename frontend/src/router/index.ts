@@ -4,9 +4,9 @@ import SurveysListVue from '@/page/SurveysList.vue'
 import SurveyDetailVue from '@/page/SurveyDetail.vue'
 import AdminIndex from '@/page/admin/AdminIndex.vue'
 import AdminCategory from "@/page/admin/AdminCategory.vue";
-import SurveyCreateVue from '@/page/SurveyCreate.vue'
 import LoginPage from '@/page/Login.vue'
 import AdminSurvey from '@/page/admin/AdminSurvey.vue'
+import AdminCreateSurvey from "@/page/admin/AdminCreateSurvey.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +35,11 @@ const router = createRouter({
             path: "survey",
             name: "admin-surveys",
             component: AdminSurvey,
+        },
+        {
+            path: "survey-create",
+            name: "admin-survey-create",
+            component: AdminCreateSurvey,
         }
       ]
     },
@@ -64,15 +69,6 @@ const router = createRouter({
         title: 'Umfrage'
       }
     },
-    {
-      // create a new survey
-      path: '/survey/create',
-      name: 'survey-create',
-      component: SurveyCreateVue,
-      meta: {
-        title: 'Umfrage erstellen'
-      }
-    }
   ]
 })
 

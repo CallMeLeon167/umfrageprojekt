@@ -1,7 +1,7 @@
 <template>
-    <h2>Kategorieles</h2>
-    <button @click="createCategory">Kategorie erstellen</button>
-    <PopupCreateCategory :show="showPopup" @created="onCategoryCreated" @close="showPopup = false" />
+  <h2>Kategorieles</h2>
+  <button @click="createCategory">Kategorie erstellen</button>
+  <PopupCreateCategory :show="showPopup" @created="onCategoryCreated" @close="showPopup = false" />
   <button @click="fetchCategories">Kategorien laden</button>
   <table class="category-table" v-if="!isLoading">
     <thead>
@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody v-if="categories.length > 0">
-      <tr v-for="category in categories" :key="category.id" >
+      <tr v-for="category in categories" :key="category.id">
         <td>{{ category.id }}</td>
         <td>{{ category.name }}</td>
         <td>{{ category.type }}</td>
@@ -37,10 +37,10 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import {ref} from "vue";
+import { ref } from "vue";
 import PopupCreateCategory from "@/components/admin/category/popupCreate.vue";
-import type {Category} from "@/types/survey";
-import {ofetch} from "ofetch";
+import type { Category } from "@/types/survey";
+import { ofetch } from "ofetch";
 
 const router = useRouter();
 
@@ -49,60 +49,39 @@ const categories = ref<Category[]>([])
 const isLoading = ref(true)
 
 const createCategory = () => {
-    showPopup.value = true;
+  showPopup.value = true;
 }
 
 const onCategoryCreated = () => {
-    showPopup.value = false;
-    fetchCategories();
+  showPopup.value = false;
+  fetchCategories();
 }
 
 const fetchCategories = async () => {
   isLoading.value = true;
-    const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL
 
-    const response = await ofetch("/category", {
-      baseURL: API_URL,
-      method: 'GET',
-      headers: {
-          'Cookie': 'XDEBUG_SESSION=PHPSTORM'
-      }
-    });
-    console.log(response);
-    categories.value = response || [];
-    isLoading.value = false;
+  const response = await ofetch("/category", {
+    baseURL: API_URL,
+    method: 'GET',
+    headers: {
+      'Cookie': 'XDEBUG_SESSION=PHPSTORM'
+    }
+  });
+  console.log(response);
+  categories.value = response || [];
+  isLoading.value = false;
 }
 
 const onDeleteCategory = async (id: number | string) => {
-    const API_URL = import.meta.env.VITE_API_URL
+  const API_URL = import.meta.env.VITE_API_URL
 
-    const response = fetch(`${API_URL}/category/${id}`, {
-      method: 'DELETE',
-    });
-    console.log(response);
-    fetchCategories();
+  const response = fetch(`${API_URL}/category/${id}`, {
+    method: 'DELETE',
+  });
+  console.log(response);
+  fetchCategories();
 }
 
 fetchCategories();
 </script>
-
-<style scoped>
-  .category-table {
-    width: 100%;
-    margin-top: 2rem;
-    border-collapse: collapse;
-  }
-
-  .category-table th, .category-table td {
-    border: 1px solid black;
-    padding: 10px;
-  }
-
-  .category-table th {
-    background-color: #f0f0f0;
-  }
-
-  .category-table td {
-    text-align: center;
-  }
-</style>

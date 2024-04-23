@@ -10,12 +10,10 @@
       <div class="login-body">
         <h2>Login</h2>
         <form @submit.prevent="auth.login">
-          <label for="user"
-            >Benutzername oder E-Mail
+          <label for="user">Benutzername oder E-Mail
             <input type="text" name="user" id="user" required autofocus />
           </label>
-          <label for="password"
-            >Passwort
+          <label for="password">Passwort
             <input type="password" name="password" id="password" required />
           </label>
           <div class="login-bottom">
@@ -86,28 +84,7 @@ h2 {
   font-size: 24px;
 }
 
-label {
-  user-select: none;
-  display: grid;
-  padding: 5px 0;
-}
 
-input[type='text'],
-input[type='email'],
-input[type='password'] {
-  outline: none;
-  border: 1px solid #c9c9c9;
-  border-radius: 10px;
-  padding: 12px;
-  background: var(--background);
-  transition: border 0.2s;
-}
-
-input[type='text']:focus,
-input[type='email']:focus,
-input[type='password']:focus {
-  border: 1px solid #7e7e7e;
-}
 
 .underline-hover {
   color: rgb(0, 0, 0);
@@ -117,29 +94,6 @@ input[type='password']:focus {
 .login-bottom {
   display: flex;
   justify-content: space-between;
-}
-
-button {
-  outline: none;
-  border: none;
-  background: rgb(231, 231, 231);
-  padding: 6px 12px;
-  border-radius: 17px;
-  margin-top: 15px;
-  transition:
-    background-color 0.3s,
-    transform 0.2s;
-  font-size: 13px;
-}
-
-button:hover:not(:disabled) {
-  background-color: rgb(204, 204, 204);
-  transform: scale(1.05);
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.6;
 }
 
 a {

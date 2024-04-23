@@ -14,8 +14,8 @@ export type Survey = {
     id: string
     topic: string
     type: string
-    startDate: Date
-    endDate: Date
+    startdate: Date
+    enddate: Date
     status: SurveyState
     categoryID: string
     questions?: SurveyQuestion[]

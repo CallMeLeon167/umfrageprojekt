@@ -22,8 +22,7 @@ class Survey extends DB
         $this->dbh = new DB();
         $data = $this->dbh->sql2array_file("SELECT_SURVEYBYID.sql",[$_id]);
         
-        if(!is_null($data ))
-        {                
+        if(!is_null($data)) {
                 $this->id = $data[0][0]["id"];
                 $this->categoryID = $data[0][0]["s_categoryID"];
                 $this->topic = $data[0][0]["s_topic"];
@@ -31,7 +30,7 @@ class Survey extends DB
                 $this->startdate = $data[0][0]["s_startdate"];
                 $this->enddate = $data[0][0]["s_enddate"];
                 $this->status = $data[0][0]["s_status"];
-        }  
+        }
 
         $questionData = $this->dbh->sql2array_file("SELECT_QUESTIONSBYSURVEYID.sql", [$_id]);        
         if(!is_null($questionData))

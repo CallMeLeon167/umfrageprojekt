@@ -4,15 +4,24 @@ namespace CML\Controllers;
 
 use CML\Classes\DB;
 use CML\DataStructure\Survey;
+use CML\DataStructure\SurveyRepository;
 
 class SurveyController extends DB
 {
+    private SurveyRepository $surveyRepository;
+
+    public function __construct() {
+        parent::__construct();
+        $this->surveyRepository = new SurveyRepository();
+    }
 
     public function getAllSurveys($params)
     {
         //echo $this->sql2json_file("SELECT_SURVEYS.sql");     
-        $s1 = new Survey(1);
-        echo json_encode($s1);
+//        $s1 = new Survey(1);
+//        echo json_encode([$s1]);
+        $surveys = $this->surveyRepository->getSurveys();
+        echo json_encode($surveys);
     }
 
     public function deleteSurvey($data)

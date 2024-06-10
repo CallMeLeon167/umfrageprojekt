@@ -4,17 +4,26 @@
 
     class Survey
     {
+        /* @var int */
         public $id;
+        /* @var string */
         public $topic;
+        /* @var string */
         public $type;
+        /* @var \DateTime */
         public $startdate;
+        /* @var \DateTime */
         public $enddate;
+        /* @var string */
         public $status;
+        /* @var int */
         public $categoryID;
-
-        public $questions;
+        /* @var User[] */
         public $participatingUsers;
-
+        /* @var Category */
+        public Category $category;
+        /* @var Question[] */
+        public array $questions;
 
         public function hydrateFromDBRow(array $row): Survey|null
         {

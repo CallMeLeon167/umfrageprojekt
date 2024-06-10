@@ -3,35 +3,36 @@ namespace CML\DataStructure;
 
 use CML\DataStructure\AnswerOption;
 
-class Question extends Survey
+class Question
 {
+    /* @var int */
     public $QuestionID;
+    /* @var string */
     public $questionText;
+    /* @var string */
     public $questionType;
+    /* @var int */
     public $questionOrder;
+    /* @var int */
+    public $questionSurveyID;
+    /* @var AnswerOption[] */
+    public $answerOptions = [];
 
-    public $AnswerOptions;
-
-    function __construct($_QuestionID,$_questionText,$_questionType,$_questionOrder)
+    function hydrateFromDBRow($row)
     {
-        $this->QuestionID = $_QuestionID;
-        $this->questionText = $_questionText;
-        $this->questionType = $_questionType;
-        $this->questionOrder = $_questionOrder;
+        $this->QuestionID = $row['id'];
+        $this->questionText = $row['q_questionText'];
+        $this->questionType = $row['q_questionType'];
+        $this->questionOrder = $row['q_questionOrder'];
+        $this->questionSurveyID = $row['q_surveyID'];
 
-        $AnswerOptionsData = $this->sql2array_file("SELECT_ANSWEROPTIONSBYQUESTIONID.sql", [$_QuestionID]);  
-    
-        $cache =  array();
-        if(!is_null($AnswerOptionsData))
-        {
-            foreach($AnswerOptionsData[0] as $row)
-            {              
-                $q = new AnswerOption($row["id"], $row["ao_answerOptionText"], $row["ao_order"]);
-                $cache[] = $q;
-            }
-        }
-
-        $this->AnswerOptions = $cache;
+        return $this;
     }       
+
+    private function validateFields(array $row): bool
+    {
+        /*not implemented */
+        return true;
+    }
 }
 ?>

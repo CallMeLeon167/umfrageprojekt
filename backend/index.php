@@ -59,6 +59,7 @@ $router->addRoute('GET', '/survey/:id', function ($id) use ($router) {
 //survey erstellen
 $router->addRoute('POST', '/survey', function () use ($router) {
     $router->isApi();
+    $router->useController("SurveyController", "newSurvey");
 });
 
 //survey löschen
@@ -99,4 +100,13 @@ $router->addRoute('DELETE', '/category/:id', function ($id) use ($router) {
     $router->useController("CategoryController", "deleteCategory", ['id' => $id]);
 });
 
-//kategorie löschen
+$router->addRoute('GET', '/question', function () use ($router) {
+    $router->isApi();
+    $router->useController("QuestionController", "getAllQuestions");
+});
+
+$router->addRoute('GET', '/answerOption', function () use ($router) {
+    $router->isApi();
+    $router->useController("AnswerOptionController", "getAllAnswerOptions");
+});
+

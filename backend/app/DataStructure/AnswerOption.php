@@ -1,19 +1,28 @@
 <?php 
 namespace CML\DataStructure;
-use CML\DataStructure\Question;
 
-class AnswerOption extends Question
+
+class AnswerOption
 {
-    public $AnswerOptionID;
-    public $AnswerOptionText;
-    public $AnswerOptionOrder;
+    public $answerOptionID;
+    public $answerOptionText;
+    public $answerOptionOrder;
+    public $answerOptionQuestionID;
 
-    function __construct($id,$ao_answerOptionText,$ao_order)
+    function hydrateFromDBRow($row)
     {
-        $this->AnswerOptionID = $id;
-        $this->AnswerOptionText = $ao_answerOptionText;
-        $this->AnswerOptionOrder = $ao_order;
+        $this->answerOptionID = $row['id'];
+        $this->answerOptionText = $row['ao_answerOptionText'];
+        $this->answerOptionOrder = $row['ao_order'];
+        $this->answerOptionQuestionID = $row['ao_questionID'];
 
+        return $this;
+    }       
+
+    private function validateFields(array $row): bool
+    {
+        /*not implemented */
+        return true;
     }
 }
 ?>

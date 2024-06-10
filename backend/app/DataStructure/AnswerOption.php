@@ -4,17 +4,17 @@ namespace CML\DataStructure;
 
 class AnswerOption
 {
-    public $AnswerOptionID;
-    public $AnswerOptionText;
-    public $AnswerOptionOrder;
-    public $AnswerOptionQuestionID;
+    public $answerOptionID;
+    public $answerOptionText;
+    public $answerOptionOrder;
+    public $answerOptionQuestionID;
 
     function hydrateFromDBRow($row)
     {
-        $this->AnswerOptionID = $row['id'];
-        $this->AnswerOptionText = $row['ao_answerOptionText'];
-        $this->AnswerOptionOrder = $row['ao_order'];
-        $this->AnswerOptionQuestionID = $row['ao_questionID'];
+        $this->answerOptionID = $row['id'];
+        $this->answerOptionText = $row['ao_answerOptionText'];
+        $this->answerOptionOrder = $row['ao_order'];
+        $this->answerOptionQuestionID = $row['ao_questionID'];
 
         return $this;
     }       

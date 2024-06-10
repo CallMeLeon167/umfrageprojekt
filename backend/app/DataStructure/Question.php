@@ -6,7 +6,7 @@ use CML\DataStructure\AnswerOption;
 class Question
 {
     /* @var int */
-    public $QuestionID;
+    public $questionId;
     /* @var string */
     public $questionText;
     /* @var string */
@@ -20,7 +20,7 @@ class Question
 
     function hydrateFromDBRow($row)
     {
-        $this->QuestionID = $row['id'];
+        $this->questionId = $row['id'];
         $this->questionText = $row['q_questionText'];
         $this->questionType = $row['q_questionType'];
         $this->questionOrder = $row['q_questionOrder'];

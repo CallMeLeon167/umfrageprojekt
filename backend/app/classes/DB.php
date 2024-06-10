@@ -191,8 +191,10 @@ class DB
      *
      * @param string $query The SQL query.
      * @param array $params Parameters for the SQL query (optional).
+     *
+     * @return array The result of the SQL query as an array.
      */
-    public function sql2db(string $query, array $params = [])
+    public function sql2db(string $query, array $params = []): array
     {
         $stmt = $this->conn->prepare($query);
 
@@ -225,8 +227,12 @@ class DB
 
         $stmt->execute();
         $affectedRows = $stmt->affected_rows ?? 0;
+        $insertId = $stmt->insert_id ?? null;
         $stmt->close();
-        return json_encode(['affectedRows' => $affectedRows]);
+        return [
+            'affectedRows' => $affectedRows,
+            'insert_id' => $insertId
+        ];
     }
 
     /**

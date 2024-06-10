@@ -59,6 +59,7 @@ $router->addRoute('GET', '/survey/:id', function ($id) use ($router) {
 //survey erstellen
 $router->addRoute('POST', '/survey', function () use ($router) {
     $router->isApi();
+    $router->useController("SurveyController", "createSurvey");
 });
 
 //survey löschen

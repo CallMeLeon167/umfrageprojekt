@@ -5,11 +5,18 @@ use CML\DataStructure\AnswerOption;
 
 class Question
 {
+    /* @var int */
     public $QuestionID;
+    /* @var string */
     public $questionText;
+    /* @var string */
     public $questionType;
+    /* @var int */
     public $questionOrder;
+    /* @var int */
     public $questionSurveyID;
+    /* @var AnswerOption[] */
+    public $answerOptions = [];
 
     function hydrateFromDBRow($row)
     {

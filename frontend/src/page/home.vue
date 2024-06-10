@@ -3,14 +3,19 @@
     <div class="home__left">
       <h2>Letzte Umfrage</h2>
       <div class="last-survey">
-        <h3>Umfrage Title</h3>
-        <p>Das ist die letzte Umfrage</p>
+        <div>
+          <h3>{{ lastSurvey?.topic }}</h3>
+          <p>{{ lastSurvey?.type }}</p>
+        </div>
+        <RouterLink :to="`/survey/${lastSurvey?.id}`" class="btn-right">
+          <button>An Umfrage Teilnehmen</button>
+        </RouterLink>
       </div>
     </div>
     <div class="home__right">
       <h2>Top Voters</h2>
       <div class="top-voters">
-        <div class="top-voter" v-for="voter in topVoters" :key="voter.id">
+        <div class="top-voter" v-for="    voter     in     topVoters    " :key="voter.id">
           <div class="voter-content">
             <Avatar imageUrl="https://i0.wp.com/pbs.twimg.com/media/FtsxswzaUAAZXJj.jpg:large?ssl=1" class="voter-img">
             </Avatar>
@@ -27,7 +32,7 @@
       <h2>Alle Umfrage</h2>
       <div class="surveys_wrapper">
         <h3>Umfrage Title</h3>
-        <p>irgendein content der umfrage</p>
+        <p>irgendein content der Umfrage</p>
       </div>
       <pre>res:{{ res }}</pre>
     </div>
@@ -42,10 +47,12 @@ const API_URL = import.meta.env.VITE_API_URL
 
 const topVoters = ref<User[]>([])
 const res = ref()
+const allSurveys = ref();
+const lastSurvey = ref();
 
 onMounted(async () => {
-  const response = await fetch(API_URL + '/stats')
-  const data = await response.json()
+  let response = await fetch(API_URL + '/stats')
+  let data = await response.json()
   topVoters.value = data[0].map((result: any, index: number) => ({
     id: index.toString(),
     username: result.a_username,
@@ -53,6 +60,11 @@ onMounted(async () => {
     votes: result.votes,
   }));
   res.value = await ofetch(API_URL + '/stats')
+  allSurveys.value = await ofetch(API_URL + '/survey')
+  let lastSurveysKey = allSurveys.value.length - 1;
+  lastSurvey.value = allSurveys.value[lastSurveysKey];
+  console.log(lastSurvey.value);
+
 })
 </script>
 
@@ -68,6 +80,12 @@ onMounted(async () => {
 
 .home__right {
   width: 30%;
+}
+
+.btn-right {
+  display: flex;
+  justify-content: flex-end;
+  text-decoration: none;
 }
 
 .last-survey {

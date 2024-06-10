@@ -3,3 +3,4 @@ FROM Account AS a
 INNER JOIN SurveyParticipation AS sp ON sp.sp_accountID = a.id
 GROUP BY sp.sp_accountID
 ORDER BY votes DESC
+LIMIT 3;

@@ -99,4 +99,13 @@ $router->addRoute('DELETE', '/category/:id', function ($id) use ($router) {
     $router->useController("CategoryController", "deleteCategory", ['id' => $id]);
 });
 
-//kategorie löschen
+$router->addRoute('GET', '/question', function () use ($router) {
+    $router->isApi();
+    $router->useController("QuestionController", "getAllQuestions");
+});
+
+$router->addRoute('GET', '/answerOption', function () use ($router) {
+    $router->isApi();
+    $router->useController("AnswerOptionController", "getAllAnswerOptions");
+});
+

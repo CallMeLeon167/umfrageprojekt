@@ -51,6 +51,7 @@
 <script setup lang="ts">
 import { useAuth } from '@/composables/useAuth'
 import {UserRole} from "@/types/auth";
+import Avatar from '@/components/Avatar.vue'
 
 const auth = useAuth()
 const adminRoles = [UserRole.Admin, UserRole.Kunde]

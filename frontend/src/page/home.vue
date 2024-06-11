@@ -37,12 +37,15 @@
       <pre>res:{{ res }}</pre>
     </div>
   </div>
+  <SurveyCard></SurveyCard>
 </template>
 
 <script setup lang="ts">
 import { ofetch } from 'ofetch'
 import { ref, onMounted } from 'vue'
 import { type User } from '../types/auth';
+import Avatar from '@/components/Avatar.vue'
+import SurveyCard from '@/components/SurveyCard.vue'
 const API_URL = import.meta.env.VITE_API_URL
 
 const topVoters = ref<User[]>([])

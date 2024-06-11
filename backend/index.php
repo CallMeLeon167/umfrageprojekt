@@ -49,6 +49,8 @@ $router->addRoute('*', '/login', function () use ($router, $user) {
 
 $router->addRoute('OPTIONS', '/survey/:id', function ($id) use ($router, $user) {
 });
+$router->addRoute('OPTIONS', '/survey', function ($id) use ($router, $user) {
+});
 
 //filterung per form, gibt komplettes Survey objekt zurück
 $router->addRoute('GET', '/survey', function () use ($router) {

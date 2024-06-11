@@ -46,6 +46,10 @@ $router->addRoute('*', '/login', function () use ($router, $user) {
     $user->login("kontakt@callmeleon.de", "TestPassword1234"); //das geht
     // $user->login("callmeleon", "TestPassword1234"); //das geht auch :)
 });
+
+$router->addRoute('OPTIONS', '/survey/:id', function ($id) use ($router, $user) {
+});
+
 //filterung per form, gibt komplettes Survey objekt zurück
 $router->addRoute('GET', '/survey', function () use ($router) {
     $router->isApi();

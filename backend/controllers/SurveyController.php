@@ -54,9 +54,14 @@ class SurveyController extends DB
      *
      * @param int $id The ID of the survey to retrieve.
      */
-    public function getSurveyById($id)
+    public function getSurveyById($data)
     {
-        $survey = $this->surveyRepository->getSurveyById($id);
+        if (!isset($data['id'])) {
+            http_response_code(400);
+            echo json_encode(["message" => "Invalid input"]);
+            return;
+        }
+        $survey = $this->surveyRepository->getSurveyById($data['id']);
         if (!$survey) {
             http_response_code(404);
             echo json_encode(["message" => "Survey not found"]);

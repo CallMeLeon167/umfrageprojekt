@@ -1,39 +1,37 @@
 <template>
-    <div class="home__left">
-      <h2>Letzte Umfrage</h2>
-      <div class="last-survey">
-        <div>
-          <h3>Titel</h3>
-          <p>Bescreibung</p>
-        </div>
-        <RouterLink :to="`/survey/`" class="btn-right">
-          <button>An Umfrage Teilnehmen</button>
-        </RouterLink>
-      </div>
+  <div class="survey-card">
+    <div>
+      <h3>{{ survey.topic }}</h3>
+      <p>{{ survey.type }}</p>
     </div>
+    <RouterLink :to="`/survey/` + survey.id" class="btn-right">
+      <button>An Umfrage Teilnehmen</button>
+    </RouterLink>
+  </div>
 </template>
-  
-  <script setup lang="ts">
-  const props = defineProps({
-      imageUrl: {
-        type: String,
-        required: false,
-        default: 'Avatar'
-      },
-    }
-  );
-  </script>
-  
-  <style scoped>
-.last-survey {
+
+<script setup lang="ts">
+import type { Survey } from '@/types/survey'
+import type { PropType } from 'vue'
+
+const props = defineProps({
+  survey: {
+    type: Object as PropType<Survey>,
+    required: true
+  }
+})
+</script>
+
+<style>
+.survey-card {
   padding: 20px;
   border-radius: 7px;
   border: 2px solid var(--border);
   margin: 20px;
 }
 
-.last-survey h3,
-.last-survey p {
+.survey-card h3,
+.survey-card p {
   margin: 0;
 }
 
@@ -42,4 +40,4 @@
   justify-content: flex-end;
   text-decoration: none;
 }
-  </style>
+</style>

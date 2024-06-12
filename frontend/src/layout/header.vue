@@ -12,10 +12,14 @@
             <RouterLink to="/">Home</RouterLink>
           </li>
           <li>
-            <RouterLink to="/survey/list">Umfragen</RouterLink>
+            <RouterLink to="/survey">Umfragen</RouterLink>
           </li>
           <li>
-            <RouterLink to="/admin" v-if="auth.session.user.role && adminRoles.includes(auth.session.user.role)">Admin</RouterLink>
+            <RouterLink
+              to="/admin"
+              v-if="auth.session.user.role && adminRoles.includes(auth.session.user.role)"
+              >Admin</RouterLink
+            >
           </li>
           <li>
             <a @click="auth.logout" href="#">Logout</a>
@@ -23,7 +27,10 @@
         </ul>
       </nav>
       <div class="user_wrapper">
-        <Avatar imageUrl="https://unchainedcrypto.com/wp-content/uploads/2023/07/pfp-nft.png" class="header__avatar">
+        <Avatar
+          imageUrl="https://unchainedcrypto.com/wp-content/uploads/2023/07/pfp-nft.png"
+          class="header__avatar"
+        >
         </Avatar>
         <div class="user_info">
           <span class="name">{{ auth.session.user.username }}</span>
@@ -50,12 +57,11 @@
 
 <script setup lang="ts">
 import { useAuth } from '@/composables/useAuth'
-import {UserRole} from "@/types/auth";
+import { UserRole } from '@/types/auth'
 import Avatar from '@/components/Avatar.vue'
 
 const auth = useAuth()
 const adminRoles = [UserRole.Admin, UserRole.Kunde]
-
 </script>
 
 <style>

@@ -15,9 +15,12 @@
     <div class="home__right">
       <h2>Top Voters</h2>
       <div class="top-voters">
-        <div class="top-voter" v-for="    voter     in     topVoters    " :key="voter.id">
+        <div class="top-voter" v-for="voter in topVoters" :key="voter.id">
           <div class="voter-content">
-            <Avatar imageUrl="https://i0.wp.com/pbs.twimg.com/media/FtsxswzaUAAZXJj.jpg:large?ssl=1" class="voter-img">
+            <Avatar
+              imageUrl="https://i0.wp.com/pbs.twimg.com/media/FtsxswzaUAAZXJj.jpg:large?ssl=1"
+              class="voter-img"
+            >
             </Avatar>
             <div class="voter-info">
               <h4>{{ voter.username }}</h4>
@@ -37,21 +40,22 @@
       <pre>res:{{ res }}</pre>
     </div>
   </div>
-  <SurveyCard></SurveyCard>
+  <LastSurveyCard></LastSurveyCard>
 </template>
 
 <script setup lang="ts">
 import { ofetch } from 'ofetch'
 import { ref, onMounted } from 'vue'
-import { type User } from '../types/auth';
+import { type User } from '../types/auth'
 import Avatar from '@/components/Avatar.vue'
-import SurveyCard from '@/components/SurveyCard.vue'
+import SurveyCard from '@/components/LastSurveyCard.vue'
+import LastSurveyCard from '@/components/LastSurveyCard.vue'
 const API_URL = import.meta.env.VITE_API_URL
 
 const topVoters = ref<User[]>([])
 const res = ref()
-const allSurveys = ref();
-const lastSurvey = ref();
+const allSurveys = ref()
+const lastSurvey = ref()
 
 onMounted(async () => {
   let response = await fetch(API_URL + '/stats')
@@ -60,14 +64,13 @@ onMounted(async () => {
     id: index.toString(),
     username: result.a_username,
     email: result.a_emailaddress,
-    votes: result.votes,
-  }));
+    votes: result.votes
+  }))
   res.value = await ofetch(API_URL + '/stats')
   allSurveys.value = await ofetch(API_URL + '/survey')
-  let lastSurveysKey = allSurveys.value.length - 1;
-  lastSurvey.value = allSurveys.value[lastSurveysKey];
-  console.log(lastSurvey.value);
-
+  let lastSurveysKey = allSurveys.value.length - 1
+  lastSurvey.value = allSurveys.value[lastSurveysKey]
+  console.log(lastSurvey.value)
 })
 </script>
 
@@ -140,7 +143,6 @@ onMounted(async () => {
 }
 
 @media (max-width: 768px) {
-
   .home__left,
   .home__right {
     width: 100%;

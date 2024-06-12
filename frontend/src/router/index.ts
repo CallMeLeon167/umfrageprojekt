@@ -7,6 +7,7 @@ import AdminCategory from '@/page/admin/AdminCategory.vue'
 import LoginPage from '@/page/Login.vue'
 import AdminSurvey from '@/page/admin/AdminSurvey.vue'
 import AdminCreateSurvey from '@/page/admin/AdminCreateSurvey.vue'
+import SurveyParticipate from '@/page/SurveyParticipate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,21 +55,24 @@ const router = createRouter({
     },
     {
       // list of all surveys
-      path: '/survey/list',
+      path: '/survey',
       name: 'survey-list',
       component: SurveysListVue,
       meta: {
         title: 'Umfragen'
-      }
-    },
-    {
-      // detail of a survey (results, questions, etc.)
-      path: '/survey/detail/:id',
-      name: 'survey-detail',
-      component: SurveyDetailVue,
-      meta: {
-        title: 'Umfrage'
-      }
+      },
+      children: [
+        {
+          path: ':id/detail',
+          name: 'survey-detail',
+          component: SurveyDetailVue
+        },
+        {
+          path: ':id/participate',
+          name: 'survey-participate',
+          component: SurveyParticipate
+        }
+      ]
     }
   ]
 })

@@ -60,6 +60,7 @@ $router->addRoute('GET', '/survey', function () use ($router) {
 //zum abrufen von surveys
 $router->addRoute('GET', '/survey/:id', function ($id) use ($router) {
     $router->isApi();
+    $router->useController("SurveyController", "getSurveyById", ['id' => $id]);
 });
 
 //survey erstellen

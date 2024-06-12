@@ -4,9 +4,14 @@
       <h3>{{ survey.topic }}</h3>
       <p>{{ survey.type }}</p>
     </div>
-    <RouterLink :to="`/survey/` + survey.id" class="btn-right">
-      <button>An Umfrage Teilnehmen</button>
-    </RouterLink>
+    <div class="action-buttons">
+      <RouterLink :to="`/survey/` + survey.id" class="btn-right">
+        <button>Umfrage ansehen</button>
+      </RouterLink>
+      <RouterLink :to="`/survey/` + survey.id + '/participate/'" class="btn-right">
+        <button>An Umfrage Teilnehmen</button>
+      </RouterLink>
+    </div>
   </div>
 </template>
 
@@ -39,5 +44,11 @@ const props = defineProps({
   display: flex;
   justify-content: flex-end;
   text-decoration: none;
+}
+
+.action-buttons {
+  display: flex;
+  justify-self: flex-end;
+  justify-content: space-between;
 }
 </style>

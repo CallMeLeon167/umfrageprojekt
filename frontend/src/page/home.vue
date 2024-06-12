@@ -2,15 +2,7 @@
   <div class="home__wrapper">
     <div class="home__left">
       <h2>Letzte Umfrage</h2>
-      <div class="last-survey">
-        <div>
-          <h3>{{ lastSurvey?.topic }}</h3>
-          <p>{{ lastSurvey?.type }}</p>
-        </div>
-        <RouterLink :to="`/survey/${lastSurvey?.id}`" class="btn-right">
-          <button>An Umfrage Teilnehmen</button>
-        </RouterLink>
-      </div>
+      <SurveyCard v-if="lastSurvey" :survey="lastSurvey" />
     </div>
     <div class="home__right">
       <h2>Top Voters</h2>
@@ -32,15 +24,13 @@
       </div>
     </div>
     <div class="home__down">
-      <h2>Alle Umfrage</h2>
+      <h2>Weitere Umfragen</h2>
       <div class="surveys_wrapper">
-        <h3>Umfrage Title</h3>
-        <p>irgendein content der Umfrage</p>
+        <!-- show first 5 entries in loop -->
+        <SurveyCard v-for="survey in allSurveys.slice(0, 5)" :key="survey.id" :survey="survey" />
       </div>
-      <pre>res:{{ res }}</pre>
     </div>
   </div>
-  <LastSurveyCard></LastSurveyCard>
 </template>
 
 <script setup lang="ts">
@@ -48,14 +38,15 @@ import { ofetch } from 'ofetch'
 import { ref, onMounted } from 'vue'
 import { type User } from '../types/auth'
 import Avatar from '@/components/Avatar.vue'
-import SurveyCard from '@/components/LastSurveyCard.vue'
 import LastSurveyCard from '@/components/LastSurveyCard.vue'
+import type { Survey } from '@/types/survey'
+import SurveyCard from '@/components/SurveyCard.vue'
 const API_URL = import.meta.env.VITE_API_URL
 
 const topVoters = ref<User[]>([])
 const res = ref()
-const allSurveys = ref()
-const lastSurvey = ref()
+const allSurveys = ref<Survey[]>([])
+const lastSurvey = ref<Survey>()
 
 onMounted(async () => {
   let response = await fetch(API_URL + '/stats')

@@ -30,6 +30,9 @@ class SurveyRepository extends DB
 
     public function getSurveyById($id)
     {
+        if (!is_numeric($id)) {
+            return null;
+        }
         $result = $this->dbConn->sql2array("SELECT * FROM Survey WHERE id = ?", [$id]);
         if (empty($result)) {
             return null;

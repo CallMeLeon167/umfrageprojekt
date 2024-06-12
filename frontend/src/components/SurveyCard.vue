@@ -5,10 +5,10 @@
       <p>{{ survey.type }}</p>
     </div>
     <div class="action-buttons">
-      <RouterLink :to="`/survey/` + survey.id" class="btn-right">
+      <RouterLink :to="`/survey/` + survey.id + '/detail'" class="btn-right">
         <button>Umfrage ansehen</button>
       </RouterLink>
-      <RouterLink :to="`/survey/` + survey.id + '/participate/'" class="btn-right">
+      <RouterLink :to="`/survey/` + survey.id + '/participate'" class="btn-right">
         <button>An Umfrage Teilnehmen</button>
       </RouterLink>
     </div>

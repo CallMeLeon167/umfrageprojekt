@@ -60,19 +60,17 @@ const router = createRouter({
       component: SurveysListVue,
       meta: {
         title: 'Umfragen'
-      },
-      children: [
-        {
-          path: ':id/detail',
-          name: 'survey-detail',
-          component: SurveyDetailVue
-        },
-        {
-          path: ':id/participate',
-          name: 'survey-participate',
-          component: SurveyParticipate
-        }
-      ]
+      }
+    },
+    {
+      path: '/survey/:id/detail',
+      name: 'survey-detail',
+      component: SurveyDetailVue
+    },
+    {
+      path: '/survey/:id/participate',
+      name: 'survey-participate',
+      component: SurveyParticipate
     }
   ]
 })

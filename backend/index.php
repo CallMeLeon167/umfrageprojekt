@@ -52,13 +52,14 @@ $router->addRoute('OPTIONS', '/survey/:id', function ($id) use ($router, $user) 
 $router->addRoute('OPTIONS', '/survey', function () use ($router, $user) {
 });
 
-//filterung per form, gibt komplettes Survey objekt zurück
+//
 $router->addRoute('GET', '/survey', function () use ($router) {
     $router->isApi();
     $router->useController("SurveyController", "getAllSurveys");
 });
 //zum abrufen von surveys
-$router->addRoute('GET', '/survey/:id', function ($id) use ($router) {
+$router->addRoute('GET', '/survey/:id', function ($id) use ($router) 
+{
     $router->isApi();
     $router->useController("SurveyController", "getSurveyById", ['id' => $id]);
 });
@@ -115,5 +116,9 @@ $router->addRoute('GET', '/question', function () use ($router) {
 $router->addRoute('GET', '/answerOption', function () use ($router) {
     $router->isApi();
     $router->useController("AnswerOptionController", "getAllAnswerOptions");
+});
+$router->addRoute('GET', '/userResponse', function () use ($router) {
+    $router->isApi();
+    $router->useController("StatsController", "getUserResponses");
 });
 

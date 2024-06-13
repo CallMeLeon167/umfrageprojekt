@@ -18,13 +18,13 @@ class Question
     /* @var AnswerOption[] */
     public $answerOptions = [];
 
-    function hydrateFromDBRow($row)
+    function hydrateFromDBRow($row): Question
     {
         $this->questionId = $row['id'];
-        $this->questionText = $row['q_questionText'];
-        $this->questionType = $row['q_questionType'];
-        $this->questionOrder = $row['q_questionOrder'];
-        $this->questionSurveyID = $row['q_surveyID'];
+        $this->questionSurveyID = $row['q_surveyID'] ?? "null";
+        $this->questionText = $row['q_questionText'] ?? "null";
+        $this->questionType = $row['q_questionType'] ?? "null";
+        $this->questionOrder = $row['q_questionOrder'] ?? "null";
 
         return $this;
     }       

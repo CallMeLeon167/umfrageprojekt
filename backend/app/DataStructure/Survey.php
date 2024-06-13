@@ -25,7 +25,7 @@
         /* @var Question[] */
         public array $questions;
 
-        public function hydrateFromDBRow(array $row): Survey|null
+        public function hydrateSurveyFromDBRow(array $row): Survey|null
         {
             if (!$this->validateFields($row)) {
                 return null;

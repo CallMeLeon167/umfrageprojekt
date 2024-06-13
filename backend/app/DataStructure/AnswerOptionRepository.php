@@ -39,4 +39,35 @@
             return $answerOptions;
         }
 
+        /**
+         * Fetch question answers.
+         *
+         * This method fetches the answers for a question from the database.
+         *
+         * @param int $questionId The ID of the question to fetch the answers for.
+         *
+         * @return AnswerOption[] The array of answers for the question.
+         *
+         * @throws \Exception
+         */
+        public function fetchQuestionAnswerOptions(int $questionId): array
+        {
+            $stmt = <<<SQL
+                SELECT * FROM AnswerOption WHERE ao_questionID = ?;
+            SQL;
+            try {
+                $result = $this->dbConn->sql2array($stmt, [$questionId]);
+                /* @var $answerOptions AnswerOption[] */
+                $answerOptions = [];
+                foreach ($result as $row) {
+                    $answerOption = new AnswerOption();
+                    $answerOption->hydrateFromDBRow($row);
+                    $answerOptions[] = $answerOption;
+                }
+                return $answerOptions;
+            } catch (\Exception $e) {
+                throw new \Exception("Error fetching question answers: " . $e->getMessage(), 500);
+            }
+        }
+
     }

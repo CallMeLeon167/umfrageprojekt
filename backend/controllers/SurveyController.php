@@ -61,7 +61,12 @@ class SurveyController extends DB
             echo json_encode(["message" => "Invalid input"]);
             return;
         }
-        $survey = $this->surveyRepository->getSurveyById($data['id']);
+        // Get URL parameters
+        $params = $this->parseUrlParams($_SERVER['REQUEST_URI']);
+        $populateQuestions = isset($params['populateQuestions']) && $params['populateQuestions'] === 'true';
+        $populateAnswers = isset($params['populateAnswers']) && $params['populateAnswers'] === 'true';
+
+        $survey = $this->surveyRepository->getSurveyById($data['id'], $populateQuestions, $populateAnswers);
         if (!$survey) {
             http_response_code(404);
             echo json_encode(["message" => "Survey not found"]);
@@ -99,4 +104,17 @@ class SurveyController extends DB
     }
 
 
+    private function parseUrlParams($url): array {
+        $params = [];
+        if (!$url || !str_contains($url, '?')) {
+            return [];
+        }
+        $paramsString = parse_url($url, PHP_URL_QUERY);
+        $paramsArray = explode('&', $paramsString);
+        foreach ($paramsArray as $param) {
+            $paramParts = explode('=', $param);
+            $params[$paramParts[0]] = $paramParts[1];
+        }
+        return $params;
+    }
 }

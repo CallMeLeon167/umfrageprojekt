@@ -1,7 +1,7 @@
 <template>
   <header>
     <RouterLink to="/" class="header__left">
-      <img src="/src/assets/logo.svg" alt="logo" class="logo" />
+      <img src="/src/assets/olefant.webp" alt="logo" class="logo" />
       <h3>Umfrage Portal</h3>
     </RouterLink>
 

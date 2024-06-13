@@ -103,7 +103,7 @@ class SurveyController extends DB
         $this->surveyRepository->createSurvey($body);
     }
 
-
+    
     private function parseUrlParams($url): array {
         $params = [];
         if (!$url || !str_contains($url, '?')) {
@@ -116,5 +116,18 @@ class SurveyController extends DB
             $params[$paramParts[0]] = $paramParts[1];
         }
         return $params;
+    }
+        /**
+     * This method searches for Responses in the Database
+     */
+    public function getResponsesByID($id)
+    {
+        $responses = $this->surveyRepository->getRegardingUserResponses($id);
+        if (!$responses) {
+            http_response_code(404);
+            echo json_encode(["message" => "Survey not found"]);
+            return;
+        }
+        echo json_encode($responses);
     }
 }

@@ -23,8 +23,8 @@ class Question
         $this->questionId = $row['id'];
         $this->questionSurveyID = $row['q_surveyID'] ?? "null";
         $this->questionText = $row['q_questionText'] ?? "null";
-        $this->questionType = $row['q_questionType'] ?? "null";
-        $this->questionOrder = $row['q_questionOrder'] ?? "null";
+        $this->questionType = $row['q_type'] ?? "null";
+        $this->questionOrder = $row['q_order'] ?? "null";
 
         return $this;
     }       

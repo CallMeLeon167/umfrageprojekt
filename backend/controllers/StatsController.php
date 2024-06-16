@@ -3,12 +3,12 @@
 namespace CML\Controllers;
 
 use CML\Classes\DB;
-use CML\DataStructure\userResponseRepository;
-use CML\DataStructure\userResponse;
+use CML\DataStructure\UserResponseRepository;
+use CML\DataStructure\UserResponse;
 
 class StatsController extends DB
 {
-    private userResponseRepository $userResponseRepository;
+    private UserResponseRepository $userResponseRepository;
     
     public function getStatsData($data)
     {
@@ -17,7 +17,7 @@ class StatsController extends DB
 
     public function getUserResponses()
     {
-        $this->userResponseRepository = new userResponseRepository(); 
+        $this->userResponseRepository = new UserResponseRepository();
         $questions = $this->userResponseRepository->getUserResponses();
         echo json_encode($questions);
     }

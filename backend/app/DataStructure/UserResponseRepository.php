@@ -4,7 +4,7 @@ namespace CML\DataStructure;
 
 use CML\Classes\DB;
 
-class userResponseRepository extends DB
+class UserResponseRepository extends DB
 {
 
     private DB $dbConn;
@@ -21,7 +21,7 @@ class userResponseRepository extends DB
         /* @var $userResponses UserResponse[] */
         $userResponses = [];
         foreach ($dbResult as $row) {
-            $userResponse = new userResponse();
+            $userResponse = new UserResponse();
             $userResponse->hydrateFromDBRow($row);
             $userResponses[] = $userResponse;
         }

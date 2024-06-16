@@ -2,7 +2,7 @@
 
     namespace CML\DataStructure;
 
-    class userResponse
+    class UserResponse
     {
         /* @var int */
         public $id;   
@@ -16,7 +16,7 @@
         public $response;
 
 
-        public function hydrateFromDBRow(array $row):userResponse|null
+        public function hydrateFromDBRow(array $row):UserResponse|null
         {
             if (!$this->validateFields($row)) {
                 return null;

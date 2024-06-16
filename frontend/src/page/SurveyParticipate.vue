@@ -9,26 +9,32 @@
     </div>
     <div class="flex flex-col">
       <span class="self-end">Status: {{ survey?.status }}</span>
-      <span class="self-end">{{survey?.startdate}} - {{survey?.enddate}}</span>
+      <span class="self-end">{{ survey?.startdate }} - {{ survey?.enddate }}</span>
     </div>
   </div>
-  <div v-if="survey">
-    <question v-for="question in survey.questions" :key="question.id" :question="question" @answer_added="onAnswerAdded" />
-  </div>
+  <form v-if="survey" @submit.prevent="onSubmitSurvey">
+    <question v-for="question in survey.questions" :key="question.questionId" :question="question"
+              @answer_added="onAnswerAdded"/>
+    <button type="submit">Submit</button>
+  </form>
+
 </template>
 
 <script setup lang="ts">
 
-import {ofetch} from 'ofetch';
+import {FetchError, ofetch} from 'ofetch';
 import {ref} from 'vue';
-import {useRoute} from 'vue-router';
+import {useRoute, useRouter} from 'vue-router';
 import type {Survey} from "@/types/survey";
 import Question from "@/components/survey/question.vue";
 
 const route = useRoute();
+const router = useRouter();
 const surveyId = route.params?.id;
 const errors = ref<string[]>([]);
 const survey = ref<Survey | null>(null);
+// answers ref is a map of questionId to answerId and answer text if set
+const answers = ref<Map<string, { answerId: string, answer?: string }>>(new Map());
 
 async function fetchSurvey() {
   if (!surveyId) {
@@ -53,11 +59,77 @@ async function fetchSurvey() {
   }
 }
 
-function onAnswerAdded(questionId: string, answer: string) {
-  console.log('Answer added', questionId, answer);
+function onAnswerAdded(questionId: string, answerId: string, answer?: string) {
+  console.log('Answer added', questionId, answerId, answer);
+  if (!questionId) {
+    errors.value.push('Question ID is missing');
+    return;
+  }
+  answers.value.set(questionId, {answerId, answer});
+}
+
+async function onSubmitSurvey() {
+  // check if answers are not empty
+  if (answers.value.size === 0) {
+    errors.value.push('No answers provided');
+    return;
+  }
+  // convert answers to json {questionId, answerId, answer}}
+  const answersJson = Array.from(answers.value).map(([questionId, {answerId, answer}]) => ({
+    questionId,
+    answerId,
+    answer
+  }));
+  console.log('Submitting answers', answersJson);
+  const body = {
+    surveyId: surveyId,
+    userId: '7',
+    answers: answersJson
+  };
+  try {
+    const result = await ofetch("/surveyParticipation", {
+      method: 'POST',
+      params: {
+        XDEBUG_SESSION_START: 'PHPSTORM'
+      },
+      baseURL: import.meta.env.VITE_API_URL,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    // redirect to survey list
+    await router.push('/survey');
+  // e of type FetchError
+  } catch (e) {
+    const error = e as FetchError;
+    switch (error.status) {
+      case 400:
+        errors.value.push('Bad request');
+        break;
+      case 401:
+        errors.value.push('Unauthorized');
+        break;
+      case 403:
+        errors.value.push('Survey already submitted');
+        break;
+      case 404:
+        errors.value.push('Survey not found');
+        break;
+      case 500:
+        errors.value.push('Internal server error');
+        break;
+      default:
+        errors.value.push('Unknown error');
+    }
+
+  }
+
+
 }
 
 fetchSurvey();
+
 </script>
 
 <style>

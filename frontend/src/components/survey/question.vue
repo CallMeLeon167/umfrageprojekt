@@ -1,18 +1,25 @@
 <template>
-  <h3>{{ question.questionText }}</h3>
-  <ul class="question-answerOptions">
-    <li v-for="option in question.answerOptions" :key="option.answerOptionID">
-      {{ option.answerOptionText}}
-    </li>
-  </ul>
-  <button @click="onAnswerAdded('yes')">Yes</button>
-  <button @click="onAnswerAdded('no')">No</button>
+  <div class="question">
+    <h3>{{ question.questionText }}</h3>
+    <div v-for="answer in question.answerOptions"
+         :key="answer.answerOptionID"
+         class="answer-option">
+      <input :type="inputType" :id="`input-${answer.answerOptionID}`" :name="question.questionId"
+             @input="onAnswerAdded($event, question.questionId, answer.answerOptionID)">
+      <label :for="`input-${answer.answerOptionID}`">{{ answer.answerOptionText }}</label>
+    </div>
+    <div v-if="question.questionType === SurveyQuestionType.TEXT" class="answer-option">
+      <input type="text" :id="`input-text-${question.questionId}`" :name="question.questionId"
+             @input="onAnswerAdded($event, question.questionId)">
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 
-import {type PropType, ref} from 'vue'
-import type {SurveyQuestion} from "@/types/survey";
+import {computed, type PropType, ref} from 'vue'
+import {type SurveyQuestion, SurveyQuestionType} from "@/types/survey";
+import QuestionAnswerOption from "@/components/survey/questionAnswerOption.vue";
 
 const props = defineProps({
   question: {
@@ -23,8 +30,30 @@ const props = defineProps({
 
 const emits = defineEmits(['answer_added']);
 
-function onAnswerAdded(answer: string) {
-  emits('answer_added', props.question?.text, answer);
+const inputType = (() => {
+  switch (props.question.questionType) {
+    case SurveyQuestionType.TEXT:
+      return 'text';
+    case SurveyQuestionType.MULTIPLE_CHOICE:
+      return 'checkbox';
+    case SurveyQuestionType.SINGLE_CHOICE:
+      return 'radio';
+    default:
+      return 'text';
+  }
+})();
+
+function onAnswerAdded(event: Event, questionId?: string, answerId?: string) {
+  const text = props.question.questionType === SurveyQuestionType.TEXT ? (event.target as HTMLInputElement).value : undefined;
+  emits('answer_added', questionId, answerId, text);
 }
 
 </script>
+
+<style>
+.answer-option {
+  padding-left: 1.5em;
+  display: flex;
+  gap: 10px;
+}
+</style>

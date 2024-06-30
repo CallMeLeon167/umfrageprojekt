@@ -19,9 +19,9 @@ class SurveyParticipationController extends DB
         $this->surveyParticipationRepository = new SurveyParticipationRepository();
     }
 
-class SurveyParticipationController extends DB {
-    public function getTest($params) {
-        
+    public function getTest($params)
+    {
+
         // $arrID = ['id' => $params['id']];
         // $news = DB::sql2array("SELECT * FROM news");
         // return $news;

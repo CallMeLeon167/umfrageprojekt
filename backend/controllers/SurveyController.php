@@ -111,10 +111,16 @@ class SurveyController extends DB
      *
      * This method returns evaluated survey
      */
-    public function surveyResults(){
+    public function surveyResults(): void
+    {
         $params = $this->getQueryParams();
 
         // Check if the survey ID is provided
+        if (!isset($params['id'])) {
+            http_response_code(400);
+            echo json_encode(["message" => "Invalid "]);
+            return;
+        }
 
         // fetch all survey participations
 

@@ -51,6 +51,8 @@ $router->addRoute('OPTIONS', '/survey/:id', function ($id) use ($router, $user) 
 });
 $router->addRoute('OPTIONS', '/survey', function () use ($router, $user) {
 });
+$router->addRoute('OPTIONS', '/survey-evaluation', function () {
+});
 
 //
 $router->addRoute('GET', '/survey', function () use ($router) {
@@ -74,6 +76,12 @@ $router->addRoute('POST', '/survey', function () use ($router) {
 $router->addRoute('DELETE', '/survey/:id', function ($id) use ($router) {
     $router->isApi();
     $router->useController("SurveyController", "deleteSurvey", ['id' => $id]);
+});
+
+//survey evaluation
+$router->addRoute('GET', '/survey-evaluation/:id', function ($id) use ($router) {
+    $router->isApi();
+    $router->useController("SurveyController", "surveyResults", ['id' => $id]);
 });
 
 $router->addRoute('OPTIONS', '/surveyParticipation', function () use ($router) {

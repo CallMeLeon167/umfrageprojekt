@@ -3,6 +3,7 @@
 namespace CML\Controllers;
 
 use CML\Classes\DB;
+use CML\Classes\Functions\Functions;
 use CML\DataStructure\Question;
 use CML\DataStructure\Survey;
 use CML\DataStructure\SurveyRepository;
@@ -21,6 +22,8 @@ class SurveyController extends DB
      * An instance of the SurveyRepository class.
      */
     private SurveyRepository $surveyRepository;
+
+    use Functions;
 
     /**
      * SurveyController constructor.
@@ -103,6 +106,25 @@ class SurveyController extends DB
         $this->surveyRepository->createSurvey($body);
     }
 
+    /**
+     * Get Survey Results
+     *
+     * This method returns evaluated survey
+     */
+    public function surveyResults(){
+        $params = $this->getQueryParams();
+
+        // Check if the survey ID is provided
+
+        // fetch all survey participations
+
+        // fetch questions ids from the survey
+
+        // fetch user responses for each question
+
+        // return data as array
+    }
+
     
     private function parseUrlParams($url): array {
         $params = [];
@@ -117,7 +139,7 @@ class SurveyController extends DB
         }
         return $params;
     }
-        /**
+    /**
      * This method searches for Responses in the Database
      */
     public function getResponsesByID($id)

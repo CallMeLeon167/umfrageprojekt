@@ -84,11 +84,10 @@ class SurveyController extends DB
             return;
         }
         // Get URL parameters
-        $params = $this->parseUrlParams($_SERVER['REQUEST_URI']);
-        $populateQuestions = isset($params['populateQuestions']) && $params['populateQuestions'] === 'true';
-        $populateAnswers = isset($params['populateAnswers']) && $params['populateAnswers'] === 'true';
+        
+        $params = $this->getQueryParams("populateQuestions","populateAnswers","populateComments","populateReplys");
 
-        $survey = $this->surveyRepository->getSurveyById($data['id'], $populateQuestions, $populateAnswers);
+        $survey = $this->surveyRepository->getSurveyById($data['id'], $params["populateQuestions"], $params["populateAnswers"], $params["populateComments"], $params["populateReplys"]);
         if (!$survey) {
             http_response_code(404);
             echo json_encode(["message" => "Survey not found"]);
@@ -174,17 +173,5 @@ class SurveyController extends DB
         }
         return $params;
     }
-    /**
-     * This method searches for Responses in the Database
-     */
-    public function getResponsesByID($id)
-    {
-        $responses = $this->surveyRepository->getRegardingUserResponses($id);
-        if (!$responses) {
-            http_response_code(404);
-            echo json_encode(["message" => "Survey not found"]);
-            return;
-        }
-        echo json_encode($responses);
-    }
+
 }

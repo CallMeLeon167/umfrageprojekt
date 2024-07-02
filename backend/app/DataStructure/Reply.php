@@ -17,10 +17,11 @@
 
         public function hydrateFromDBRow(array $row): Reply|null
         {
-            if (!$this->validateFields($row)) {
+            /*if (!$this->validateFields($row)) {
                 return null;
-            }
+            }*/
             $this->id = $row["id"];
+            $this->commentID = $row["r_commentID"];
             $this->accountID = $row["r_accountID"];
             $this->replyText = $row["r_replyText"];
             $this->likeCount = $row["r_likeCount"];

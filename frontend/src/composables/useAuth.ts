@@ -43,7 +43,7 @@ export function useAuth() {
       const response = await ofetch('/login', {
         baseURL: API_URL,
         method: 'POST',
-        body: { username: username, password: password }
+        body: new URLSearchParams({ username: username, password: password })
       })
       if (response) {
         const token = response?.token ?? null

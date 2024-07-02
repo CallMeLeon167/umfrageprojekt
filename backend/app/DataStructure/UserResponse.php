@@ -2,7 +2,7 @@
 
     namespace CML\DataStructure;
 
-    class UserResponse
+    class UserResponse extends Entity
     {
         /* @var int */
         public $id;   
@@ -15,24 +15,23 @@
         /* @var string */
         public $response;
 
-
-        public function hydrateFromDBRow(array $row):UserResponse|null
+        
+        protected function getFieldMappings(): array
         {
-            if (!$this->validateFields($row)) {
-                return null;
-            }
-            $this->id = $row["id"];
-            $this->answerOptionID = $row["ur_answerOptionID"];
-            $this->surveyParticipationID = $row["ur_surveyParticipationID"];
-            $this->response = $row["ur_response"];
-            $this->questionID = $row["ur_questionID"];
-            return $this;
+            return [
+                "id" => "id",
+                "answerOptionID" => "ur_answerOptionID",
+                "surveyParticipationID" => "ur_surveyParticipationID",
+                "response" => "ur_response",
+                "questionID" => "ur_questionID"
+            ];
         }
 
-        private function validateFields(array $row): bool
+        protected function getRequiredFields(): array
         {
-            return true;
+            return [];
         }
+
     }
 
 ?>

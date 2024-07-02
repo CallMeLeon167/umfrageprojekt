@@ -22,7 +22,7 @@ class SurveyRepository extends DB
         $surveys = [];
         foreach ($dbResult as $row) {
             $survey = new Survey();
-            $survey->hydrateSurveyFromDBRow($row);
+            $survey->hydrateFromDBRow($row);
             $surveys[] = $survey;
         }
         return $surveys;
@@ -35,7 +35,7 @@ class SurveyRepository extends DB
             return null;
         }
         $survey = new Survey();
-        $survey->hydrateSurveyFromDBRow($result[0]);
+        $survey->hydrateFromDBRow($result[0]);
         if ($populateQuestions) {
             $questionsRepo = new QuestionRepository();
             $survey->questions = $questionsRepo->fetchSurveyQuestions($survey->id, $populateAnswers);

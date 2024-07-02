@@ -3,7 +3,7 @@ namespace CML\DataStructure;
 
 use CML\DataStructure\AnswerOption;
 
-class Question
+class Question extends Entity
 {
     /* @var int */
     public $questionId;
@@ -17,22 +17,22 @@ class Question
     public $questionSurveyID;
     /* @var AnswerOption[] */
     public $answerOptions = [];
-
-    function hydrateFromDBRow($row): Question
+     
+    protected function getFieldMappings(): array
     {
-        $this->questionId = $row['id'];
-        $this->questionSurveyID = $row['q_surveyID'] ?? "null";
-        $this->questionText = $row['q_questionText'] ?? "null";
-        $this->questionType = $row['q_type'] ?? "null";
-        $this->questionOrder = $row['q_order'] ?? "null";
-
-        return $this;
-    }       
-
-    private function validateFields(array $row): bool
-    {
-        /*not implemented */
-        return true;
+        return [
+           "questionId"=> "id",
+           "questionSurveyID"=> "q_surveyID",
+           "questionText"=> "q_questionText",
+           "questionType"=> "q_type",
+           "questionOrder"=> "q_order"
+        ];
     }
+
+    protected function getRequiredFields(): array
+    {
+        return ["id", "q_questionText"];
+    }
+
 }
 ?>

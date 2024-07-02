@@ -2,27 +2,26 @@
 namespace CML\DataStructure;
 
 
-class AnswerOption
+class AnswerOption extends Entity
 {
     public $answerOptionID;
     public $answerOptionText;
     public $answerOptionOrder;
     public $answerOptionQuestionID;
 
-    function hydrateFromDBRow($row)
+    protected function getFieldMappings(): array
     {
-        $this->answerOptionID = $row['id'];
-        $this->answerOptionText = $row['ao_answerOptionText'];
-        $this->answerOptionOrder = $row['ao_order'];
-        $this->answerOptionQuestionID = $row['ao_questionID'];
+        return [
+            "answerOptionID" => "id",
+            "answerOptionText" => "ao_answerOptionText",
+            "answerOptionOrder" => "ao_order",
+            "answerOptionQuestionID" => "ao_questionID"
+        ];
+    }
 
-        return $this;
-    }       
-
-    private function validateFields(array $row): bool
+    protected function getRequiredFields(): array
     {
-        /*not implemented */
-        return true;
+        return [];
     }
 }
 ?>

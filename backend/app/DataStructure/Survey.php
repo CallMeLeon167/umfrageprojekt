@@ -2,7 +2,7 @@
 
     namespace CML\DataStructure;
 
-    class Survey
+    class Survey extends Entity
     {
         /* @var int */
         public $id;
@@ -25,32 +25,25 @@
         /* @var Question[] */
         public array $questions;
 
-        public function hydrateSurveyFromDBRow(array $row): Survey|null
+        protected function getFieldMappings(): array
         {
-            if (!$this->validateFields($row)) {
-                return null;
-            }
-            $this->id = $row["id"];
-            $this->topic = $row["s_topic"];
-            $this->type = $row["s_type"];
-            $this->startdate = $row["s_startdate"];
-            $this->enddate = $row["s_enddate"];
-            $this->status = $row["s_status"];
-            $this->categoryID = $row["s_categoryID"];
-            return $this;
+            $mapping = [
+                "id"=> "id",
+                "topic"=> "s_topic",
+                "type"=> "s_type",
+                "startdate"=> "s_startdate",
+                "enddate"=> "s_enddate",
+                "status"=> "s_status",
+                "categoryID"=> "s_categoryID",
+            ];
+            return $mapping;
         }
 
-        private function validateFields(array $row): bool
+        protected function getRequiredFields(): array
         {
-            $requiredFields = ["id", "s_topic"];
-
-            foreach ($requiredFields as $field) {
-                if (!array_key_exists($field, $row)) {
-                    return false;
-                }
-            }
-            return true;
+            return ["id", "s_topic"];
         }
+
     }
 
     ?>

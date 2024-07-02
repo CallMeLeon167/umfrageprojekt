@@ -15,7 +15,7 @@
         /* @var int */
         public $likeCount;
 
-        public function hydrateFromDBRow(array $row): Category|null
+        public function hydrateFromDBRow(array $row): Reply|null
         {
             if (!$this->validateFields($row)) {
                 return null;

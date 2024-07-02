@@ -50,7 +50,7 @@
     public function fetchSurveyComments($surveyId, bool $populateReplys = false): array
     {
         $stmt = <<<SQL
-            SELECT * FROM Comment WHERE q_surveyID = ?;
+            SELECT * FROM Comment WHERE com_surveyID = ?;
         SQL;
         try {
             $comments = [];

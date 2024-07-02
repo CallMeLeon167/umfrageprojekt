@@ -53,6 +53,8 @@ $router->addRoute('OPTIONS', '/survey', function () use ($router, $user) {
 });
 $router->addRoute('OPTIONS', '/survey-evaluation', function () {
 });
+$router->addRoute('OPTIONS', '/survey-evaluation/:id', function () {
+});
 
 //
 $router->addRoute('GET', '/survey', function () use ($router) {

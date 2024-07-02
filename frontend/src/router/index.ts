@@ -8,6 +8,7 @@ import LoginPage from '@/page/Login.vue'
 import AdminSurvey from '@/page/admin/AdminSurvey.vue'
 import AdminCreateSurvey from '@/page/admin/AdminCreateSurvey.vue'
 import SurveyParticipate from '@/page/SurveyParticipate.vue'
+import RegisterPage from "@/page/Register.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,16 +45,18 @@ const router = createRouter({
           component: AdminCreateSurvey
         }
       ]
-    },
-    {
+    }, {
       path: '/login',
       name: 'login',
       component: LoginPage,
       meta: {
         title: 'Login'
       }
-    },
-    {
+    }, {
+      path: '/register',
+      name: 'register',
+      component: RegisterPage,
+    },{
       // list of all surveys
       path: '/survey',
       name: 'survey-list',

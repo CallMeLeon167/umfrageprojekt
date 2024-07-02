@@ -15,6 +15,28 @@ export function useAuth() {
 
   const router = useRouter();
 
+  async function register(username: string, email: string, password: string) {
+    try {
+      console.log("Registering user: ", username, email, password)
+      const response = await ofetch('/register', {
+        baseURL: API_URL,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ username, email, password })
+      })
+      if (response && response.status === 200) {
+        console.log('Registration successful:', response)
+        await login(username, password)
+      } else {
+        console.error('Registration failed:', response)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async function login(username: string, password: string) {
     try {
       console.log('API URL: ' + API_URL)
@@ -59,7 +81,7 @@ export function useAuth() {
     localStorage.removeItem('token')
   }
 
-  return { session, login, logout, loginFromLocalStorage }
+  return { session, login, logout, register, loginFromLocalStorage }
 }
 
 function parseUserFromJWT(jwt: string): User | null {

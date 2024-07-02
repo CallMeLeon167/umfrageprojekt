@@ -31,20 +31,38 @@ $router->addRoute('GET', '/', function () use ($router) {
     echo json_encode(["message" => "Hey Na!!!"]);
 });
 
-$router->addRoute('*', '/register', function () use ($router, $user) {
-    $router->isApi();
-    $user->register("admin", "admin@callmeleon.de", "admin");
+$router->addRoute('OPTIONS', '/register', function () use ($router, $user) {
 });
+
+$router->addRoute('POST', '/register', function () use ($router, $user) {
+    $router->isApi();
+    $username = $_POST["username"] ?? null;
+    $email = $_POST["email"] ?? null;
+    $password = $_POST["password"] ?? null;
+    if (!$username || !$email || !$password) {
+        http_response_code(400);
+        echo json_encode(["message" => "Please fill in all fields"], JSON_PRETTY_PRINT);
+    }
+    $user->register($username, $email, $password);
+});
+
 
 // zum ändern von accountdaten
 $router->addRoute('PUT', '/register', function () use ($router, $user) {
     $router->isApi();
 });
 
+$router->addRoute('OPTIONS', '/login', function () use ($router, $user) {
+});
 $router->addRoute('*', '/login', function () use ($router, $user) {
     $router->isApi();
-    $user->login("kontakt@callmeleon.de", "TestPassword1234"); //das geht
-    // $user->login("callmeleon", "TestPassword1234"); //das geht auch :)
+    $username = $_POST["username"] ?? null;
+    $password = $_POST["password"] ?? null;
+    if (!$username || !$password) {
+        http_response_code(400);
+        echo json_encode(["message" => "Please fill in all fields"], JSON_PRETTY_PRINT);
+    }
+    $user->login($username, $password);
 });
 
 $router->addRoute('OPTIONS', '/survey/:id', function ($id) use ($router, $user) {

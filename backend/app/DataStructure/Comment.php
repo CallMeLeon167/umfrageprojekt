@@ -19,7 +19,7 @@
         /* @var reply */
         public array $replys;
 
-        public function hydrateFromDBRow(array $row): Category|null
+        public function hydrateFromDBRow(array $row): Comment|null
         {
             if (!$this->validateFields($row)) {
                 return null;
@@ -29,7 +29,7 @@
             $this->commentText = $row["com_commentText"];
             $this->likeCount = $row["com_likeCount"];
             $this->constitutionDate = $row["com_constitutionDate"];
-            $this->surveyID = $row["om_surveyID"];
+            $this->surveyID = $row["com_surveyID"];
             return $this;
         }
 

@@ -2,7 +2,7 @@
 
     namespace CML\DataStructure;
 
-    class Reply
+    class Reply extends Entity
     {
         /* @var int */
         public $id;
@@ -15,28 +15,19 @@
         /* @var int */
         public $likeCount;
 
-        public function hydrateFromDBRow(array $row): Reply|null
+        protected function getFieldMappings(): array
         {
-            /*if (!$this->validateFields($row)) {
-                return null;
-            }*/
-            $this->id = $row["id"];
-            $this->commentID = $row["r_commentID"];
-            $this->accountID = $row["r_accountID"];
-            $this->replyText = $row["r_replyText"];
-            $this->likeCount = $row["r_likeCount"];
-            return $this;
+            return [
+               "id"=> "id",
+               "commentID"=> "r_commentID",
+               "accountID"=> "r_accountID",
+               "replyText"=> "r_replyText",
+               "likeCount"=> "r_likeCount"
+            ];
         }
-
-        private function validateFields(array $row): bool
+    
+        protected function getRequiredFields(): array
         {
-            $requiredFields = ["id", "r_replyText"];
-
-            foreach ($requiredFields as $field) {
-                if (!array_key_exists($field, $row)) {
-                    return false;
-                }
-            }
-            return true;
+            return ["id", "r_commentID", "r_replyText"];
         }
     }

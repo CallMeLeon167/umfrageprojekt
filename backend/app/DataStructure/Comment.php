@@ -2,7 +2,7 @@
 
     namespace CML\DataStructure;
 
-    class Comment
+    class Comment extends Entity
     {
         /* @var int */
         public $id;
@@ -19,29 +19,20 @@
         /* @var reply */
         public array $replys;
 
-        public function hydrateFromDBRow(array $row): Comment|null
+        protected function getFieldMappings(): array
         {
-            if (!$this->validateFields($row)) {
-                return null;
-            }
-            $this->id = $row["id"];
-            $this->accountID = $row["com_accountID"];
-            $this->commentText = $row["com_commentText"];
-            $this->likeCount = $row["com_likeCount"];
-            $this->constitutionDate = $row["com_constitutionDate"];
-            $this->surveyID = $row["com_surveyID"];
-            return $this;
+            return [
+               "id"=> "id",
+               "accountID"=> "com_accountID",
+               "commentText"=> "com_commentText",
+               "likeCount"=> "com_likeCount",
+               "constitutionDate"=> "com_constitutionDate",
+               "surveyID"=>"com_surveyID"
+            ];
         }
-
-        private function validateFields(array $row): bool
+    
+        protected function getRequiredFields(): array
         {
-            $requiredFields = ["id", "com_commentText"];
-
-            foreach ($requiredFields as $field) {
-                if (!array_key_exists($field, $row)) {
-                    return false;
-                }
-            }
-            return true;
+            return ["id", "com_surveyID", "r_commentText"];
         }
     }

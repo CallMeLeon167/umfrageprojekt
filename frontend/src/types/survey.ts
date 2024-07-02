@@ -21,6 +21,16 @@ export type Survey = {
     questions?: SurveyQuestion[]
 }
 
+export type SurveyEvaluation = {
+    participations: number,
+    answers: [
+        {
+            questionId: number,
+            answer: number | string,
+        }
+    ]
+}
+
 export type SurveyQuestion = {
     questionId?: string
     questionText: string

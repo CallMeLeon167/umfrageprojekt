@@ -6,7 +6,9 @@ use CML\Classes\DB;
 use CML\Classes\Functions\Functions;
 use CML\DataStructure\Question;
 use CML\DataStructure\Survey;
+use CML\DataStructure\SurveyParticipationRepository;
 use CML\DataStructure\SurveyRepository;
+use CML\DataStructure\UserResponseRepository;
 
 /**
  * Class SurveyController
@@ -23,6 +25,21 @@ class SurveyController extends DB
      */
     private SurveyRepository $surveyRepository;
 
+    /**
+     * @var SurveyParticipationRepository $participationRepository
+     *
+     * An instance of the SurveyParticipationRepository class.
+     */
+    private SurveyParticipationRepository $participationRepository;
+
+    /**
+     * @var UserResponseRepository $userResponseRepository
+     *
+     * An instance of the UserResponseRepository class.
+     */
+    private UserResponseRepository $userResponseRepository;
+
+
     use Functions;
 
     /**
@@ -34,6 +51,8 @@ class SurveyController extends DB
     {
         parent::__construct();
         $this->surveyRepository = new SurveyRepository();
+        $this->participationRepository = new SurveyParticipationRepository();
+        $this->userResponseRepository = new UserResponseRepository();
     }
 
     /**
@@ -111,24 +130,34 @@ class SurveyController extends DB
      *
      * This method returns evaluated survey
      */
-    public function surveyResults(): void
+    public function surveyResults(array $params): void
     {
-        $params = $this->getQueryParams();
-
+        $surveyId = $params['id'] ?? null;
         // Check if the survey ID is provided
-        if (!isset($params['id'])) {
+        if (!$surveyId) {
             http_response_code(400);
-            echo json_encode(["message" => "Invalid "]);
+            echo json_encode(["message" => "Invalid Survey Id"]);
             return;
         }
 
         // fetch all survey participations
+        $participations = $this->participationRepository->getParticipationsForSurvey($surveyId);
+        if (!$participations) {
+            http_response_code(404);
+            echo json_encode(["message"=> "No participations found"]);
+            return;
+        }
 
-        // fetch questions ids from the survey
+        $answers = $this->userResponseRepository->getUserResponses($surveyId);
 
-        // fetch user responses for each question
+        $result = [];
+        foreach ($answers as $answer) {
+            $result["answers"][$answer->questionID][] = $answer->answerOptionID ?
+                $answer->answerOptionID : $answer->response;
+        }
+        $result["participations"] = count($participations);
 
-        // return data as array
+        echo json_encode($result);
     }
 
     

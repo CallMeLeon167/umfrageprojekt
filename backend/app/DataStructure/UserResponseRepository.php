@@ -15,9 +15,19 @@ class UserResponseRepository extends DB
         $this->dbConn = new DB();
     }
 
-    public function getUserResponses(): array
+    public function getUserResponses(?string $surveyId = null): array
     {
-        $dbResult = $this->dbConn->sql2array("SELECT * FROM UserResponse");
+        if ($surveyId) {
+            $query = <<<SQL
+                SELECT * FROM UserResponse
+                JOIN SurveyParticipation ON UserResponse.ur_surveyParticipationID = SurveyParticipation.id
+                WHERE SurveyParticipation.sp_surveyID = ?
+            SQL;
+            $dbResult = $this->dbConn->sql2array($query, [$surveyId]);
+        } else {
+            $query = "SELECT * FROM UserResponse";
+            $dbResult = $this->dbConn->sql2array($query);
+        }
         /* @var $userResponses UserResponse[] */
         $userResponses = [];
         foreach ($dbResult as $row) {

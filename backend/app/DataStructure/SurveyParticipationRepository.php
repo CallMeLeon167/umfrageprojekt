@@ -72,4 +72,26 @@ class SurveyParticipationRepository extends DB
         }
     }
 
+    /**
+     * Get all participations for a survey.
+     *
+     * This method returns all participations for a survey.
+     *
+     * @param int $surveyID The ID of the survey.
+     * @return array An array of participations for the survey.
+     * @throws \Exception
+     */
+    public function getParticipationsForSurvey(int $surveyID): array
+    {
+        try {
+            $stmt = <<<SQL
+                SELECT * FROM SurveyParticipation WHERE sp_surveyID = ?
+            SQL;
+            $result = $this->dbConn->sql2array($stmt, [$surveyID]);
+            return $result;
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to get participations for survey: " . $e->getMessage());
+        }
+    }
+
 }

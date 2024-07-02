@@ -60,7 +60,7 @@
                 $comment->hydrateFromDBRow($row);
                 if ($populateReplys) {
                     $replyRepo = new ReplyRepository();
-                    $comment->replys = $replyRepo->fetchCommentReplys($comment->id) ?? [];
+                    $comment->replys = $replyRepo->fetchCommentReplys($comment->commentID) ?? [];
                 }
                 $comments[] = $comment;
             }

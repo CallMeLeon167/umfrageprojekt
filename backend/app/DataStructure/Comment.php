@@ -5,7 +5,7 @@
     class Comment extends Entity
     {
         /* @var int */
-        public $id;
+        public $commentID;
         /* @var int */
         public $accountID;
         /* @var varchar */
@@ -22,7 +22,7 @@
         protected function getFieldMappings(): array
         {
             return [
-               "id"=> "id",
+               "commentID"=> "id",
                "accountID"=> "com_accountID",
                "commentText"=> "com_commentText",
                "likeCount"=> "com_likeCount",
@@ -33,6 +33,6 @@
     
         protected function getRequiredFields(): array
         {
-            return ["id", "com_surveyID", "r_commentText"];
+            return ["id","com_commentText"];
         }
     }

@@ -5,7 +5,7 @@
     class Reply extends Entity
     {
         /* @var int */
-        public $id;
+        public $replyID;
         /* @var int */
         public $accountID;
         /* @var int */
@@ -18,9 +18,9 @@
         protected function getFieldMappings(): array
         {
             return [
-               "id"=> "id",
-               "commentID"=> "r_commentID",
+               "replyID"=> "id",
                "accountID"=> "r_accountID",
+               "commentID"=> "r_commentID",
                "replyText"=> "r_replyText",
                "likeCount"=> "r_likeCount"
             ];

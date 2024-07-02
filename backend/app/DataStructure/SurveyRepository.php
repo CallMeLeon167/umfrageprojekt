@@ -277,7 +277,7 @@ class SurveyRepository extends DB
                     VALUES (?, ?, ?, ?)
                 SQL;
                 $result = $this->dbConn->sql2db($stmt, [
-                    $comment->id,
+                    $comment->commentID,
                     $reply->accountID ?? "null",
                     $reply->replyText ?? "null",
                     $reply->likeCount ?? "null"

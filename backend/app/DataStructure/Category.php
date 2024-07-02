@@ -2,32 +2,23 @@
 
     namespace CML\DataStructure;
 
-    class Category
+    class Category extends Entity
     {
         public $id;
         public $name;
         public $type;
 
-        public function hydrateFromDBRow(array $row): Category|null
+        protected function getFieldMappings(): array
         {
-            if (!$this->validateFields($row)) {
-                return null;
-            }
-            $this->id = $row["id"];
-            $this->name = $row["cat_name"];
-            $this->type = $row["cat_type"];
-            return $this;
+            return [
+                "id" => "id",
+                "name" => "cat_name",
+                "type" => "cat_type"
+            ];
         }
 
-        private function validateFields(array $row): bool
+        protected function getRequiredFields(): array
         {
-            $requiredFields = ["id", "cat_name"];
-
-            foreach ($requiredFields as $field) {
-                if (!array_key_exists($field, $row)) {
-                    return false;
-                }
-            }
-            return true;
+            return ["id", "cat_name"];
         }
     }

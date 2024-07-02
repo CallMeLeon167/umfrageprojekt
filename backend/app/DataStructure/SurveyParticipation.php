@@ -2,7 +2,7 @@
 
 namespace CML\DataStructure;
 
-class SurveyParticipation
+class SurveyParticipation extends Entity
 {
     /* @var int */
     public int $id;
@@ -13,13 +13,21 @@ class SurveyParticipation
     /* @var \DateTime */
     public \DateTime $timestamp;
 
-    public function hydrateSurveyParticipationFromDBRow(array $row): SurveyParticipation
+
+
+    protected function getRequiredFields(): array
     {
-        $this->id = $row["id"];
-        $this->surveyID = $row["sp_surveyID"];
-        $this->userID = $row["sp_accountID"];
-        $this->timestamp = $row["sp_timestamp"];
-        return $this;
+        return [];
+    }
+
+    protected function getFieldMappings(): array
+    {
+        return [
+            "id" => "id",
+            "surveyID" => "sp_surveyID",
+            "userID" => "sp_accountID",
+            "timestamp" => "sp_timestamp"
+        ];
     }
 
 }

@@ -24,6 +24,8 @@
         public Category $category;
         /* @var Question[] */
         public array $questions;
+        /* @var Comment[]*/
+        public array $comments;
 
         public function hydrateSurveyFromDBRow(array $row): Survey|null
         {

@@ -70,4 +70,33 @@
             }
         }
 
+    /**
+     * Create replys.
+     *
+     * This method creates reply entries in the DB for a Comment.
+     *
+     * @param Comment $comment The comment to create the reply for.
+     * @throws \Exception
+     */
+    public function newReply(Comment $comment): void
+    {
+        try {
+
+            foreach ($comment->replys as $reply) {
+                $stmt = <<<SQL
+                    INSERT INTO Reply (r_commentID, r_accountID, r_replyText, r_likeCount)
+                    VALUES (?, ?, ?, ?)
+                SQL;
+                $result = $this->dbConn->sql2db($stmt, [
+                    $comment->commentID,
+                    $reply->accountID ?? "null",
+                    $reply->replyText ?? "null",
+                    $reply->likeCount ?? "null"
+                ]);
+                $reply->id = $result['insert_id'];
+            }
+        } catch (\Exception $e) {
+            throw new \Exception("Error creating replys: " . $e->getMessage(), 500);
+        }
+    }
     }

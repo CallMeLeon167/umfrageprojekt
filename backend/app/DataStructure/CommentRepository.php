@@ -70,5 +70,37 @@
             throw new \Exception("Error fetching survey comments: " . $e->getMessage(), 500);
         }
     }
+    /**
+     * Create comments.
+     *
+     * This method creates commtent entries in the DB for a survey.
+     *
+     * @param Survey $survey The survey to create the questions for.
+     * @throws \Exception
+     */
+    public function createComments(Survey $survey): void
+    {
+        try {
+
+            foreach ($survey->comments as $comment) {
+                $stmt = <<<SQL
+                    INSERT INTO Comment (com_accountID, com_constitutionDate, com_surveyID, com_likeCount, com_commentText)
+                    VALUES (?, ?, ?)
+                SQL;
+                $result = $this->dbConn->sql2db($stmt, [
+                    $comment->accountID ?? "null",
+                    $comment->constitutionDate ?? "null",
+                    $survey->id,
+                    $comment->com_likeCount ?? "null",
+                    $comment->commentText ?? "null"
+
+                ]);
+                $comment->id = $result['insert_id'];
+                //$this->createReplysForComment($comment);
+            }
+        } catch (\Exception $e) {
+            throw new \Exception("Error creating comments: " . $e->getMessage(), 500);
+        }
+    }
 
 }

@@ -3,10 +3,9 @@
 namespace CML\Controllers;
 
 use CML\Classes\DB;
-use CML\DataStructure\Comment;
 use CML\DataStructure\CommentRepository;
 
-class QuestionController extends DB
+class CommentController extends DB
 {
     private CommentRepository $commentRepository;
 
@@ -31,5 +30,10 @@ class QuestionController extends DB
             return;
         }
         echo json_encode($comment);
+    }
+
+    public function newSurveyComment($params)
+    {
+        $this->commentRepository->createComments($params);
     }
 }

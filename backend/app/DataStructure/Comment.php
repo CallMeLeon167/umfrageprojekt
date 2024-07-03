@@ -8,15 +8,15 @@
         public $commentID;
         /* @var int */
         public $accountID;
-        /* @var varchar */
+        /* @var string */
         public $commentText;
         /* @var int */
         public $likeCount;
-        /* @var datetime */
+        /* @var \DateTime */
         public $constitutionDate;
         /* @var int */
         public $surveyID;
-        /* @var reply */
+        /* @var Reply[] */
         public array $replys;
 
         protected function getFieldMappings(): array

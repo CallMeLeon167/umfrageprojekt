@@ -32,8 +32,14 @@ class CommentController extends DB
         echo json_encode($comment);
     }
 
-    public function newSurveyComment($params)
+    public function newSurveyComment()
     {
-        $this->commentRepository->createComments($params);
+        $body = json_decode(file_get_contents('php://input'), true);
+        if (!$body) {
+            http_response_code(400);
+            echo json_encode(["message" => "Invalid input"]);
+            return;
+        }
+        $this->commentRepository->createComments($body);
     }
 }

@@ -10,7 +10,7 @@ $router->addRoute('GET', '/comment', function () use ($router) {
 #post
 $router->addRoute('POST', '/comment', function () use ($router) {
     $router->isApi();
-    $router->useController("CommentController", "newSurveyComment", []);
+    $router->useController("CommentController", "newSurveyComment");
 });
 #put
 

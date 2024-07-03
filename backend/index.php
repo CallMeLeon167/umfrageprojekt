@@ -30,6 +30,7 @@ include 'routes/statsRoutes.php';
 include 'routes/surveyParticipationRoutes.php';
 include 'routes/surveyRoutes.php';
 include 'routes/userResponseRoutes.php';
+include 'routes/commentRoutes.php';
 
 $router->addRoute('*', '/sql', function () use ($router, $db) {
     $name = "callmeleon";

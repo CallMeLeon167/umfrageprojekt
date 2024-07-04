@@ -5,8 +5,19 @@ namespace CML\Controllers;
 use CML\Classes\DB;
 use CML\DataStructure\CommentRepository;
 
+/**
+ * Class CommentController
+ *
+ * This class extends the DB class and is responsible for handling operations related to comments.
+ * It uses the CommentRepository to interact with the database.
+ */
 class CommentController extends DB
 {
+    /**
+     * @var CommentRepository $commentRepository
+     *
+     * An instance of the commentRepository class.
+     */
     private CommentRepository $commentRepository;
 
     public function __construct()

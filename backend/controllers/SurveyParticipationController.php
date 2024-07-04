@@ -6,10 +6,25 @@ use CML\Classes\DB;
 use CML\DataStructure\SurveyParticipationRepository;
 use CML\DataStructure\UserResponseRepository;
 
+/**
+ * Class SurveyParticipationController
+ *
+ * This class extends the DB class and is responsible for handling operations related to surveyparticipations.
+ * It uses the UserResponseRepository and SurveyParticipationRepository to interact with the database.
+ */
 class SurveyParticipationController extends DB
 {
-
+    /**
+     * @var UserResponseRepository $userResponseRepository
+     *
+     * An instance of the UserResponseRepository class.
+     */
     private UserResponseRepository $userResponseRepository;
+    /**
+     * @var SurveyParticipationRepository $surveyParticipationRepository
+     *
+     * An instance of the SurveyParticipationRepository class.
+     */
     private SurveyParticipationRepository $surveyParticipationRepository;
 
     public function __construct()

@@ -24,6 +24,8 @@
         public Category $category;
         /* @var Question[] */
         public array $questions;
+        /* @var Comment[]*/
+        public array $comments;
 
         protected function getFieldMappings(): array
         {

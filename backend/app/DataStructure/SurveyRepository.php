@@ -28,7 +28,7 @@ class SurveyRepository extends DB
         return $surveys;
     }
 
-    public function getSurveyById($id, bool $populateQuestions = false, bool $populateAnswers = false)
+    public function getSurveyById($id, bool $populateQuestions = false, bool $populateAnswers = false, bool $populateComments = false, bool $populateReplys = false)
     {
         $result = $this->dbConn->sql2array("SELECT * FROM Survey WHERE id = ?", [$id]);
         if (empty($result)) {
@@ -40,6 +40,11 @@ class SurveyRepository extends DB
             $questionsRepo = new QuestionRepository();
             $survey->questions = $questionsRepo->fetchSurveyQuestions($survey->id, $populateAnswers);
         }
+        if ($populateComments) {
+            $commentsRepo = new CommentRepository();
+            $survey->comments = $commentsRepo->fetchSurveyComments($survey->id, $populateReplys);
+        }
+
         return $survey;
     }
 
@@ -221,5 +226,4 @@ class SurveyRepository extends DB
             throw new \Exception("Error creating answers: " . $e->getMessage(), 500);
         }
     }
-
 }

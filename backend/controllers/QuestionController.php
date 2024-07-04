@@ -3,11 +3,21 @@
 namespace CML\Controllers;
 
 use CML\Classes\DB;
-use CML\DataStructure\Question;
 use CML\DataStructure\QuestionRepository;
 
+/**
+ * Class QuestionController
+ *
+ * This class extends the DB class and is responsible for handling operations related to questions.
+ * It uses the QuestionRepository to interact with the database.
+ */
 class QuestionController extends DB
 {
+    /**
+     * @var QuestionRepository $questionRepository
+     *
+     * An instance of the QuestionRepository class.
+     */
     private QuestionRepository $questionRepository;
 
     public function __construct()
@@ -18,9 +28,6 @@ class QuestionController extends DB
 
     public function getAllQuestions($params)
     {
-        //echo $this->sql2json_file("SELECT_SURVEYS.sql");     
-        //        $s1 = new Survey(1);
-        //        echo json_encode([$s1]);
         $questions = $this->questionRepository->getQuestions();
         echo json_encode($questions);
     }
@@ -35,14 +42,4 @@ class QuestionController extends DB
         }
         echo json_encode($question);
     }
-
-    /*public function deleteSurvey($data)
-    {
-        echo $this->sql2db_file("DELETE_SURVEY.sql", [$data['id']]);
-    }
-
-    public function createSurvey($data)
-    {
-        $this->sql2db_file("CREATE_SURVEY.sql", [$data['name'], $data['description']]);
-    }*/
 }

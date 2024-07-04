@@ -27,9 +27,11 @@ import {ref} from 'vue';
 import {useRoute, useRouter} from 'vue-router';
 import type {Survey} from "@/types/survey";
 import Question from "@/components/survey/question.vue";
+import {useAuth} from "@/composables/useAuth";
 
 const route = useRoute();
 const router = useRouter();
+const auth = useAuth();
 const surveyId = route.params?.id;
 const errors = ref<string[]>([]);
 const survey = ref<Survey | null>(null);
@@ -83,7 +85,7 @@ async function onSubmitSurvey() {
   console.log('Submitting answers', answersJson);
   const body = {
     surveyId: surveyId,
-    userId: '7',
+    userId: auth.session.user?.id,
     answers: answersJson
   };
   try {

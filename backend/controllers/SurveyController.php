@@ -4,8 +4,6 @@ namespace CML\Controllers;
 
 use CML\Classes\DB;
 use CML\Classes\Functions\Functions;
-use CML\DataStructure\Question;
-use CML\DataStructure\Survey;
 use CML\DataStructure\SurveyParticipationRepository;
 use CML\DataStructure\SurveyRepository;
 use CML\DataStructure\UserResponseRepository;
@@ -83,12 +81,15 @@ class SurveyController extends DB
             echo json_encode(["message" => "Invalid input"]);
             return;
         }
-        // Get URL parameters
-        $params = $this->parseUrlParams($_SERVER['REQUEST_URI']);
-        $populateQuestions = isset($params['populateQuestions']) && $params['populateQuestions'] === 'true';
-        $populateAnswers = isset($params['populateAnswers']) && $params['populateAnswers'] === 'true';
+        
+        $params = $this->getQueryParams("populateQuestions","populateAnswers","populateComments","populateReplys");
 
-        $survey = $this->surveyRepository->getSurveyById($data['id'], $populateQuestions, $populateAnswers);
+        $survey = $this->surveyRepository->getSurveyById($data['id'],
+            $params["populateQuestions"] ?? false,
+            $params["populateAnswers"] ?? false,
+            $params["populateComments"] ?? false,
+            $params["populateReplys"] ?? false
+        );
         if (!$survey) {
             http_response_code(404);
             echo json_encode(["message" => "Survey not found"]);
@@ -133,14 +134,12 @@ class SurveyController extends DB
     public function surveyResults(array $params): void
     {
         $surveyId = $params['id'] ?? null;
-        // Check if the survey ID is provided
         if (!$surveyId) {
             http_response_code(400);
             echo json_encode(["message" => "Invalid Survey Id"]);
             return;
         }
 
-        // fetch all survey participations
         $participations = $this->participationRepository->getParticipationsForSurvey($surveyId);
         if (!$participations) {
             http_response_code(404);
@@ -174,17 +173,5 @@ class SurveyController extends DB
         }
         return $params;
     }
-    /**
-     * This method searches for Responses in the Database
-     */
-    public function getResponsesByID($id)
-    {
-        $responses = $this->surveyRepository->getRegardingUserResponses($id);
-        if (!$responses) {
-            http_response_code(404);
-            echo json_encode(["message" => "Survey not found"]);
-            return;
-        }
-        echo json_encode($responses);
-    }
+
 }

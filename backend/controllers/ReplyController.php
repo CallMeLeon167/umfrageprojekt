@@ -33,8 +33,14 @@ class ReplyController extends DB
         echo json_encode($reply);
     }
 
-    public function newCommentReply($params)
+    public function newCommentReply()
     {
-       $this->ReplyRepository->newReply($params);
+        $body = json_decode(file_get_contents('php://input'), true);
+        if (!$body) {
+            http_response_code(400);
+            echo json_encode(["message" => "Invalid input"]);
+            return;
+        }
+       $this->ReplyRepository->newReply($body);
     }
 }

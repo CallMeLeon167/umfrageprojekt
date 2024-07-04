@@ -78,25 +78,46 @@
      * @param Comment $comment The comment to create the reply for.
      * @throws \Exception
      */
-    public function newReply(Comment $comment): void
+    public function newReply($data): void
     {
         try {
 
-            foreach ($comment->replys as $reply) {
-                $stmt = <<<SQL
-                    INSERT INTO Reply (r_commentID, r_accountID, r_replyText, r_likeCount)
-                    VALUES (?, ?, ?, ?)
-                SQL;
-                $result = $this->dbConn->sql2db($stmt, [
-                    $comment->commentID,
-                    $reply->accountID ?? "null",
-                    $reply->replyText ?? "null",
-                    $reply->likeCount ?? "null"
-                ]);
-                $reply->id = $result['insert_id'];
-            }
+            $reply = new Reply();
+            $reply = $this->parseReplyFromJson($data);
+
+               $stmt = <<<SQL
+               INSERT INTO Reply (r_accountID, r_commentID, r_replyText, r_likeCount)
+               VALUES (?, ?, ?, ?)
+           SQL;
+           $result = $this->dbConn->sql2db($stmt, [
+               $reply->accountID ?? "null",
+               $reply->commentID ?? "null",
+               $reply->replyText?? "null",
+               $reply->likeCount ?? "null",
+               
+
+           ]);
+               $reply->replyID = $result['insert_id'];
+               //$this->createReplysForComment($comment);
+           
+       } catch (\Exception $e) {
+           throw new \Exception("Error creating reply: " . $e->getMessage(), 500);
+       }
+    }
+    private function parseReplyFromJson($data): Reply
+    {
+        try {
+            $reply = new Reply();
+            $reply->accountID = $data['accountId'] ?? null;
+            $reply->commentID = $data['commentId'] ?? null;
+            $reply->replyText = $data['replytext'] ?? null;
+            $reply->likeCount = $data['likecount'] ?? null;
+            //$comment->Replys = $this->parseReplysFromJSON($data);
+            
+            return $reply;
         } catch (\Exception $e) {
-            throw new \Exception("Error creating replys: " . $e->getMessage(), 500);
+            throw new \Exception("Error parsing comment from JSON: " . $e->getMessage(), 500);
         }
+
     }
     }

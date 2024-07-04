@@ -55,6 +55,7 @@ class SurveyRepository extends DB
             SELECT s.id AS SurveyID, 
                    q.q_questionText AS Question,
                    q.id AS QuestionId,
+                   ao.id AS AnswerOptionId,
                    ao.ao_answerOptionText AS AnswerOption,
                    ur.ur_response AS UserResponse,
                    a.a_username AS Username

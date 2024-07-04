@@ -3,10 +3,9 @@
 namespace CML\Controllers;
 
 use CML\Classes\DB;
-use CML\DataStructure\Comment;
 use CML\DataStructure\CommentRepository;
 
-class QuestionController extends DB
+class CommentController extends DB
 {
     private CommentRepository $commentRepository;
 
@@ -31,5 +30,16 @@ class QuestionController extends DB
             return;
         }
         echo json_encode($comment);
+    }
+
+    public function newSurveyComment()
+    {
+        $body = json_decode(file_get_contents('php://input'), true);
+        if (!$body) {
+            http_response_code(400);
+            echo json_encode(["message" => "Invalid input"]);
+            return;
+        }
+        $this->commentRepository->createComments($body);
     }
 }

@@ -3,6 +3,7 @@ require_once 'app/admin/cml-load.php';
 
 use CML\Classes\{Router, DB, Login};
 
+
 $db = new DB();
 $router = new Router();
 $user = new Login();
@@ -20,6 +21,17 @@ header("Access-Control-Allow-Methods: 'GET, POST, PUT, DELETE, OPTIONS'", true);
 header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, Cookie', true);
 header("Access-Control-Allow-Credentials: true", true);
 
+include 'routes/answerOptionRoutes.php';
+include 'routes/categoryRoutes.php';
+include 'routes/loginRoutes.php';
+include 'routes/questionRoutes.php';
+include 'routes/registerRoutes.php';
+include 'routes/statsRoutes.php';
+include 'routes/surveyParticipationRoutes.php';
+include 'routes/surveyRoutes.php';
+include 'routes/userResponseRoutes.php';
+include 'routes/commentRoutes.php';
+
 $router->addRoute('*', '/sql', function () use ($router, $db) {
     $name = "callmeleon";
     $t = $db->sql2db_file("SELECT_USERBYUSERNAME.sql", [$name]);
@@ -29,128 +41,5 @@ $router->addRoute('*', '/sql', function () use ($router, $db) {
 $router->addRoute('GET', '/', function () use ($router) {
     $router->isApi();
     echo json_encode(["message" => "Hey Na!!!"]);
-});
-
-$router->addRoute('OPTIONS', '/register', function () use ($router, $user) {
-});
-
-$router->addRoute('POST', '/register', function () use ($router, $user) {
-    $router->isApi();
-    $username = $_POST["username"] ?? null;
-    $email = $_POST["email"] ?? null;
-    $password = $_POST["password"] ?? null;
-    if (!$username || !$email || !$password) {
-        http_response_code(400);
-        echo json_encode(["message" => "Please fill in all fields"], JSON_PRETTY_PRINT);
-    }
-    $user->register($username, $email, $password);
-});
-
-
-// zum ändern von accountdaten
-$router->addRoute('PUT', '/register', function () use ($router, $user) {
-    $router->isApi();
-});
-
-$router->addRoute('OPTIONS', '/login', function () use ($router, $user) {
-});
-$router->addRoute('*', '/login', function () use ($router, $user) {
-    $router->isApi();
-    $username = $_POST["username"] ?? null;
-    $password = $_POST["password"] ?? null;
-    if (!$username || !$password) {
-        http_response_code(400);
-        echo json_encode(["message" => "Please fill in all fields"], JSON_PRETTY_PRINT);
-    }
-    $user->login($username, $password);
-});
-
-$router->addRoute('OPTIONS', '/survey/:id', function ($id) use ($router, $user) {
-});
-$router->addRoute('OPTIONS', '/survey', function () use ($router, $user) {
-});
-$router->addRoute('OPTIONS', '/survey-evaluation', function () {
-});
-$router->addRoute('OPTIONS', '/survey-evaluation/:id', function ($id) use ($router) {
-});
-
-//
-$router->addRoute('GET', '/survey', function () use ($router) {
-    $router->isApi();
-    $router->useController("SurveyController", "getAllSurveys");
-});
-//zum abrufen von surveys
-$router->addRoute('GET', '/survey/:id', function ($id) use ($router) 
-{
-    $router->isApi();
-    $router->useController("SurveyController", "getSurveyById", ['id' => $id]);
-});
-
-//survey erstellen
-$router->addRoute('POST', '/survey', function () use ($router) {
-    $router->isApi();
-    $router->useController("SurveyController", "newSurvey");
-});
-
-//survey löschen
-$router->addRoute('DELETE', '/survey/:id', function ($id) use ($router) {
-    $router->isApi();
-    $router->useController("SurveyController", "deleteSurvey", ['id' => $id]);
-});
-
-//survey evaluation
-$router->addRoute('GET', '/survey-evaluation/:id', function ($id) use ($router) {
-    $router->isApi();
-    $router->useController("SurveyController", "surveyResults", ['id' => $id]);
-});
-
-$router->addRoute('OPTIONS', '/surveyParticipation', function () use ($router) {
-});
-
-//surveyParticipation erstellen
-$router->addRoute('POST', '/surveyParticipation', function () use ($router) {
-    $router->isApi();
-    $router->useController("SurveyParticipationController", "submitSurveyParticipation");
-});
-
-//daten für statansicht generieren
-$router->addRoute('GET', '/stats', function () use ($router) {
-    $router->isApi();
-    echo $router->useController("StatsController", "getStatsData");
-});
-
-//abrufen der kateogrien (ohne verknüpfungen)
-$router->addRoute('GET', '/category', function () use ($router) {
-    $router->isApi();
-    $router->useController("CategoryController", "getCategories", []);
-});
-
-//kategorie erstellen
-$router->addRoute('POST', '/category', function () use ($router) {
-    $router->isApi();
-    $router->useController("CategoryController", "createCategory", []);
-});
-
-$router->addRoute('OPTIONS', '/category', function () {
-});
-//$router->addRoute('OPTIONS', '/category/:id', function () {});
-
-$router->addRoute('DELETE', '/category/:id', function ($id) use ($router) {
-    $router->isApi();
-    $router->useController("CategoryController", "deleteCategory", ['id' => $id]);
-});
-
-$router->addRoute('GET', '/question', function () use ($router) {
-    $router->isApi();
-    $router->useController("QuestionController", "getAllQuestions");
-});
-
-$router->addRoute('GET', '/answerOption', function () use ($router) {
-    $router->isApi();
-    $router->useController("AnswerOptionController", "getAllAnswerOptions");
-});
-$router->addRoute('GET', '/userResponse', function () use ($router) {
-    $router->isApi();
-    $router->useController("StatsController", "getUserResponses");
 });
 

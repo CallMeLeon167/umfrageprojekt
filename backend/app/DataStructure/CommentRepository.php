@@ -70,5 +70,56 @@
             throw new \Exception("Error fetching survey comments: " . $e->getMessage(), 500);
         }
     }
+    /**
+     * Create comments.
+     *
+     * This method creates commtent entries in the DB for a survey.
+     *
+     * @param  $data The json to create the comments for.
+     * @throws \Exception
+     */
+    public function createComments($data): void
+    {
+        try {
+
+             $comment = new Comment();
+             $comment = $this->parseCommentFromJson($data);
+
+                $stmt = <<<SQL
+                INSERT INTO Comment (com_accountID, com_constitutionDate, com_surveyID, com_likeCount, com_commentText)
+                VALUES (?, ?, ?, ?, ?)
+            SQL;
+            $result = $this->dbConn->sql2db($stmt, [
+                $comment->accountID ?? "null",
+                $comment->constitutionDate ?? "null",
+                $comment->surveyID?? "null",
+                $comment->likeCount ?? "null",
+                $comment->commentText ?? "null"
+
+            ]);
+                $comment->commentID = $result['insert_id'];
+                //$this->createReplysForComment($comment);
+            
+        } catch (\Exception $e) {
+            throw new \Exception("Error creating comments: " . $e->getMessage(), 500);
+        }
+    }
+
+    private function parseCommentFromJson($data): Comment
+    {
+        try {
+            $comment = new Comment();
+            $comment->accountID = $data['accountId'] ?? null;
+            $comment->commentText = $data['commenttext'] ?? null;
+            $comment->constitutionDate = $data['constitutiondate'] ?? null;
+            $comment->surveyID = $data['surveyId'] ?? null;
+            //$comment->Replys = $this->parseReplysFromJSON($data);
+            
+            return $comment;
+        } catch (\Exception $e) {
+            throw new \Exception("Error parsing comment from JSON: " . $e->getMessage(), 500);
+        }
+
+    }
 
 }

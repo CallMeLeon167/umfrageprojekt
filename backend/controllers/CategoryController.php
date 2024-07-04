@@ -5,9 +5,21 @@ namespace CML\Controllers;
 use CML\Classes\DB;
 use CML\DataStructure\CategoryRepository;
 
-class CategoryController extends DB {
-
+/**
+ * Class CategoryController
+ *
+ * This class extends the DB class and is responsible for handling operations related to categories.
+ * It uses the CategoryRepository to interact with the database.
+ */
+class CategoryController extends DB 
+{
+    /**
+     * @var CategoryRepository $categoryRepository
+     *
+     * An instance of the categoryRepository class.
+     */
     private CategoryRepository $categoryRepository;
+    
     public function __construct() {
         parent::__construct();
         $this->categoryRepository = new CategoryRepository();
@@ -17,7 +29,6 @@ class CategoryController extends DB {
     {
         $categories = $this->categoryRepository->getCategories();
         echo json_encode($categories);
-//        echo $this->sql2json_file("SELECT_CATEGORYS.sql");
     }
 
     public function deleteCategory($data)

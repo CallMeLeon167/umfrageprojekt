@@ -8,7 +8,7 @@
       </div>
       <div>
         <label for="category">Umfragenkategorie:</label>
-        <select id="category" :disabled="categories.length === 0">
+        <select id="category" :disabled="categories.length === 0" v-model="form.categoryId">
           <option v-for="category in categories" :key="category.id" :value="category.id">
             {{ category.name }} ({{ category.type }})
           </option>
@@ -16,17 +16,17 @@
       </div>
       <div>
         <label for="start_date">Start Date</label>
-        <input type="date" id="start_date" />
+        <input type="date" id="start_date" v-model="form.startdate" />
       </div>
       <div>
         <label for="end_date">End Date</label>
-        <input type="date" id="end_date" />
+        <input type="date" id="end_date" v-model="form.enddate" />
       </div>
 
       <!-- status -->
       <div>
         <label for="status">Status</label>
-        <select id="status">
+        <select id="status" v-model="form.status">
           <option v-bind:key="option" :value="option" v-for="option in surveyStateOptions">
             {{ option }}
           </option>
@@ -66,6 +66,10 @@ const API_URL = import.meta.env.VITE_API_URL
 
 const form = ref({
   title: '',
+  categoryId: '',
+  startdate: '',
+  enddate: '',
+  status: undefined,
   questions: [] as SurveyQuestion[]
 });
 

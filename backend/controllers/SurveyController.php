@@ -123,7 +123,15 @@ class SurveyController extends DB
             echo json_encode(["message" => "Invalid input"]);
             return;
         }
-        $this->surveyRepository->createSurvey($body);
+        try {
+            $newSurvey = $this->surveyRepository->createSurvey($body);
+        } catch (\Exception $e) {
+            http_response_code(500);
+            echo json_encode(["message" => "Error creating survey", "error" => $e->getMessage()]);
+            return;
+        }
+        http_response_code(201);
+        echo json_encode(["message" => "Survey created", "survey" => $newSurvey]);
     }
 
     /**

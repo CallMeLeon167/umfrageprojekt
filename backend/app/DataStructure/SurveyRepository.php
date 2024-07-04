@@ -69,8 +69,8 @@ class SurveyRepository extends DB
             $result = $this->dbConn->sql2db($stmt, [
                 $survey->topic ?? "null",
                 $survey->type ?? "null",
-                $survey->startdate ? date('Y-m-d H:i:s', $survey->startdate) : date('Y-m-d H:i:s'),
-                $survey->enddate ? date('Y-m-d H:i:s', $survey->enddate) : date('Y-m-d H:i:s'),
+                $survey->startdate ? $survey->startdate->format('Y-m-d H:i:s') : date('Y-m-d H:i:s'),
+                $survey->enddate ? $survey->enddate->format('Y-m-d H:i:s') : date('Y-m-d H:i:s'),
                 $survey->status ?? "open",
                 $survey->categoryID ?? 1
             ]);
@@ -96,12 +96,21 @@ class SurveyRepository extends DB
     {
         try {
             $survey = new Survey();
-            $survey->topic = $data['topic'] ?? null;
+            $survey->topic = $data['title'] ?? null;
             $survey->type = $data['type'] ?? null;
-            $survey->startdate = $data['startdate'] ?? null;
-            $survey->enddate = $data['enddate'] ?? null;
+            if (isset($data['startdate'])) {
+                $survey->startdate = \DateTime::createFromFormat('Y-m-d', $data['startdate']);
+            } else {
+                $survey->startdate = null;
+            }
+
+            if (isset($data['enddate'])) {
+                $survey->enddate = \DateTime::createFromFormat('Y-m-d', $data['enddate']);
+            } else {
+                $survey->enddate = null;
+            }
             $survey->status = $data['status'] ?? null;
-            $survey->categoryID = $data['categoryID'] ?? null;
+            $survey->categoryID = $data['categoryId'] ?? null;
             $survey->questions = $this->parseQuestionsFromJSON($data);
             return $survey;
         } catch (\Exception $e) {
@@ -128,7 +137,7 @@ class SurveyRepository extends DB
             $questions = [];
             foreach ($data['questions'] as $questionData) {
                 $question = new Question();
-                $question->questionText = $questionData['question'] ?? null;
+                $question->questionText = $questionData['text'] ?? null;
                 $question->questionType = $questionData['type'] ?? null;
                 $question->answerOptions = $this->parseAnswersFromJSON($questionData);
                 $questions[] = $question;
@@ -159,7 +168,7 @@ class SurveyRepository extends DB
         $answers = [];
         foreach ($data['answeroptions'] as $answerData) {
             $answer = new AnswerOption();
-            $answer->answerOptionText = $answerData ?? null;
+            $answer->answerOptionText = $answerData["text"] ?? null;
             $answers[] = $answer;
         }
         return $answers;

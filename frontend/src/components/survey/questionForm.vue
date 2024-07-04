@@ -9,11 +9,11 @@
       <label for="question_type">Frage Typ</label>
       <select id="question_type" v-model="question.type">
         <option value="text">Text</option>
-        <option value="radio">Radio</option>
-        <option value="checkbox">Checkbox</option>
+        <option value="single_choice">Radio</option>
+        <option value="multiple_choice">Checkbox</option>
       </select>
       <ul>
-        <li v-for="option in question.options" :key="JSON.stringify(option)">
+        <li v-for="option in question.answeroptions" :key="JSON.stringify(option)">
           {{ option }}
         </li>
       </ul>
@@ -30,10 +30,10 @@ import { ref } from 'vue'
 import { defineEmits } from 'vue'
 import { SurveyQuestionType, type SurveyQuestion, type SurveyAnswerOption } from '@/types/survey'
 
-const question = ref<SurveyQuestion>({
+const question = ref<Object>({
   text: '',
   type: SurveyQuestionType.TEXT,
-  options: []
+  answeroptions: []
 })
 const answerInput = ref('')
 
@@ -45,7 +45,7 @@ function onAddAnswer() {
     type: SurveyQuestionType.TEXT,
     text: answerInput.value
   }
-  question.value.options.push(option)
+  question.value.answeroptions.push(option)
   answerInput.value = ''
 }
 

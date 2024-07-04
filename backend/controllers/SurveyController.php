@@ -4,8 +4,6 @@ namespace CML\Controllers;
 
 use CML\Classes\DB;
 use CML\Classes\Functions\Functions;
-use CML\DataStructure\Question;
-use CML\DataStructure\Survey;
 use CML\DataStructure\SurveyParticipationRepository;
 use CML\DataStructure\SurveyRepository;
 use CML\DataStructure\UserResponseRepository;
@@ -83,7 +81,6 @@ class SurveyController extends DB
             echo json_encode(["message" => "Invalid input"]);
             return;
         }
-        // Get URL parameters
         
         $params = $this->getQueryParams("populateQuestions","populateAnswers","populateComments","populateReplys");
 
@@ -132,14 +129,12 @@ class SurveyController extends DB
     public function surveyResults(array $params): void
     {
         $surveyId = $params['id'] ?? null;
-        // Check if the survey ID is provided
         if (!$surveyId) {
             http_response_code(400);
             echo json_encode(["message" => "Invalid Survey Id"]);
             return;
         }
 
-        // fetch all survey participations
         $participations = $this->participationRepository->getParticipationsForSurvey($surveyId);
         if (!$participations) {
             http_response_code(404);

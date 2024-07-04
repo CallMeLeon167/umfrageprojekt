@@ -72,4 +72,5 @@ export type Comment = {
   likeCount: number;
   constitutionDate: Date;
   surveyID: string;
+  accountName?: string | undefined;
 };

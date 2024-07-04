@@ -87,7 +87,12 @@ class SurveyController extends DB
         
         $params = $this->getQueryParams("populateQuestions","populateAnswers","populateComments","populateReplys");
 
-        $survey = $this->surveyRepository->getSurveyById($data['id'], $params["populateQuestions"] ?? false, $params["populateAnswers"] ?? false, $params["populateComments"] ?? false, $params["populateReplys"] ?? false);
+        $survey = $this->surveyRepository->getSurveyById($data['id'],
+            $params["populateQuestions"] ?? false,
+            $params["populateAnswers"] ?? false,
+            $params["populateComments"] ?? false,
+            $params["populateReplys"] ?? false
+        );
         if (!$survey) {
             http_response_code(404);
             echo json_encode(["message" => "Survey not found"]);

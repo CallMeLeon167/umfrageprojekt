@@ -21,7 +21,7 @@
       <span v-if="commentsLoading">Lade Kommentare...</span>
       <ul v-else>
         <li v-for="(comment, index) in comments" :key="index">
-          <span>{{ comment.accountID }} : {{ comment.commentText }}</span>
+          <span>{{ comment.accountName }} : {{ comment.commentText }}</span>
         </li>
       </ul>
     </div>

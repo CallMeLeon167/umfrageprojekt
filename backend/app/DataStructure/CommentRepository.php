@@ -32,7 +32,7 @@
             foreach ($dbResult as $row) {
                 $comment = new Comment();
                 $comment->hydrateFromDBRow($row);
-                $comment->accountName = $row["a_username"];
+                $comment->accountName = $row["a_username"] ?? null;
                 $comments[] = $comment;
             }
             return $comments;

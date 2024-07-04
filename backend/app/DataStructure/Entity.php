@@ -5,7 +5,7 @@ namespace CML\DataStructure;
 /**
  * Class Entity
  *
- * This abstract class offers the managing the value assignment for the DB pattern 
+ * This abstract class offers functions to manage the value assignment for the DB pattern 
  */
 abstract class Entity 
 {

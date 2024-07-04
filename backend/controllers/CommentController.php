@@ -3,6 +3,7 @@
 namespace CML\Controllers;
 
 use CML\Classes\DB;
+use CML\Classes\Functions\Functions;
 use CML\DataStructure\CommentRepository;
 
 /**
@@ -18,6 +19,8 @@ class CommentController extends DB
      *
      * An instance of the commentRepository class.
      */
+    use Functions;
+
     private CommentRepository $commentRepository;
 
     public function __construct()
@@ -26,9 +29,11 @@ class CommentController extends DB
         $this->commentRepository = new CommentRepository();
     }
 
-    public function getAllComments($params)
+    public function getAllComments()
     {
-        $comments = $this->commentRepository->getComments();
+        $params = $this->getQueryParams("surveyId");
+        $surveyId = $params["surveyId"] ?? null;
+        $comments = $this->commentRepository->getComments($surveyId);
         echo json_encode($comments);
     }
 

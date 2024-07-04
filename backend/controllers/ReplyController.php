@@ -5,9 +5,19 @@ namespace CML\Controllers;
 use CML\Classes\DB;
 use CML\DataStructure\ReplyRepository;
 
-
+/**
+ * Class ReplyController
+ *
+ * This class extends the DB class and is responsible for handling operations related to replys.
+ * It uses the ReplyRepository to interact with the database.
+ */
 class ReplyController extends DB
 {
+    /**
+     * @var ReplyRepository $ReplyRepository
+     *
+     * An instance of the ReplyRepository class.
+     */
     private ReplyRepository $ReplyRepository;
 
     public function __construct()
@@ -33,6 +43,11 @@ class ReplyController extends DB
         echo json_encode($reply);
     }
 
+    /**
+     * Create a reply.
+     *
+     * This method creates a new reply for a comment in the database.
+     */
     public function newCommentReply()
     {
         $body = json_decode(file_get_contents('php://input'), true);

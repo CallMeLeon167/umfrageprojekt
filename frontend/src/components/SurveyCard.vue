@@ -1,6 +1,6 @@
 <template>
   <div class="survey-card">
-    <div>
+    <div class="survey-card_body">
       <h3>{{ survey.topic }}</h3>
       <p>{{ survey.type }}</p>
     </div>
@@ -33,6 +33,10 @@ const props = defineProps({
   border-radius: 7px;
   border: 2px solid var(--border);
   margin: 20px;
+}
+
+.survey-card_body {
+  margin-bottom: 10px;
 }
 
 .survey-card h3,

@@ -9,10 +9,7 @@
       <div class="top-voters">
         <div class="top-voter" v-for="voter in topVoters" :key="voter.id">
           <div class="voter-content">
-            <Avatar
-              imageUrl="https://i0.wp.com/pbs.twimg.com/media/FtsxswzaUAAZXJj.jpg:large?ssl=1"
-              class="voter-img"
-            >
+            <Avatar imageUrl="https://i0.wp.com/pbs.twimg.com/media/FtsxswzaUAAZXJj.jpg:large?ssl=1" class="voter-img">
             </Avatar>
             <div class="voter-info">
               <h4>{{ voter.username }}</h4>
@@ -79,6 +76,10 @@ onMounted(async () => {
   width: 30%;
 }
 
+.home__down {
+  width: 100%;
+}
+
 .btn-right {
   display: flex;
   justify-content: flex-end;
@@ -134,6 +135,7 @@ onMounted(async () => {
 }
 
 @media (max-width: 768px) {
+
   .home__left,
   .home__right {
     width: 100%;

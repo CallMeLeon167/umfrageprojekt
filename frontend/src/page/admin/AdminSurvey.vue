@@ -1,8 +1,8 @@
 <template>
-  <h2>Kategorieles</h2>
-  <button @click="createSurvey">Umfägele erstellen</button>
+  <h2>Umfragen</h2>
+  <button @click="createSurvey">Umfragen erstellen</button>
 
-  <button @click="fetchSurveys">Umfägeles laden</button>
+  <button @click="fetchSurveys">Umfragen laden</button>
   <table class="survey-table" v-if="!isLoading">
     <thead>
       <tr>
@@ -38,13 +38,8 @@
     </tbody>
   </table>
   <div v-else>Lade Umfägeles...</div>
-  <confirmModal
-    :show="showConfirmModal"
-    @confirm="deleteSurvey"
-    :title="modalOptions.title"
-    :description="modalOptions.description"
-    :confirm-text="modalOptions.confirmText"
-  />
+  <confirmModal :show="showConfirmModal" @confirm="deleteSurvey" :title="modalOptions.title"
+    :description="modalOptions.description" :confirm-text="modalOptions.confirmText" />
 </template>
 
 <script setup lang="ts">

@@ -1,6 +1,6 @@
 <template>
-  <h2>Kategorieles</h2>
-  <button @click="createCategory">Kategorie erstellen</button>
+  <h2>Kategorien</h2>
+  <button @click="createCategory">Kategorien erstellen</button>
   <PopupCreateCategory :show="showPopup" @created="onCategoryCreated" @close="showPopup = false" />
   <button @click="fetchCategories">Kategorien laden</button>
   <table class="category-table" v-if="!isLoading">

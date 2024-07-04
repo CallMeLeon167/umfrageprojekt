@@ -3,11 +3,11 @@
     <h3>Frage hinzufügen</h3>
     <div>
       <label for="question">Frage</label>
-      <input type="text" id="question_text" />
+      <input type="text" id="question_text" v-model="question.text" />
     </div>
     <div id="questions_answers">
       <label for="question_type">Frage Typ</label>
-      <select id="question_type">
+      <select id="question_type" v-model="question.type">
         <option value="text">Text</option>
         <option value="radio">Radio</option>
         <option value="checkbox">Checkbox</option>
@@ -53,7 +53,6 @@ function onAddQuestion() {
   console.log(question.value)
   emits('question_added', question.value)
   question.value = {
-    text: '',
     type: SurveyQuestionType.TEXT,
     options: []
   }

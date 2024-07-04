@@ -85,7 +85,6 @@ async function loadCategories() {
     method: 'GET'
   });
   categories.value = response || [];
-
 }
 
 async function onSubmitSurvey() {
@@ -96,7 +95,7 @@ async function onSubmitSurvey() {
     body: JSON.stringify(form.value)
   })
   console.log(response)
-  if (response.ok) {
+  if (response) {
     alert('Survey created')
   } else {
     alert('Error creating survey')

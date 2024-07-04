@@ -26,7 +26,7 @@ export function useAuth() {
                 },
                 body: new URLSearchParams({username, email, password})
             })
-            if (response.ok) {
+            if (response) {
                 console.log('Registration successful:', response)
                 await login(username, password);
             }

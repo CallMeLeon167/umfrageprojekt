@@ -15,10 +15,14 @@
             $this->dbConn = new DB();
         }
 
-        public function getComments(): array
+        public function getComments(?string $surveyId = null)
         {
-            $dbResult = $this->dbConn->sql2array("SELECT * FROM Comment");
-            /* @var $comments Comment[] */
+            if ($surveyId) {
+                $dbResult = $this->dbConn->sql2array("SELECT * FROM Comment WHERE com_surveyID = ?", [$surveyId]);
+            } else {
+                $dbResult = $this->dbConn->sql2array("SELECT * FROM Comment");
+            }
+            /** @var $comments Comment[] */
             $comments = [];
             foreach ($dbResult as $row) {
                 $comment = new Comment();

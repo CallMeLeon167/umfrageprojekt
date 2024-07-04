@@ -47,7 +47,38 @@ class SurveyRepository extends DB
 
         return $survey;
     }
-
+    public function getSurveyResponsesByID($surveyID)
+    {
+        try
+        {
+            $stmt = <<<SQL
+            SELECT s.id AS SurveyID, 
+                   q.q_questionText AS Question,
+                   ao.ao_answerOptionText AS AnswerOption,
+                   ur.ur_response AS UserResponse,
+                   a.a_username AS Username
+            FROM 
+                Survey s
+                Join
+                Question q on s.id = q.q_surveyID
+                LEFT JOIN
+                UserResponse ur ON q.id = ur.ur_questionID
+                LEFT JOIN
+                AnswerOption ao ON ur.ur_answerOptionID = ao.id
+                LEFT JOIN
+                SurveyParticipation sp ON ur.ur_surveyParticipationID = sp.id
+                LEFT JOIN
+                    Account a ON sp.sp_accountID = a.id
+                where
+                s.id = $surveyID
+        SQL;
+            $result = $this->dbConn->sql2array($stmt);
+            return  $result;
+        }
+        catch (\Exception $e) {
+            throw new \Exception("Error parsing Responses from DB: " . $e->getMessage(), 500);
+        }
+    }
     /**
      * Create a survey.
      *

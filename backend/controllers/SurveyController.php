@@ -147,7 +147,8 @@ class SurveyController extends DB
             echo json_encode(["message" => "Invalid Survey Id"]);
             return;
         }
-
+        $result = $this->surveyRepository->getSurveyResponsesByID($surveyId);
+        /*
         $participations = $this->participationRepository->getParticipationsForSurvey($surveyId);
         if (!$participations) {
             http_response_code(404);
@@ -162,7 +163,7 @@ class SurveyController extends DB
             $result["answers"][$answer->questionID][] = $answer->answerOptionID ?
                 $answer->answerOptionID : $answer->response;
         }
-        $result["participations"] = count($participations);
+        $result["participations"] = count($participations);*/
 
         echo json_encode($result);
     }

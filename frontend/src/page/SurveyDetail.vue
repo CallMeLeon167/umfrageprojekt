@@ -1,6 +1,7 @@
 <template>
-  <h2>Auswertung Umfage {{ survey?.id }}</h2>
-  <div v-if="!surveyLoading && !evaluationLoading">
+  <span v-if="error" class="error">{{ error }}</span>
+  <h2 v-if="!error">Auswertung Umfage {{ survey?.id }}</h2>
+  <div v-if="!surveyLoading && !evaluationLoading && !error">
     <h3>{{ survey?.topic }}</h3>
     <span>
       {{ evaluation?.participations }}
@@ -33,10 +34,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRoute } from "vue-router";
-import { ofetch } from "ofetch";
-import type { Survey, SurveyEvaluation, Comment } from "@/types/survey";
+import {ref} from "vue";
+import {useRoute} from "vue-router";
+import {FetchError, ofetch} from "ofetch";
+import type {Survey, SurveyEvaluation, Comment} from "@/types/survey";
 
 const route = useRoute();
 
@@ -48,6 +49,7 @@ const evaluation = ref<SurveyEvaluation | null>(null);
 const comments = ref<Comment[]>([]);
 const evaluationLoading = ref(true);
 const commentsLoading = ref(true);
+const error = ref("");
 
 async function fetchSurvey() {
   survey.value = await ofetch(`/survey/${surveyId}`, {
@@ -81,14 +83,26 @@ async function fetchComments() {
 }
 
 async function fetchEvaluation() {
-  evaluation.value = await ofetch(`/survey-evaluation/${surveyId}`, {
-    method: "GET",
-    baseURL: import.meta.env.VITE_API_URL,
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  evaluationLoading.value = false;
+  try {
+    evaluation.value = await ofetch(`/survey-evaluation/${surveyId}`, {
+      method: "GET",
+      baseURL: import.meta.env.VITE_API_URL,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    evaluationLoading.value = false;
+  } catch (err) {
+    const fetchError = err as FetchError;
+    if (fetchError.response?.status === 404) {
+      error.value = "An dieser Umfrage hat noch niemand teilgenommen.";
+      evaluationLoading.value = false;
+      surveyLoading.value = false;
+    } else {
+      error.value = "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut." + fetchError.message;
+    }
+    console.error(error);
+  }
 }
 
 fetchSurvey();
@@ -113,6 +127,16 @@ span {
   display: block;
   color: #666;
   margin-bottom: 20px;
+}
+
+.error {
+  color: white;
+  text-align: center;
+  background: #ff6969;
+  width: 70%;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 8px;
 }
 
 #survey-evaluation {

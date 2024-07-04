@@ -10,7 +10,7 @@
         <label for="category">Umfragenkategorie:</label>
         <select id="category" :disabled="categories.length === 0">
           <option v-for="category in categories" :key="category.id" :value="category.id">
-            {{ category.cat_name }}
+            {{ category.name }} ({{ category.type }})
           </option>
         </select>
       </div>

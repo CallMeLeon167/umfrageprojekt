@@ -113,6 +113,7 @@
             $comment->commentText = $data['commenttext'] ?? null;
             $comment->constitutionDate = $data['constitutiondate'] ?? null;
             $comment->surveyID = $data['surveyId'] ?? null;
+            $comment->likeCount = $data['likecount'] ?? null;
             //$comment->Replys = $this->parseReplysFromJSON($data);
             
             return $comment;

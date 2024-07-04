@@ -1,7 +1,7 @@
 <template>
   <header>
     <RouterLink to="/" class="header__left">
-      <img src="/src/assets/olefant.webp" alt="logo" class="logo" />
+      <img src="/src/assets/logo.png" alt="logo" class="logo" />
       <h3>Umfrage Portal</h3>
     </RouterLink>
 
@@ -15,11 +15,8 @@
             <RouterLink to="/survey">Umfragen</RouterLink>
           </li>
           <li>
-            <RouterLink
-              to="/admin"
-              v-if="auth.session.user.role && adminRoles.includes(auth.session.user.role)"
-              >Admin</RouterLink
-            >
+            <RouterLink to="/admin" v-if="auth.session.user.role && adminRoles.includes(auth.session.user.role)">Admin
+            </RouterLink>
           </li>
           <li>
             <a @click="auth.logout" href="#">Logout</a>
@@ -27,15 +24,12 @@
         </ul>
       </nav>
       <div class="user_wrapper">
-        <Avatar
-          imageUrl="https://unchainedcrypto.com/wp-content/uploads/2023/07/pfp-nft.png"
-          class="header__avatar"
-        >
+        <Avatar imageUrl="https://i0.wp.com/pbs.twimg.com/media/FtsxswzaUAAZXJj.jpg:large?ssl=1" class="header__avatar">
         </Avatar>
         <div class="user_info">
           <span class="name">{{ auth.session.user.username }}</span>
           <span class="role" v-if="auth.session.user.role">({{ auth.session.user.role }})</span>
-          <span class="role" v-else>(Keine Rolle)</span>
+          <span class="role" v-else>(User)</span>
         </div>
       </div>
     </div>

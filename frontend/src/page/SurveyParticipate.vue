@@ -1,33 +1,35 @@
 <template>
-  <p v-if="errors.length > 0" class="error-notification">
-    Errors: {{ errors }}
-  </p>
-  <div class="survey-head">
-    <div>
-      <h2 class="title">{{ survey?.topic }}</h2>
-      <span class="subtitle">{{ survey?.type }}</span>
+  <div class="survey-container">
+    <p v-if="errors.length > 0" class="error-notification">
+      Errors: {{ errors }}
+    </p>
+    <div class="survey-head">
+      <div>
+        <h2 class="title">{{ survey?.topic }}</h2>
+        <span class="subtitle">{{ survey?.type }}</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="self-end">Status: {{ survey?.status }}</span>
+        <span class="self-end">{{ survey?.startdate }} - {{ survey?.enddate }}</span>
+      </div>
     </div>
-    <div class="flex flex-col">
-      <span class="self-end">Status: {{ survey?.status }}</span>
-      <span class="self-end">{{ survey?.startdate }} - {{ survey?.enddate }}</span>
-    </div>
+    <form v-if="survey" @submit.prevent="onSubmitSurvey">
+      <question v-for="question in survey.questions" :key="question.questionId" :question="question"
+        @answer_added="onAnswerAdded" />
+      <button type="submit">Submit</button>
+    </form>
   </div>
-  <form v-if="survey" @submit.prevent="onSubmitSurvey">
-    <question v-for="question in survey.questions" :key="question.questionId" :question="question"
-              @answer_added="onAnswerAdded"/>
-    <button type="submit">Submit</button>
-  </form>
 
 </template>
 
 <script setup lang="ts">
 
-import {FetchError, ofetch} from 'ofetch';
-import {ref} from 'vue';
-import {useRoute, useRouter} from 'vue-router';
-import type {Survey} from "@/types/survey";
+import { FetchError, ofetch } from 'ofetch';
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import type { Survey } from "@/types/survey";
 import Question from "@/components/survey/question.vue";
-import {useAuth} from "@/composables/useAuth";
+import { useAuth } from "@/composables/useAuth";
 
 const route = useRoute();
 const router = useRouter();
@@ -67,7 +69,7 @@ function onAnswerAdded(questionId: string, answerId: string, answer?: string) {
     errors.value.push('Question ID is missing');
     return;
   }
-  answers.value.set(questionId, {answerId, answer});
+  answers.value.set(questionId, { answerId, answer });
 }
 
 async function onSubmitSurvey() {
@@ -77,7 +79,7 @@ async function onSubmitSurvey() {
     return;
   }
   // convert answers to json {questionId, answerId, answer}}
-  const answersJson = Array.from(answers.value).map(([questionId, {answerId, answer}]) => ({
+  const answersJson = Array.from(answers.value).map(([questionId, { answerId, answer }]) => ({
     questionId,
     answerId,
     answer
@@ -102,7 +104,7 @@ async function onSubmitSurvey() {
     });
     // redirect to survey list
     await router.push('/survey');
-  // e of type FetchError
+    // e of type FetchError
   } catch (e) {
     const error = e as FetchError;
     switch (error.status) {
@@ -134,7 +136,7 @@ fetchSurvey();
 
 </script>
 
-<style>
+<style scoped>
 .title {
   font-size: 1.5em;
   margin-bottom: .2em;
@@ -168,7 +170,54 @@ fetchSurvey();
   flex-direction: column;
 }
 
+.survey-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.survey-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+  color: #333;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #777;
+}
+
 .self-end {
   align-self: flex-end;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #555;
+}
+
+form button {
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+form button:hover {
+  background-color: #555;
 }
 </style>

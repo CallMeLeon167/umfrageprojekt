@@ -5,7 +5,6 @@
       <label for="question">Frage</label>
       <input type="text" id="question_text" />
     </div>
-    <br />
     <div id="questions_answers">
       <label for="question_type">Frage Typ</label>
       <select id="question_type">

@@ -95,3 +95,80 @@ fetchSurvey();
 fetchEvaluation();
 fetchComments();
 </script>
+
+
+<style scoped>
+h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h3 {
+  color: #444;
+  margin-bottom: 10px;
+}
+
+span {
+  display: block;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+#survey-evaluation {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+#survey-evaluation h4 {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+#survey-evaluation ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#survey-evaluation li {
+  background: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#comments {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#comments h3 {
+  color: #444;
+}
+
+#comments ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#comments li {
+  background: #f9f9f9;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+#loading {
+  text-align: center;
+  color: #777;
+  font-size: 18px;
+  margin-top: 20px;
+}
+</style>

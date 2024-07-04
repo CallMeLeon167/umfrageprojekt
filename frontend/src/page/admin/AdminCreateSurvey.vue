@@ -1,5 +1,5 @@
 <template>
-  <h2>Umfrage erstellen</h2>
+  <h2 class="survey-create-title">Umfrage erstellen</h2>
   <div>
     <form id="survey-create-form" @submit.prevent="onSubmitSurvey()">
       <div>
@@ -56,9 +56,9 @@
 
 <script setup lang="ts">
 import QuestionForm from '@/components/survey/questionForm.vue'
-import {ref} from 'vue'
-import {SurveyState, type SurveyQuestion, type Category} from '@/types/survey'
-import {$fetch, ofetch} from 'ofetch'
+import { ref } from 'vue'
+import { SurveyState, type SurveyQuestion, type Category } from '@/types/survey'
+import { $fetch, ofetch } from 'ofetch'
 
 const questionForm = ref<Object>({})
 
@@ -105,3 +105,79 @@ async function onSubmitSurvey() {
 
 loadCategories();
 </script>
+
+
+<style>
+.survey-create-title {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#survey-create-form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#survey-create-form div {
+  margin-bottom: 15px;
+}
+
+#survey-create-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+#survey-create-form input[type="text"],
+#survey-create-form input[type="date"],
+#survey-create-form select {
+  width: 100%;
+  outline: none;
+  border: 1px solid #c9c9c9;
+  border-radius: 10px;
+  padding: 12px;
+  background: var(--background);
+  transition: border 0.2s;
+  box-sizing: border-box;
+}
+
+#survey-create-form input[type="text"]:focus,
+#survey-create-form input[type="date"]:focus,
+#survey-create-form select:focus {
+  border-color: #333;
+}
+
+#survey-create-form button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#survey-create-form button:hover {
+  background-color: #555;
+}
+
+#survey-create-form h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#survey-create-form pre {
+  background: #f9f9f9;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+</style>

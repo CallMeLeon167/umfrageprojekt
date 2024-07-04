@@ -1,23 +1,43 @@
 <template>
-  <form @submit.prevent="onSumit">
-    <h1>Registrieren</h1>
-    <div id="errors">
-      <span v-for="(error, index) in errors" :key="index">{{ error }}</span>
+  <div id="errors">
+    <span v-for="(error, index) in errors" :key="index">{{ error }}</span>
+  </div>
+
+  <div class="login-container">
+    <div class="login-content">
+      <div class="login-header">
+        <div class="login-header_left">
+          <img src="/src/assets/logo.png" alt="logo" />
+          <span class="app-name">Umfrage Portal</span>
+        </div>
+      </div>
+      <div class="login-body">
+        <h2>Registrieren</h2>
+        <form @submit.prevent="onSumit">
+          <label for="username">Username
+            <input type="text" v-model="username" placeholder="Username" />
+          </label>
+          <label for="mail">E-Mail
+            <input type="email" v-model="mail" placeholder="E-Mail" />
+          </label>
+          <label for="password">Passwort
+            <input type="password" v-model="password" placeholder="Password" />
+          </label>
+          <div class="login-bottom">
+            <a href="/login" class="underline-hover">Ich habe einen Account</a>
+            <button type="submit">Account erstellen</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <label for="username">Username</label>
-    <input type="text" v-model="username" placeholder="Username" />
-    <label for="mail">E-Mail</label>
-    <input type="email" v-model="mail" placeholder="E-Mail" />
-    <label for="password">Password</label>
-    <input type="password" v-model="password" placeholder="Password" />
-    <button type="submit">Account erstellen</button>
-  </form>
+  </div>
+
 </template>
 
 <script setup lang="ts">
 import { useAuth } from '@/composables/useAuth'
-import {ref} from "vue";
-import {FetchError} from "ofetch";
+import { ref } from "vue";
+import { FetchError } from "ofetch";
 
 const auth = useAuth();
 

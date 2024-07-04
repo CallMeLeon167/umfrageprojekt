@@ -1,24 +1,22 @@
 <template>
   <div class="question">
     <h3>{{ question.questionText }}</h3>
-    <div v-for="answer in question.answerOptions"
-         :key="answer.answerOptionID"
-         class="answer-option">
+    <div v-for="answer in question.answerOptions" :key="answer.answerOptionID" class="answer-option">
       <input :type="inputType" :id="`input-${answer.answerOptionID}`" :name="question.questionId"
-             @input="onAnswerAdded($event, question.questionId, answer.answerOptionID)">
+        @input="onAnswerAdded($event, question.questionId, answer.answerOptionID)">
       <label :for="`input-${answer.answerOptionID}`">{{ answer.answerOptionText }}</label>
     </div>
     <div v-if="question.questionType === SurveyQuestionType.TEXT" class="answer-option">
       <input type="text" :id="`input-text-${question.questionId}`" :name="question.questionId"
-             @input="onAnswerAdded($event, question.questionId)">
+        @input="onAnswerAdded($event, question.questionId)">
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 
-import {computed, type PropType, ref} from 'vue'
-import {type SurveyQuestion, SurveyQuestionType} from "@/types/survey";
+import { computed, type PropType, ref } from 'vue'
+import { type SurveyQuestion, SurveyQuestionType } from "@/types/survey";
 import QuestionAnswerOption from "@/components/survey/questionAnswerOption.vue";
 
 const props = defineProps({
@@ -50,9 +48,8 @@ function onAnswerAdded(event: Event, questionId?: string, answerId?: string) {
 
 </script>
 
-<style>
+<style scoped>
 .answer-option {
-  padding-left: 1.5em;
   display: flex;
   gap: 10px;
 }

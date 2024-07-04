@@ -21,15 +21,17 @@ export type Survey = {
   questions?: SurveyQuestion[];
 };
 
-export type SurveyEvaluation = {
-  participations: number;
-  answers: [
+export type SurveyEvaluation = [
     {
-      questionId: number;
-      answer: number | string;
+      SurveyID: string;
+      Question: string;
+      QuestionId: string;
+      AnswerOptionId: string;
+      AnswerOption: string;
+      UserResponse: string;
+      Username: string;
     }
-  ];
-};
+];
 
 export type SurveyQuestion = {
   questionId?: string;

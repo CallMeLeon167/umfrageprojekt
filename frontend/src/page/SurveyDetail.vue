@@ -7,16 +7,30 @@
       {{ evaluation?.participations }}
       {{ evaluation?.participations > 1 ? "Teilnahmen" : "Teilnahme" }}
     </span>
+
     <div id="survey-evaluation" v-if="survey">
-      <div v-for="(question, index) in evaluation?.answers" :key="index">
-        <h4 v-if="survey.questions">{{ survey?.questions[index - 1]?.questionText }}</h4>
-        <ul>
-          <li v-for="(answer, index) in question" :key="index">
-            {{ answer }}
-          </li>
-        </ul>
-      </div>
+      <h4>Ergebnisse</h4>
+      <ul>
+        <li v-for="(question, index) in survey.questions" :key="index">
+          <h5>{{ question.questionText }}</h5>
+          <ul v-if="question.questionType != 'text'">
+            <li v-for="(answer, index) in question.answerOptions" :key="index">
+              <div>
+                {{ answer.answerOptionText }} ({{countAnswers(question?.questionId, answer.answerOptionID)}}x)
+              </div>
+            </li>
+          </ul>
+          <ul v-else>
+            <li v-for="(answer, index) in getAnswerTexts(question.questionId)" :key="index">
+              {{ answer.Username || "Unbekannt" }}: {{ answer.UserResponse }}
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+
     </div>
+
     <div id="comments">
       <h3>Kommentare</h3>
       <span v-if="commentsLoading">Lade Kommentare...</span>
@@ -38,6 +52,7 @@ import {ref} from "vue";
 import {useRoute} from "vue-router";
 import {FetchError, ofetch} from "ofetch";
 import type {Survey, SurveyEvaluation, Comment} from "@/types/survey";
+import QuestionAnswerOption from "@/components/survey/questionAnswerOption.vue";
 
 const route = useRoute();
 
@@ -103,6 +118,27 @@ async function fetchEvaluation() {
     }
     console.error(error);
   }
+}
+
+function countAnswers(questionId: string, answerOptionId: string): number {
+  return evaluation.value?.filter((entry) => {
+    return entry.QuestionId === questionId && entry.AnswerOptionId === answerOptionId;
+  }).length || 0;
+}
+
+function getAnswerTexts(questionId: string) {
+  // return all entries in evaluation that have the given questionId
+  const entries = evaluation.value?.filter((entry) => {
+    return entry.QuestionId === questionId;
+  }) || [];
+
+  // return only fields UserResponse and Username
+  return entries.map((entry) => {
+    return {
+      UserResponse: entry.UserResponse,
+      Username: entry.Username,
+    };
+  });
 }
 
 fetchSurvey();

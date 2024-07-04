@@ -18,6 +18,10 @@
         public $surveyID;
         /* @var Reply[] */
         public array $replys;
+        /**
+         * @var mixed
+         */
+        public ?string $accountName = null;
 
         protected function getFieldMappings(): array
         {

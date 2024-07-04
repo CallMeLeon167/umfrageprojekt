@@ -18,15 +18,21 @@
         public function getComments(?string $surveyId = null)
         {
             if ($surveyId) {
-                $dbResult = $this->dbConn->sql2array("SELECT * FROM Comment WHERE com_surveyID = ?", [$surveyId]);
+                $query = "SELECT * FROM Comment
+                    JOIN Account ON Comment.com_accountID = Account.id
+                    WHERE com_surveyID = ?
+                ";
             } else {
-                $dbResult = $this->dbConn->sql2array("SELECT * FROM Comment");
+                $query = "SELECT * FROM Comment";
             }
+            
+            $dbResult = $this->dbConn->sql2array($query);
             /** @var $comments Comment[] */
             $comments = [];
             foreach ($dbResult as $row) {
                 $comment = new Comment();
                 $comment->hydrateFromDBRow($row);
+                $comment->accountName = $row["a_username"];
                 $comments[] = $comment;
             }
             return $comments;
